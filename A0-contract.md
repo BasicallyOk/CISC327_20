@@ -49,9 +49,9 @@ Student Number:	20232567
 
 Team Member #3:
 
-Name:
+Name: Ammar Lakdawala
 
-Student Number:	
+Student Number:	20214226
 
 
 Team Member #4:
