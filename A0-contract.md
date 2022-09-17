@@ -49,13 +49,13 @@ Student Number:	20232567
 
 Team Member #3:
 
-Name: Ammar Lakdawala
+Name: Drake Li
 
-Student Number:	20214226
+Student Number: 20228006	
 
 
 Team Member #4:
 
 Name:
-
-Student Number:	
+Ammar Lakdawala
+Student Number:	20214226
