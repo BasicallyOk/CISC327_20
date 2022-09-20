@@ -5,7 +5,7 @@ Here, include a brief description of the PR. What is being changed, why was it c
 If there are any shortcomings at all, make sure that is also included here.
  -->
 
-## [Github Issue Number]
+## [Github Issue Number](https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues)
 
 Resolves:
 <!--
