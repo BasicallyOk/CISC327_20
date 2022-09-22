@@ -49,7 +49,7 @@ Student Number:	20232567
 
 Team Member #3:
 
-Name: Drake Li
+Name:Drake Li
 
 Student Number: 20228006	
 
