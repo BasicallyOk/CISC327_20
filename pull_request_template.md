@@ -25,4 +25,17 @@ Relates to:
 - [ ] Branch has merged in the **latest version of main**
 - [ ] **CI Pipeline** has passed  
 - [ ] **Linting** has occured, as per the project linting config 
+- [ ] Indicate in description that the database needs to be rebuilt
 - [ ] All changed functions have proper **docstring** to describe what they do and how to use them.
+ 
+ 
+## Reviewer checklist
+Second reviewer will need to double check all of these points
+
+- [ ] Relevant issue is mentioned in description 
+- [ ] Code solves the issue
+- [ ] Code is the best solution for the issue
+- [ ] Branch is **ahead of main**
+- [ ] **CI Pipeline** has passed  
+- [ ] Ensures the fix/feature works locally  
+- [ ] **MAKE ABSOLUTELY SURE EVERYONE KNOWS IF DATABASE NEEDS TO BE REBUILT**
