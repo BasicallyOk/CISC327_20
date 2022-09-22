@@ -19,8 +19,9 @@ Relates to:
 
 
 ## Author checklist
+If any of these points have yet to be satisfied, make sure that you set the title to the format DRAFT #issue-num Title
 
-- [ ] The title is short and descriptive of the PR. Must start with the Github Issue Number (format: #<Issue Number> Title).
+- [ ] The title is short and descriptive of the PR. Must start with the Github Issue Number (format: #issue-num Title).
 - [ ] The description follows proper cl description practices and mentions related Github Issues (make sure this is the first thing you mention).
 - [ ] Branch has merged in the **latest version of main**
 - [ ] **CI Pipeline** has passed  
