@@ -1,0 +1,26 @@
+{
+  "name": "cisc327_20",
+  "version": "1.0.0",
+  "description": "L BOZO LOL",
+  "main": "Review.js",
+  "scripts": {
+    "devStart": "nodemon script.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BasicallyOk/CISC327_20.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BasicallyOk/CISC327_20/issues"
+  },
+  "homepage": "https://github.com/BasicallyOk/CISC327_20#readme",
+  "dependencies": {
+    "mongoose": "^6.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
