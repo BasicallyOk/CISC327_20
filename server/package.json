@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "mongoose": "^6.6.1"
+  },
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint . --fix"
+  },
+  "devDependencies": {
+    "eslint": "^8.23.1",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.3.0",
+    "eslint-plugin-promise": "^6.0.1"
+  }
+}
