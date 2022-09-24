@@ -1,31 +1,31 @@
-import mongoose, { Schema, ObjectId } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 
 const ListingSchema = new Schema({
-    address :{
-        type: String,
-        required: true
-    },
+  address: {
+    type: String,
+    required: true
+  },
 
-    description:{
-        type: String,
-        required: false
-    },
+  description: {
+    type: String,
+    required: false
+  },
 
-    price: {
-        type: Number, 
-        required: true
-    }, 
-    
-    picture_url:{
-        type: String,
-        required: true
-    },
+  price: {
+    type: Number,
+    required: true
+  },
 
-    review_score:{
-        type: Number,
-        required: true
-    }
+  picture_url: {
+    type: String,
+    required: true
+  },
+
+  review_score: {
+    type: Number,
+    required: true
+  }
 
 })
 
-module.exports = mongoose.model('Listing',ListingSchema)
+module.exports = mongoose.model('Listing', ListingSchema)
