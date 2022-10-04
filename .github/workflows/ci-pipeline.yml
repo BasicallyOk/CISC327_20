@@ -10,7 +10,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '17'
-          cache: npm
+          cache: 'npm'
+          cache-dependency-path: 'client/package-lock.json'
       - run: npm install
       - run: npm run build
   test-client:
