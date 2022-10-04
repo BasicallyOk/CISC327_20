@@ -1,0 +1,21 @@
+name: ci-pipeline
+run-name: ${{ github.actor }} is testing the commit
+on: [push]
+jobs:
+  build-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '17'
+          cache: npm
+      - run: cd ./client
+      - run: npm install
+      - run: npm run build
+  test-client:
+    needs: build-client
+    runs-on: ubuntu-latest
+    steps:
+      - run: cd ./client
+      - run: npm run test
