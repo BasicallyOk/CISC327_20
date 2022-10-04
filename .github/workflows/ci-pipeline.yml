@@ -5,8 +5,8 @@ jobs:
   build-client:
     runs-on: ubuntu-latest
     steps:
-      - run: cd ./client
       - uses: actions/checkout@v3
+      - run: cd ./client
       - uses: actions/setup-node@v3
         with:
           node-version: '17'
