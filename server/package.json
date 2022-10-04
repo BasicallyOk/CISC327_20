@@ -3,7 +3,8 @@
     "mongoose": "^6.6.1"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint . --fix"
+    "lint": "./node_modules/.bin/eslint . --fix",
+    "lint-check": "./node_modules/.bin/eslint ."
   },
   "devDependencies": {
     "eslint": "^8.23.1",
