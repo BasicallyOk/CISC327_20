@@ -19,7 +19,7 @@ describe('Login functionality', () => {
   })
   afterAll(() => {
     User.findOneAndRemove({ email: 'test@gmail.com' }).then(() => {
-        disconnectDb()
+      disconnectDb()
     })
   })
 
