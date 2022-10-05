@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "jest": "^29.1.2",
     "mongoose": "^6.6.1"
   },
   "scripts": {
