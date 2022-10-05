@@ -1,6 +1,7 @@
 const User = require('../User')
 const { login } = require('../utils/userUtils')
 const { connectDb, disconnectDb } = require('../../database')
+const { deleteOne } = require('../User')
 
 describe('Login functionality', () => {
   // Set up testing
@@ -21,6 +22,7 @@ describe('Login functionality', () => {
     User.findOneAndRemove({ email: 'test@gmail.com' }).then(() => {
       disconnectDb()
     })
+		done()
   })
 
   describe('Input validation', () => {
