@@ -1,7 +1,6 @@
 const User = require('../User')
 const { login } = require('../utils/userUtils')
 const { connectDb, disconnectDb } = require('../../database')
-const { deleteOne } = require('../User')
 
 describe('Login functionality', () => {
   // Set up testing
@@ -18,11 +17,9 @@ describe('Login functionality', () => {
     })
     testUser.save()
   })
-  afterAll(() => {
-    User.findOneAndRemove({ email: 'test@gmail.com' }).then(() => {
-      disconnectDb()
-    })
-		done()
+  afterAll(async () => {
+    await User.findOneAndRemove({ email: 'test@gmail.com' })
+    disconnectDb()
   })
 
   describe('Input validation', () => {
