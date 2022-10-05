@@ -18,8 +18,9 @@ describe('Login functionality', () => {
     testUser.save()
   })
   afterAll(() => {
-    User.findOneAndRemove({ email: 'test@gmail.com' })
-    disconnectDb()
+    User.findOneAndRemove({ email: 'test@gmail.com' }).then(() => {
+        disconnectDb()
+    })
   })
 
   describe('Input validation', () => {
