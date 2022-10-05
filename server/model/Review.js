@@ -1,9 +1,6 @@
-import mongoose from 'mongoose'
-const { Schema } = mongoose
+import mongoose, { Schema } from 'mongoose'
 
-const Review = mongoose.model('Review', reviewSchema)
-
-const reviewSchema = new Schema({
+const ReviewSchema = new Schema({
   listing: String,
   user: String,
   comments: [{ body: String, date: Date }],
@@ -13,3 +10,5 @@ const reviewSchema = new Schema({
     score: Number
   }
 })
+
+module.exports = mongoose.model('Review', ReviewSchema)
