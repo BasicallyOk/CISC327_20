@@ -1,6 +1,6 @@
-import mongoose, { Schema, ObjectId } from 'mongoose'
+const mongoose = require('mongoose')
 
-const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true
@@ -10,7 +10,7 @@ const UserSchema = new Schema({
     required: true
   },
   listingID: {
-    type: ObjectId,
+    type: mongoose.ObjectId,
     required: true
   },
   wallet: {
