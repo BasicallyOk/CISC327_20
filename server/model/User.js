@@ -19,8 +19,8 @@ const UserSchema = new mongoose.Schema({
   //balance that is used to assign to user 
   balance: {
     type: Number,
-    min: 1,
-    required: true
+    default: 100,
+    required: false
   },
   //billing address that is used to assign to user 
   billingAddress: {
