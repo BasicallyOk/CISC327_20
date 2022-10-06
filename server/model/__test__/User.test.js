@@ -4,8 +4,8 @@ const { connectDb, disconnectDb } = require('../../database')
 
 describe('Login functionality', () => {
   // Set up testing
-  beforeAll(async () => {
-    await connectDb()
+  beforeAll(() => {
+    connectDb()
     // Register the test@gmail.com account
     const testUser = new User({
       email: 'test@gmail.com',
@@ -19,7 +19,7 @@ describe('Login functionality', () => {
   })
   afterAll(async () => {
     await User.findOneAndRemove({ email: 'test@gmail.com' })
-    await disconnectDb()
+    disconnectDb()
   })
 
   describe('Input validation', () => {
