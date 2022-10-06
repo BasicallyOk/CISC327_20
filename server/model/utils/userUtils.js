@@ -74,7 +74,7 @@ const validateUsername = (username) => {
  */
 async function login (email, password) {
   if (password === '') {
-    return false
+    return null
   }
 
   if (!validateEmail(email)) {
