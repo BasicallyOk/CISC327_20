@@ -97,11 +97,20 @@ describe("Register functionality", () => {
   it("should return true if registration is successful", () => {
       register('test@gmail.com', 'P@ssword', 'testregister', '', '', 100).then(status => {
           expect(status).toBe(true)
+          User.findOne({email:'test@gmail.com'}).then(user => {
+            //expects us to find a user 
+            expect(user).not.toBeNull()
+            //mongodb automatically creates an ID
+            epect(user._id).not.toBeUndefined()
+            //removes the user after finding it 
+            User.findOneAndRemove({ email: 'test@gmail.com' })
+            
+          })
       })
   })
 
   describe("checks email and password is valid", () => {
-    it('should not accept an invalid email format', () => {
+    it('should not accept an invalid email format (R1-1, R1-3)', () => {
       register('notanemail', 'P@ssword', 'testregister', '', '', 100).then(status => {
         expect(status).toBe(false)
       })
@@ -130,7 +139,7 @@ describe("Register functionality", () => {
         expect(status).toBe(false)
       })
     })
-    it("should return false if password does not meet requirement", () => {
+    it("should return false if password does not meet requirement (R1-4)", () => {
       //fails because of length not being minimum 6
       register('testregister@gmail.com', 'P@ss', 'testregister', '', '', 100).then(status => {
         expect(status).toBe(false)
@@ -150,7 +159,7 @@ describe("Register functionality", () => {
     })
   })
   describe("checks to see if username is valid", () => {
-    it("should return false if username does not meet requirement", () => {
+    it("should return false if username does not meet requirement (R1-5, R1-6, R1-7, R1-8, R1-9, R1-10)" , () => {
       //fails because username is empty 
       register('testregister@gmail.com', 'P@ssword', '', '', '', 100).then(status => {
         expect(status).toBe(false)
