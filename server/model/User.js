@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true
+  },
   username: {
     type: String,
     required: true
@@ -9,13 +13,17 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  listingID: {
-    type: mongoose.ObjectId,
-    required: true
-  },
-  wallet: {
+  balance: {
     type: Number,
     min: 1,
+    required: true
+  },
+  billingAddress: {
+    type: String,
+    required: true
+  },
+  postalCode: {
+    type: String,
     required: true
   }
 })
