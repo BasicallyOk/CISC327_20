@@ -42,3 +42,8 @@ describe('Login functionality', () => {
     })
     
 })
+
+describe('Password has to meet the required complexity: minimum length 6, at least one upper case, at least one lower case, at least one special character'
+, () => {
+    
+})
