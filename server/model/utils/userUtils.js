@@ -42,7 +42,7 @@ const validatePassword = (password) => {
   }
 
   // checks if they are all alphanuermic and if there are special characters
-  if (!password.match(/^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]$/)) {
+  if (!password.match(/^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,80}$/)) {
     return false
   }
   return true
@@ -102,7 +102,7 @@ async function login (email, password) {
  * @param {String} postalCode postal code of user
  * @param {Number} balance the balance for the user (set at 100 as signup bonus)
  */
-async function register (email, password, username, billingAddress, postalCode) {
+async function register (email, password, username) {
   // makes sure that the email is valid when registrating
   if (!validateEmail(email)) {
     return false
@@ -123,16 +123,6 @@ async function register (email, password, username, billingAddress, postalCode) 
       return false
     }
   })
-
-  // return false if billing address is not empty
-  if (billingAddress !== '') {
-    return false
-  }
-
-  // return false if postal code is not empty
-  if (postalCode !== '') {
-    return false
-  }
 
   return true
 }
