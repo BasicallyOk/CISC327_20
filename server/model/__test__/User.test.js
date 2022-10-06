@@ -1,5 +1,5 @@
 const User = require('../User')
-const { login } = require('../utils/userUtils')
+const { login, register } = require('../utils/userUtils')
 const { connectDb, disconnectDb } = require('../../database')
 
 describe('Login functionality', () => {
@@ -19,7 +19,7 @@ describe('Login functionality', () => {
   })
   afterAll(async () => {
     await User.findOneAndRemove({ email: 'test@gmail.com' })
-    disconnectDb()
+    await disconnectDb()
   })
 
   describe('Input validation', () => {
@@ -79,14 +79,128 @@ describe('Login functionality', () => {
     it('should return the correct user object', () => {
       login('test@gmail.com', 'password').then(user => {
         expect(user).not.toBeNull()
-        expect(user.email).toBeEqual('test@gmail.com')
-        expect(user.username).toBeEqual('testUser')
+        expect(user.email).toEqual('test@gmail.com')
+        expect(user.username).toEqual('testUser')
       })
     })
   })
 })
 
-describe('Password has to meet the required complexity: minimum length 6, at least one upper case, at least one lower case, at least one special character'
-, () => {
-    
+describe("Register functionality", () => {
+  beforeAll(() => {
+    connectDb()
+  })
+  afterAll(async () => {
+    disconnectDb()
+  })
+  //it() is the main task, what it should be doing 
+  it("should return true if registration is successful", () => {
+      register('test@gmail.com', 'P@ssword', 'testregister', '', '', 100).then(status => {
+          expect(status).toBe(true)
+      })
+  })
+
+  describe("checks email and password is valid", () => {
+    it('should not accept an invalid email format', () => {
+      register('notanemail', 'P@ssword', 'testregister', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      register('notanemail@@gmail.com', 'P@ssword', 'testregister', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      register('a"b(c)d,e:f;g<h>i[j\\k]l@example.com', 'P@ssword', 'testregister', '', '',100).then(status => {
+        expect(status).toBe(false)
+      })
+      register('just"not"right@example.com', 'P@ssword', 'testregister', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      register('this is"not\\allowed@example.com', 'P@ssword', 'testregister', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      register('this\\ still\\"not\\\\allowed@example.com', 'P@ssword', 'testregister', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      register('1234567890123456789012345678901234567890123456789012345678901234+x@example.com', 'P@ssword', 'testregister', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      register('i_like_underscore@but_its_not_allowed_in_this_part.example.com', 'P@ssword', 'testregister', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      register('QA[icon]CHOCOLATE[icon]@test.com', 'P@ssword', 'testregister', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+    })
+    it("should return false if password does not meet requirement", () => {
+      //fails because of length not being minimum 6
+      register('testregister@gmail.com', 'P@ss', 'testregister', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      //fails because of no capital 
+      register('testregister@gmail.com', 'p@ssword', 'testregister', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      //fails because no lowercase  
+      register('testregister@gmail.com', 'P@SSWORD', 'testregister', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      //fails because no special character 
+      register('testregister@gmail.com', 'Password', 'testregister', '', '').then(status => {
+        expect(status).toBe(false)
+      })
+    })
+  })
+  describe("checks to see if username is valid", () => {
+    it("should return false if username does not meet requirement", () => {
+      //fails because username is empty 
+      register('testregister@gmail.com', 'P@ssword', '', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      //fails because username is less than 2 characters 
+      register('testregister@gmail.com', 'P@ssword', 'u', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      //fails because username is greater than 20 characters
+      register('testregister@gmail.com', 'P@ssword', 'username1234567890123', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      //fails because space is in the prefix
+      register('testregister@gmail.com', 'P@ssword', ' testregister', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      //fails because space is in the suffix 
+      register('testregister@gmail.com', 'P@ssword', 'testregister ', '', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      //fails because email is already been used 
+      connectDb()
+      // Register the test@gmail.com account
+      const existingUser = new User({
+        email: 'testregister@gmail.com',
+        username: 'testregister',
+        password: 'P@sswordregister',
+        balance: 100,
+        billingAddress: 'address',
+        postalCode: 'postalCode'
+      })
+      testUser.save.then(() => {
+        //fails because email is already used in the database 
+        register('testregister@gmail.com', 'P@ssword', 'testregister', '', '', 100).then(status => {
+          expect(status).toBe(false)
+        })
+      })
+      //fails because shipping address is filled
+      register('testregister@gmail.com', 'P@ssword', 'testregister', 'address', '', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      //fails because postal code is filled
+      register('testregister@gmail.com', 'P@ssword', 'testregister', '', 'postalCode', 100).then(status => {
+        expect(status).toBe(false)
+      })
+      //fails because balance is not 100
+      register('testregister@gmail.com', 'P@ssword', 'testregister ', '', '', 0).then(status => {
+        expect(status).toBe(false)
+      })
+    })
+  })
 })
+
