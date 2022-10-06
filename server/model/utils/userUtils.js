@@ -23,25 +23,25 @@ const validateEmail = (email) => {
 
 /**
  * Validates password for registration
- * @param {String} password 
+ * @param {String} password
  */
 const validatePassword = (password) => {
-  //if password has length shorter than 6 then return false 
-  if (password.length < 6){
+  // if password has length shorter than 6 then return false
+  if (password.length < 6) {
     return false
   }
 
-  //if password is all uppercase then return false 
-  if(password.toUpperCase() === password){
-    return false 
-  }
-  
-  //if password is all lowercase then return false 
-  if(password.toLowerCase() === password){
+  // if password is all uppercase then return false
+  if (password.toUpperCase() === password) {
     return false
   }
-  
-  //checks if they are all alphanuermic and if there are special characters 
+
+  // if password is all lowercase then return false
+  if (password.toLowerCase() === password) {
+    return false
+  }
+
+  // checks if they are all alphanuermic and if there are special characters
   if (!password.match(/^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]$/)) {
     return false
   }
@@ -49,19 +49,19 @@ const validatePassword = (password) => {
 }
 
 const validateUsername = (username) => {
-  //return false if username is less than 2 characters and greater than 20 
-  if(username.length < 2 && username.length > 20){
-    return false
-  }
- 
-  //return false if username contains anything otherthan alphanumeric values
-  if(!username.match(/^[0-9a-zA-Z]+$/)){
+  // return false if username is less than 2 characters and greater than 20
+  if (username.length < 2 && username.length > 20) {
     return false
   }
 
-  //return false if username has a space in either prefix or suffix
-  if(username.startsWith(' ')|| username.endsWith(' ')) {
-    return false 
+  // return false if username contains anything otherthan alphanumeric values
+  if (!username.match(/^[0-9a-zA-Z]+$/)) {
+    return false
+  }
+
+  // return false if username has a space in either prefix or suffix
+  if (username.startsWith(' ') || username.endsWith(' ')) {
+    return false
   }
   return true
 }
@@ -73,7 +73,7 @@ const validateUsername = (username) => {
  * @return {Object} true if the login operation succeeded and false if otherwise
  */
 async function login (email, password) {
-  if (password = ""){
+  if (password === '') {
     return false
   }
 
@@ -93,50 +93,47 @@ async function login (email, password) {
   })
 }
 
-
-
 /**
- * 
+ *
  * @param {String} email email used for registration
- * @param {String} password password for the user 
+ * @param {String} password password for the user
  * @param {String} username username for the user
- * @param {String} billing_address billing address for the user
- * @param {String} postal_code postal code of user
+ * @param {String} billingAddress billing address for the user
+ * @param {String} postalCode postal code of user
  * @param {Number} balance the balance for the user (set at 100 as signup bonus)
  */
-async function register(email, password, username, billing_address, postal_code) {
-  
-  //makes sure that the email is valid when registrating 
+async function register (email, password, username, billingAddress, postalCode) {
+  // makes sure that the email is valid when registrating
   if (!validateEmail(email)) {
     return false
   }
 
-  //make sure that the password meets the requirments 
-  if (!validatePassword(password)){
-    return false 
+  // make sure that the password meets the requirments
+  if (!validatePassword(password)) {
+    return false
   }
 
-  //make sure that the username meets the requirements 
-  if (!validateUsername(username)){
-    return false 
+  // make sure that the username meets the requirements
+  if (!validateUsername(username)) {
+    return false
   }
-  //looks through the database if the email has been used then return false 
+  // looks through the database if the email has been used then return false
   await User.findOne({ email }).then(user => {
     if (user) {
       return false
     }
   })
 
-  //return false if billing address is not empty
-  if(billing_address != ''){
+  // return false if billing address is not empty
+  if (billingAddress !== '') {
     return false
   }
-  
-  //return false if postal code is not empty 
-  if(postal_code != ''){
+
+  // return false if postal code is not empty
+  if (postalCode !== '') {
     return false
   }
 
   return true
 }
-module.exports = { login, register}
+module.exports = { login, register }

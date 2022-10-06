@@ -86,31 +86,31 @@ describe('Login functionality', () => {
   })
 })
 
-describe("Register functionality", () => {
+describe('Register functionality', () => {
   beforeAll(() => {
     connectDb()
   })
   afterAll(async () => {
     disconnectDb()
   })
-  //it() is the main task, what it should be doing 
-  it("should return true if registration is successful (R1-10)", () => {
-      register('test@gmail.com', 'P@ssword', 'testregister', '', '').then(status => {
-          expect(status).toBe(true)
-          User.findOne({email:'test@gmail.com'}).then(user => {
-            //expects us to find a user 
-            expect(user).not.toBeNull()
-            //mongodb automatically creates an ID
-            epect(user._id).not.toBeUndefined()
-            //expect balance to always be 100 after registration
-            expect(user.balance).toBe(100)
-            //removes the user after finding it 
-            User.findOneAndRemove({ email: 'test@gmail.com' })
-          })
+  // it() is the main task, what it should be doing
+  it('should return true if registration is successful (R1-10)', () => {
+    register('test@gmail.com', 'P@ssword', 'testregister', '', '').then(status => {
+      expect(status).toBe(true)
+      User.findOne({ email: 'test@gmail.com' }).then(user => {
+        // expects us to find a user
+        expect(user).not.toBeNull()
+        // mongodb automatically creates an ID
+        expect(user._id).not.toBeUndefined()
+        // expect balance to always be 100 after registration
+        expect(user.balance).toBe(100)
+        // removes the user after finding it
+        User.findOneAndRemove({ email: 'test@gmail.com' })
       })
+    })
   })
 
-  describe("checks email and password is valid", () => {
+  describe('checks email and password is valid', () => {
     it('should not accept an invalid email format (R1-1, R1-3)', () => {
       register('notanemail', 'P@ssword', 'testregister', '', '').then(status => {
         expect(status).toBe(false)
@@ -140,48 +140,48 @@ describe("Register functionality", () => {
         expect(status).toBe(false)
       })
     })
-    it("should return false if password does not meet requirement (R1-4)", () => {
-      //fails because of length not being minimum 6
+    it('should return false if password does not meet requirement (R1-4)', () => {
+      // fails because of length not being minimum 6
       register('testregister@gmail.com', 'P@ss', 'testregister', '', '').then(status => {
         expect(status).toBe(false)
       })
-      //fails because of no capital 
+      // fails because of no capital
       register('testregister@gmail.com', 'p@ssword', 'testregister', '', '').then(status => {
         expect(status).toBe(false)
       })
-      //fails because no lowercase  
+      // fails because no lowercase
       register('testregister@gmail.com', 'P@SSWORD', 'testregister', '', '').then(status => {
         expect(status).toBe(false)
       })
-      //fails because no special character 
+      // fails because no special character
       register('testregister@gmail.com', 'Password', 'testregister', '', '').then(status => {
         expect(status).toBe(false)
       })
     })
   })
-  describe("checks to see if username is valid", () => {
-    it("should return false if username does not meet requirement (R1-5, R1-6, R1-7, R1-8, R1-9)" , () => {
-      //fails because username is empty 
+  describe('checks to see if username is valid', () => {
+    it('should return false if username does not meet requirement (R1-5, R1-6, R1-7, R1-8, R1-9)', () => {
+      // fails because username is empty
       register('testregister@gmail.com', 'P@ssword', '', '', '').then(status => {
         expect(status).toBe(false)
       })
-      //fails because username is less than 2 characters 
+      // fails because username is less than 2 characters
       register('testregister@gmail.com', 'P@ssword', 'u', '', '').then(status => {
         expect(status).toBe(false)
       })
-      //fails because username is greater than 20 characters
+      // fails because username is greater than 20 characters
       register('testregister@gmail.com', 'P@ssword', 'username1234567890123', '', '').then(status => {
         expect(status).toBe(false)
       })
-      //fails because space is in the prefix
+      // fails because space is in the prefix
       register('testregister@gmail.com', 'P@ssword', ' testregister', '', '').then(status => {
         expect(status).toBe(false)
       })
-      //fails because space is in the suffix 
+      // fails because space is in the suffix
       register('testregister@gmail.com', 'P@ssword', 'testregister ', '', '').then(status => {
         expect(status).toBe(false)
       })
-      //fails because email is already been used 
+      // fails because email is already been used
       connectDb()
       // Register the test@gmail.com account
       const existingUser = new User({
@@ -192,21 +192,20 @@ describe("Register functionality", () => {
         billingAddress: 'address',
         postalCode: 'postalCode'
       })
-      testUser.save.then(() => {
-        //fails because email is already used in the database 
+      existingUser.save.then(() => {
+        // fails because email is already used in the database
         register('testregister@gmail.com', 'P@ssword', 'testregister', '', '').then(status => {
           expect(status).toBe(false)
         })
       })
-      //fails because shipping address is filled
+      // fails because shipping address is filled
       register('testregister@gmail.com', 'P@ssword', 'testregister', 'address', '').then(status => {
         expect(status).toBe(false)
       })
-      //fails because postal code is filled
+      // fails because postal code is filled
       register('testregister@gmail.com', 'P@ssword', 'testregister', '', 'postalCode').then(status => {
         expect(status).toBe(false)
       })
     })
   })
 })
-
