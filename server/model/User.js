@@ -25,12 +25,12 @@ const UserSchema = new mongoose.Schema({
   // billing address that is used to assign to user
   billingAddress: {
     type: String,
-    required: true
+    default: ''
   },
   // postal code that is used to assign to uer
   postalCode: {
     type: String,
-    required: true
+    default: ''
   }
 })
 
