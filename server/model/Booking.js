@@ -1,6 +1,6 @@
-import mongoose, { Schema, ObjectId } from 'mongoose'
+const mongoose = require('mongoose')
 
-const BookingSchema = new Schema({
+const BookingSchema = new mongoose.Schema({
   startDate: {
     type: Date,
     required: true
@@ -9,8 +9,8 @@ const BookingSchema = new Schema({
     type: Date,
     required: true
   },
-  bookerId: {
-    type: ObjectId,
+  userId: {
+    type: mongoose.ObjectId,
     required: true
   },
   progress: String,
@@ -20,10 +20,14 @@ const BookingSchema = new Schema({
     default: 1
   },
   listingId: {
-    type: ObjectId,
+    type: mongoose.ObjectId,
     required: true
   },
-  payment: Number // We'll deal with this later, absolute necessity for now
+  price: {
+    type: Number,
+    required: true,
+    min: 1
+  }
 })
 
 module.exports = mongoose.model('Booking', BookingSchema)
