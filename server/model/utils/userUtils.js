@@ -2,7 +2,7 @@ const User = require('../User')
 
 /**
  * Validate username using R3-4
- * @param {String} username 
+ * @param {String} username
  * @returns
  */
 const validateUserName = (username) => {
@@ -34,22 +34,20 @@ const validateEmail = (email) => {
  * @param {String} billingAddress
  * @returns
  */
- const validateBillingAddress = (billingAddress) => {
+const validateBillingAddress = (billingAddress) => {
   return String(billingAddress)
-    .match(/^\d+ [ ]? [a-zA-Z]+ []? [a-zA-Z]+$/i)
+    .match(/^\d+ [ ]? [a-zA-Z]+ [ ]? [a-zA-Z]+$/i)
 }
 /**
  * Validate postalCode using R3-2 and R3-3
  * @param {String} postalCode
  * @returns
  */
- const validatePostalCode = (postalCode) => {
+const validatePostalCode = (postalCode) => {
   return String(postalCode)
     .toUpperCase()
     .match(/^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] [ ]?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i)
 }
-
-
 /**
  * Validates password for registration
  * @param {String} password
@@ -176,7 +174,7 @@ async function register (email, password, username) {
 // write user update pofile function async
 async function update (username, email, billingAddress, postalCode) {
   // Validate if input is empty
-  if (username === '' || email === '' || billingAddress === '' || postalCode == '') {
+  if (username === '' || email === '' || billingAddress === '' || postalCode === '') {
     return null
   }
   // Check if username is valid
@@ -194,14 +192,14 @@ async function update (username, email, billingAddress, postalCode) {
     return null
   }
   // Ckeck if billingAddress is valid
-  if (billingAddress.split(' ').length != 3) {
+  if (billingAddress.split(' ').length !== 3) {
     return null
   }
   if (!validateBillingAddress) {
     return null
   }
   // Check if postalCode is valid
-  if (postalCode.split(' ').length != 2) {
+  if (postalCode.split(' ').length !== 2) {
     return null
   }
   if (!validatePostalCode) {

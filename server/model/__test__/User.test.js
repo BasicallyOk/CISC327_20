@@ -1,5 +1,5 @@
 const User = require('../User')
-const { login, register , update} = require('../utils/userUtils')
+const { login, register, update } = require('../utils/userUtils')
 const { connectDb, disconnectDb } = require('../../database')
 
 beforeAll(() => {
@@ -197,7 +197,6 @@ describe('Register functionality', () => {
       await User.findOneAndRemove({ email: 'testregister@gmail.com' })
     })
   })
-    
 
   // testing update user profile for invalid inputs
   describe('Input validation', () => {
@@ -210,45 +209,32 @@ describe('Register functionality', () => {
       // one empty
       status = await update('', 'test@gmail.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-
       status = await update('testUser', '', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-
       status = await update('testUser', 'test@gmail.com', '', 'A1B 2C3')
       expect(status).toBe(false)
-
       status = await update('testUser', 'test@gmail.com', 'address', '')
       expect(status).toBe(false)
-
       // two empty
       status = await update('', '', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-
       status = await update('', 'test@gmail.com', '', 'A1B 2C3')
       expect(status).toBe(false)
-
       status = await update('', 'test@gmail.com', 'address', '')
       expect(status).toBe(false)
-
       status = await update('testUser', '', '', 'A1B 2C3')
       expect(status).toBe(false)
-
       status = await update('testUser', '', 'address', '')
       expect(status).toBe(false)
-
       status = await update('testUser', 'test@gmail.com', '', '')
       expect(status).toBe(false)
-
       // three empty
       status = await update('testUser', '', '', '')
       expect(status).toBe(false)
-
       status = await update('', 'test@gmail.com', '', '')
       expect(status).toBe(false)
-
       status = await update('', '', 'address', '')
       expect(status).toBe(false)
-
       status = await update('', 'test@gmail.com', '', 'A1B 2C3')
       expect(status).toBe(false)
     })
@@ -257,10 +243,8 @@ describe('Register functionality', () => {
       let status
       status = await update('a', 'test@gmail.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-
       status = await update('ab', 'test@gmail.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-
       status = await update('abcdefghijklmnopqrst+x', 'test@gmail.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
     })
@@ -269,57 +253,42 @@ describe('Register functionality', () => {
       let status
       status = await update('testUser', 'notanemail', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-      
       status = await update('testUser', 'notanemail@@gmail.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-      
       status = await update('testUser', 'a"b(c)d,e:f;g<h>i[j\\k]l@example.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-      
       status = await update('testUser', 'just"not"right@example.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-      
       status = await update('testUser', 'this is"not\\allowed@example.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-      
       status = await update('testUser', 'this\\ still\\"not\\\\allowed@example.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-      
       status = await update('testUser', '1234567890123456789012345678901234567890123456789012345678901234+x@example.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-      
       status = await update('testUser', 'i_like_underscore@but_its_not_allowed_in_this_part.example.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-      
       status = await update('testUser', 'QA[icon]CHOCOLATE[icon]@test.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-      
     })
     // testing for invalid postalCode
     it('should not accept an invalid postalCode format', async () => {
       let status
       status = await update('testUser', 'test@gmail.com', 'address', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
       expect(status).toBe(false)
-      
       status = await update('testUser', 'test@gmail.com', 'address', '0123456789')
       expect(status).toBe(false)
-      
       status = await update('testUser', 'test@gmail.com', 'address', '!@#$%^&*()-_=+[]{};:,<>./?')
       expect(status).toBe(false)
-      
       status = await update('testUser', 'test@gmail.com', 'address', 'ABC DEF')
       expect(status).toBe(false)
-      
       status = await update('testUser', 'test@gmail.com', 'address', '123 456')
       expect(status).toBe(false)
-      
       status = await update('testUser', 'test@gmail.com', 'address', '1A2 B3C')
       expect(status).toBe(false)
     })
-    
     it('should not update a user that does not exist', async () => {
       // In a perfect world, the testing db used in CI will not have this
-      let status = await update('non-existent-username', 'non-existent@gmail.com', 'non-existent-billing-address', 'non-existent-postal-code')
+      const status = await update('non-existent-username', 'non-existent@gmail.com', 'non-existent-billing-address', 'non-existent-postal-code')
       expect(status).toBe(false)
     })
   })
