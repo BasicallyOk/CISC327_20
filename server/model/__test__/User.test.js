@@ -197,10 +197,12 @@ describe('Register functionality', () => {
       await User.findOneAndRemove({ email: 'testregister@gmail.com' })
     })
   })
+})
 
-  // testing update user profile for invalid inputs
-  describe('Input validation', () => {
-    // testing for empty parameters
+// testing update user profile for invalid inputs
+describe('Update functionality', () => {
+  describe('checks for empty parameters', () => {
+  // testing for empty parameters
     it('should not accept empty username, email, billingAddress and postalCode', async () => {
       // all empty
       let status
@@ -238,18 +240,34 @@ describe('Register functionality', () => {
       status = await update('', 'test@gmail.com', '', 'A1B 2C3')
       expect(status).toBe(false)
     })
-    // testing for invalid username
-    it('should not accept an invalid username format', async () => {
+  })
+  describe('checks to see if username is valid', () => {
+    it('should not accept an invalid username format R1-5, R1-6, R1-8, R1-9', async () => {
       let status
-      status = await update('a', 'test@gmail.com', 'address', 'A1B 2C3')
+      // fails because username is empty
+      status = await update('', 'test@gmail.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-      status = await update('ab', 'test@gmail.com', 'address', 'A1B 2C3')
+
+      // fails because username is less than 2 characters
+      status = await update('u', 'test@gmail.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
-      status = await update('abcdefghijklmnopqrst+x', 'test@gmail.com', 'address', 'A1B 2C3')
+
+      // fails because username is greater than 20 characters
+      status = await update('abcdefghijklmnopqrstu', 'test@gmail.com', 'address', 'A1B 2C3')
+      expect(status).toBe(false)
+
+      // fails because space is in the prefix
+      status = await update(' username', 'test@gmail.com', 'address', 'A1B 2C3')
+      expect(status).toBe(false)
+
+      // fails because space is in the suffix
+      status = await update('username ', 'test@gmail.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
     })
+  })
+  describe('checks for valid email', () => {
     // testing for invalid email
-    it('should not accept an invalid email format', async () => {
+    it('should not accept an invalid email format R1-1, R1-3', async () => {
       let status
       status = await update('testUser', 'notanemail', 'address', 'A1B 2C3')
       expect(status).toBe(false)
@@ -270,22 +288,32 @@ describe('Register functionality', () => {
       status = await update('testUser', 'QA[icon]CHOCOLATE[icon]@test.com', 'address', 'A1B 2C3')
       expect(status).toBe(false)
     })
+  })
+  describe('checks for valid postalCode', () => {
     // testing for invalid postalCode
-    it('should not accept an invalid postalCode format', async () => {
+    it('should not accept an invalid postalCode format R3-2, R3-3', async () => {
       let status
+      // fails because too long
       status = await update('testUser', 'test@gmail.com', 'address', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
       expect(status).toBe(false)
-      status = await update('testUser', 'test@gmail.com', 'address', '0123456789')
+      // fails because all numbers
+      status = await update('testUser', 'test@gmail.com', 'address', '012 345')
       expect(status).toBe(false)
-      status = await update('testUser', 'test@gmail.com', 'address', '!@#$%^&*()-_=+[]{};:,<>./?')
+      // fails because symbols
+      status = await update('testUser', 'test@gmail.com', 'address', '!@# $%^')
       expect(status).toBe(false)
+      // fails because all letters
       status = await update('testUser', 'test@gmail.com', 'address', 'ABC DEF')
       expect(status).toBe(false)
-      status = await update('testUser', 'test@gmail.com', 'address', '123 456')
+      // fails because lowercase letters
+      status = await update('testUser', 'test@gmail.com', 'address', 'a1b 2c3')
       expect(status).toBe(false)
+      // fails because wrong format
       status = await update('testUser', 'test@gmail.com', 'address', '1A2 B3C')
       expect(status).toBe(false)
     })
+  })
+  describe('checks for if user exists', () => {
     it('should not update a user that does not exist', async () => {
       // In a perfect world, the testing db used in CI will not have this
       const status = await update('non-existent-username', 'non-existent@gmail.com', 'non-existent-billing-address', 'non-existent-postal-code')

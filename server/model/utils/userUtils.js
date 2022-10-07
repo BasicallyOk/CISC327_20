@@ -35,6 +35,9 @@ const validateEmail = (email) => {
  * @returns
  */
 const validateBillingAddress = (billingAddress) => {
+  if (billingAddress.split(' ').length !== 3) {
+    return false
+  }
   return String(billingAddress)
     .match(/^\d+ [ ]? [a-zA-Z]+ [ ]? [a-zA-Z]+$/i)
 }
@@ -44,8 +47,10 @@ const validateBillingAddress = (billingAddress) => {
  * @returns
  */
 const validatePostalCode = (postalCode) => {
+  if (postalCode.split(' ').length !== 2) {
+    return false
+  }
   return String(postalCode)
-    .toUpperCase()
     .match(/^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] [ ]?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i)
 }
 /**
@@ -175,36 +180,27 @@ async function register (email, password, username) {
 async function update (username, email, billingAddress, postalCode) {
   // Validate if input is empty
   if (username === '' || email === '' || billingAddress === '' || postalCode === '') {
-    return null
+    return false
   }
   // Check if username is valid
-  if (username.length <= 2 || username.length >= 20) {
-    return null
-  }
   if (!validateUserName(username)) {
-    return null
+    return false
   }
   // Check if local part is longer than 64. Regex cant test this
-  if (email.split('@')[0].length > 64) {
-    return null
-  }
   if (!validateEmail(email)) {
-    return null
+    return false
   }
   // Ckeck if billingAddress is valid
-  if (billingAddress.split(' ').length !== 3) {
-    return null
-  }
-  if (!validateBillingAddress) {
-    return null
+  if (!validateBillingAddress(billingAddress)) {
+    return false
   }
   // Check if postalCode is valid
-  if (postalCode.split(' ').length !== 2) {
-    return null
+  if (!validatePostalCode(postalCode)) {
+    return false
   }
-  if (!validatePostalCode) {
-    return null
-  }
+  // updates user to database
+  await User.updateOne()
+  return true
 }
 
 module.exports = { login, register, update }
