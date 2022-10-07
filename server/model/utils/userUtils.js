@@ -90,7 +90,7 @@ async function login (email, password) {
     return null
   }
 
-  let user = await User.findOne({ email }) 
+  const user = await User.findOne({ email })
   if (user) {
     if (user.password === password) {
       return user
@@ -128,19 +128,19 @@ async function register (email, password, username) {
     return false
   }
   // looks through the database if the email has been used then return false
-  await User.findOne({ email })
+  const user = await User.findOne({ email })
   if (user) {
     return false
   }
 
-  //create the user 
-  const user = new User({
+  // create the user
+  const newUser = new User({
     email,
     password,
     username
   })
-  //save user to database
-  await user.save()
+  // save user to database
+  await newUser.save()
   return true
 }
 module.exports = { login, register }
