@@ -2,24 +2,26 @@ const User = require('../User')
 const { login, register } = require('../utils/userUtils')
 const { connectDb, disconnectDb } = require('../../database')
 
+beforeAll(() => {
+  connectDb()
+})
+
+afterAll(() => {
+  disconnectDb()
+})
 describe('Login functionality', () => {
   // Set up testing
   beforeAll(() => {
-    connectDb()
     // Register the test@gmail.com account
     const testUser = new User({
       email: 'test@gmail.com',
       username: 'testUser',
       password: 'password',
-      balance: 100,
-      billingAddress: 'address',
-      postalCode: 'postalCode'
     })
     testUser.save()
   })
   afterAll(async () => {
     await User.findOneAndRemove({ email: 'test@gmail.com' })
-    disconnectDb()
   })
 
   describe('Input validation', () => {
@@ -87,12 +89,6 @@ describe('Login functionality', () => {
 })
 
 describe('Register functionality', () => {
-  beforeAll(() => {
-    connectDb()
-  })
-  afterAll(async () => {
-    disconnectDb()
-  })
   // it() is the main task, what it should be doing
   it('should return true if registration is successful (R1-10)', () => {
     register('test@gmail.com', 'P@ssword', 'testregister').then(status => {
@@ -181,8 +177,6 @@ describe('Register functionality', () => {
       register('testregister@gmail.com', 'P@ssword', 'testregister ').then(status => {
         expect(status).toBe(false)
       })
-      // fails because email is already been used
-      connectDb()
       // Register the test@gmail.com account
       const existingUser = new User({
         email: 'testregister@gmail.com',
