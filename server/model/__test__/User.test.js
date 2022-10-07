@@ -1,9 +1,8 @@
 const User = require('../User')
 const { login, register } = require('../utils/userUtils')
-const { connectDb, disconnectDb } = require('../../database')
-const { default: mongoose } = require('mongoose')
+const { connectDb } = require('../../database')
 
-beforeAll(async() => {
+beforeAll(async () => {
   await connectDb()
 })
 

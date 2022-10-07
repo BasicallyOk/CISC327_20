@@ -50,7 +50,7 @@ const validatePassword = (password) => {
 
 /**
  * Validate Username for registration
- * @param {String} username 
+ * @param {String} username
  * @returns {Boolean} true if it passes and false if it doesn't
  */
 const validateUsername = (username) => {
