@@ -1,9 +1,13 @@
 const User = require('../User')
 const { login, register } = require('../utils/userUtils')
-const { connectDb } = require('../../database')
+const { connectDb, disconnectDb } = require('../../database')
 
-beforeAll(async () => {
-  await connectDb()
+beforeAll(() => {
+  connectDb()
+})
+
+afterAll(async () => {
+  await disconnectDb()
 })
 
 describe('Login functionality', () => {

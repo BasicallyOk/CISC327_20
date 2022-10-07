@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint . --fix",
     "lint-check": "./node_modules/.bin/eslint .",
-    "test": "TZ=EST jest"
+    "test": "TZ=EST jest --detectOpenHandles"
   },
   "devDependencies": {
     "eslint": "^8.23.1",
