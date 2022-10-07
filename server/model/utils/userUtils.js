@@ -48,6 +48,11 @@ const validatePassword = (password) => {
   return true
 }
 
+/**
+ * Validate Username for registration
+ * @param {String} username 
+ * @returns {Boolean} true if it passes and false if it doesn't
+ */
 const validateUsername = (username) => {
   // return false if username is less than 2 characters and greater than 20
   if (username.length < 2 && username.length > 20) {

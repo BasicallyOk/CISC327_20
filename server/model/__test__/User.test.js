@@ -1,14 +1,12 @@
 const User = require('../User')
 const { login, register } = require('../utils/userUtils')
 const { connectDb, disconnectDb } = require('../../database')
+const { default: mongoose } = require('mongoose')
 
-beforeAll(() => {
-  connectDb()
+beforeAll(async() => {
+  await connectDb()
 })
 
-afterAll(() => {
-  disconnectDb()
-})
 describe('Login functionality', () => {
   // Set up testing
   beforeAll(() => {
