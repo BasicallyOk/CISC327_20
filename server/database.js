@@ -4,15 +4,11 @@ const mongoose = require('mongoose')
 const dbURI = 'mongodb+srv://test:test@cluster0.bt5g3.mongodb.net/QBNB?retryWrites=true&w=majority'
 
 const connectDb = () => {
-  mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }).then(mongoose => {
-    return mongoose
-  })
+  mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 }
 
-const disconnectDb = () => {
-  mongoose.connection.close().then(mongoose => {
-    return mongoose
-  })
+const disconnectDb = async () => {
+  await mongoose.connection.close()
 }
 
 module.exports = { connectDb, disconnectDb }
