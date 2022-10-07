@@ -1,2 +1,2 @@
 # CISC327_20
-L BOZO LOL
+Javascript style standard: [Eslint Standard](https://github.com/standard/eslint-config-standard)
