@@ -305,7 +305,7 @@ describe('Register functionality', () => {
       
     })
     // testing for invalid postalCode
-    it('should not accept an invalid username format', async () => {
+    it('should not accept an invalid postalCode format', async () => {
       let status
       status = await update('testUser', 'test@gmail.com', 'address', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
       expect(status).toBe(false)
