@@ -55,7 +55,7 @@ const validatePassword = (password) => {
  */
 const validateUsername = (username) => {
   // return false if username is less than 2 characters and greater than 20
-  if (username.length < 2 && username.length > 20) {
+  if (username.length < 2 || username.length > 20) {
     return false
   }
 
@@ -79,6 +79,10 @@ const validateUsername = (username) => {
  */
 async function login (email, password) {
   if (password === '') {
+    return null
+  }
+
+  if (!validatePassword(password)) {
     return null
   }
 
