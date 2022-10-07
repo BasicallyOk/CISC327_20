@@ -16,7 +16,7 @@ describe('Login functionality', () => {
     const testUser = new User({
       email: 'test@gmail.com',
       username: 'testUser',
-      password: 'password',
+      password: 'password'
     })
     testUser.save()
   })
