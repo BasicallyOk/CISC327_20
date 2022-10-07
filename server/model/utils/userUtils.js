@@ -44,29 +44,4 @@ async function login (email, password) {
   })
 }
 
-async function listing (id, title, description, price, last_modified_date, owner_id) {
-  // Validate if input is empty
-  if (email === '' || password === '') {
-    return null
-  }
-  // Check if local part is longer than 64. Regex cant test this
-  if (email.split('@')[0].length > 64) {
-    return null
-  }
-  if (!validateEmail(email)) {
-    return null
-  }
-
-  await User.findOne({ email }).then(user => {
-    if (user) {
-      if (user.password === password) {
-        return user
-      }
-    } else {
-      // User does not exist
-      return null
-    }
-  })
-}
-
 module.exports = { login }
