@@ -90,16 +90,17 @@ async function login (email, password) {
     return null
   }
 
-  await User.findOne({ email }).then(user => {
-    if (user) {
-      if (user.password === password) {
-        return user
-      }
-    } else {
-      // User does not exist
+  let user = await User.findOne({ email }) 
+  if (user) {
+    if (user.password === password) {
+      return user
+    } else { // Wrong password
       return null
     }
-  })
+  } else {
+    // User does not exist
+    return null
+  }
 }
 
 /**
@@ -127,12 +128,19 @@ async function register (email, password, username) {
     return false
   }
   // looks through the database if the email has been used then return false
-  await User.findOne({ email }).then(user => {
-    if (user) {
-      return false
-    }
-  })
+  await User.findOne({ email })
+  if (user) {
+    return false
+  }
 
+  //create the user 
+  const user = new User({
+    email,
+    password,
+    username
+  })
+  //save user to database
+  await user.save()
   return true
 }
 module.exports = { login, register }
