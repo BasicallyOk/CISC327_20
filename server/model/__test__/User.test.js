@@ -198,3 +198,13 @@ describe('Register functionality', () => {
     })
   })
 })
+
+
+describe('Register functionality', () => {
+  it('should return false if password does not meet requirement (R1-4)', async () => {
+    let status
+    // fails because of length not being minimum 6
+    status = await register('testfail@gmail.com', 'P@ss', 'testfail')
+    expect(status).toBe(false)
+  })
+})
