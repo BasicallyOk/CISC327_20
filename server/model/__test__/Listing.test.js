@@ -19,11 +19,7 @@ describe('Listing functionality', () => {
       username: 'ammarTest',
       password: 'P@ssword'
     })
-    await testUser.save()
-    id = await User.findOne({
-      email: 'ammar@gmail.com',
-      username: 'ammarTest'
-    })._id
+    id = (await testUser.save()).id
   })
 
   afterAll(async () => {
@@ -32,6 +28,7 @@ describe('Listing functionality', () => {
       username: 'ammarTest',
       password: 'P@ssword'
     })
+    await Listing.collection.drop()
   })
   describe('Input validation', () => {
     it('The title of the product has to be alphanumeric-only, and space allowed only if it is not as prefix and suffix. R4-1', async () => {
@@ -47,7 +44,7 @@ describe('Listing functionality', () => {
     })
     it('The title of the product is no longer than 80 characters. R4-2', async () => {
       let listing
-      listing = await createListing('test title', 'This is a test description that should work as it is more than 20 chars', 5000, '2022-03-25', id)
+      listing = await createListing('test title 2', 'This is a test description that should work as it is more than 20 chars', 5000, '2022-03-25', id)
       expect(listing).toBe(true)
       listing = await createListing('this title should not work as it is more than 80 characters long test test test test', 'This is a test description that should work as it is more than 20 chars', 5000, '2022-03-25', id)
       expect(listing).toBe(false)
@@ -56,7 +53,7 @@ describe('Listing functionality', () => {
     })
     it('The description of the product can be arbitrary characters, with a minimum length of 20 characters and a maximum of 2000 characters. R4-3', async () => {
       let listing
-      listing = await createListing('test title', 'This is a test description that should work as it is more than 20 chars', 5000, '2022-03-25', id)
+      listing = await createListing('test title 3', 'This is a test description that should work as it is more than 20 chars', 5000, '2022-03-25', id)
       expect(listing).toBe(true)
       listing = await createListing('test title', 'test', 5000, '2022-03-25', id)
       expect(listing).toBe(false)
@@ -84,25 +81,25 @@ describe('Listing functionality', () => {
       listing = await createListing('test title', 'This is a test description that should work as it is more than 20 chars', 5000, '2027-03-25', id)
       expect(listing).toBe(false)
     })
-    it('owner_email cannot be empty. The owner of the corresponding product must exist in the database. R4-7', async () => {
-      // Register the owner_id
-      const testListing = new Listing({
-        title: 'test title',
-        description: 'This is a test description that should work as it is more than 20 chars',
-        price: 5000,
-        last_modified_date: '2022-03-25',
-        owner_id: id
+    it('owner_id cannot be empty. The owner of the corresponding product must exist in the database. R4-7', async () => {
+      const testUser = new User({
+        email: 'shouldnotexist@gmail.com',
+        username: 'shouldnotexist',
+        password: 'P@ssword'
       })
-      await testListing.save()
-      const listing = await createListing('test title', 'This is a test description that should work as it is more than 20 chars', 5000, '2022-03-25', id)
-      expect(listing).not.toBe(false)
-      expect(User.email).toEqual('test@gmail.com')
-      expect(User.username).toEqual('testRegister')
-      await User.findOneAndRemove({ email: 'test@gmail.com' })
+      let nonExistentId = (await testUser.save()).id
+      // Make sure no user with this id exists
+      await User.findByIdAndDelete(nonExistentId)
+
+      let listing = await createListing('test title', 'This is a test description that should work as it is more than 20 chars', 5000, '2022-03-25', '')
+      expect(listing).toBe(false)
+      // 0 should not be a real user id
+      listing = await createListing('test title', 'This is a test description that should work as it is more than 20 chars', 5000, '2022-03-25', nonExistentId)
+      expect(listing).toBe(false)
     })
     it('should create the listing correctly, and should fail if a listing of the same title is created again R4-8', async () => {
       // Register the test@gmail.com account
-      let status = await createListing('test title', 'This is a test description that should work as it is more than 20 chars', 5000, '2022-03-25', id)
+      let status = await createListing('test title 4', 'This is a test description that should work as it is more than 20 chars', 5000, '2022-03-25', id)
       expect(status).toBe(true)
       const listing = Listing.findOne({ title: 'test title', owner_id: id })
       expect(listing).not.toBeUndefined()
@@ -124,6 +121,25 @@ R4-3: The description of the product can be arbitrary characters, with a minimum
 R4-4: Description has to be longer than the product's title.
 */
 describe('Update functionality', () => {
+  let id
+
+  beforeAll(async () => {
+    const testUser = new User({
+      email: 'ammar@gmail.com',
+      username: 'ammarTest',
+      password: 'P@ssword'
+    })
+    id = (await testUser.save()).id
+  })
+
+  afterAll(async () => {
+    await User.findOneAndRemove({
+      email: 'ammar@gmail.com',
+      username: 'ammarTest',
+      password: 'P@ssword'
+    })
+    await Listing.collection.drop()
+  })
   it('should not accept empty title description price', async () => {
     // all empty
     let status
@@ -153,13 +169,13 @@ describe('Update functionality', () => {
   })
   it('should not accept price decrease R5-2', async () => {
     let status
-    status = await createListing('temp title', 'abcdefghijklmnopqrstuvwxyz', 100, '2021-01-03', 'id')
-    await status.save
-    status = await updateListing('title', 'abcdefghijklmnopqrstuvwxyz', 99)
+    status = await createListing('temp title', 'abcdefghijklmnopqrstuvwxyz', 100, '2021-01-03', id)
+    expect(status).toBe(true) // Listing successfully created
+    status = await updateListing('temp title', 'abcdefghijklmnopqrstuvwxyz', 99)
     expect(status).toBe(false)
   })
   it('should change last modified date R5-3', async () => {
-    const status = await updateListing('title', 'abcdefghijklmnopqrstuvwxyz', 100)
+    const status = await updateListing('temp title', 'abcdefghijklmnopqrstuvwxyz', 100)
     expect(status).toBe(true)
   })
   it('should not accept title to have non-alphanumeric characters R4-1', async () => {
@@ -172,16 +188,20 @@ describe('Update functionality', () => {
     expect(status).toBe(false)
     status = await updateListing('title ', 'abcdefghijklmnopqrstuvwxyz', 100)
     expect(status).toBe(false)
-    status = await updateListing('title title', 'abcdefghijklmnopqrstuvwxyz', 100)
+    status = await updateListing('temp title', 'abcdefghijklmnopqrstuvwxyz', 100)
     expect(status).toBe(true)
   })
   it('should not accept title out of range R4-2', async () => {
     const status = await updateListing('abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz', 100)
     expect(status).toBe(false)
   })
-  it('should not accept description to have non-arbitary characters R4-3', async () => {
-    const status = await updateListing('title', 'dsaf asasdf123 445645690 091892-=_+{}[],<.>/?', 100)
-    expect(status).toBe(true)
+  it('should not accept description under 20 characters or over 2000 characters R4-3', async () => {
+    let status = await updateListing('temp title', 'too short', 100) // shorter than title
+    expect(status).toBe(false)
+    status = await updateListing('temp title', 'still too short', 100) // shorter than 20
+    expect(status).toBe(false)
+    status = await updateListing('temp title', Array(2002).join('a'), 100)
+    expect(status).toBe(false)
   })
   it('should not accept description oustide of range R4-3', async () => {
     let status
