@@ -8,13 +8,13 @@ const ReviewSchema = new mongoose.Schema({
   },
 
   // Required entity
-  listing_id: {
+  listingId: {
     type: Number,
     required: true
   },
 
   // Required entity
-  review_text: {
+  reviewText: {
     type: String,
     required: true
   },
