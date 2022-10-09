@@ -8,8 +8,7 @@ const ListingSchema = new mongoose.Schema({
   },
 
   address: {
-    type: String,
-    required: true
+    type: String
   },
   // Required entity
   description: {
@@ -22,20 +21,20 @@ const ListingSchema = new mongoose.Schema({
     required: true
   },
 
-  picture_url: {
+  pictureUrl: {
     type: String
   },
   // Required entity
-  owner_id: {
-    type: Number,
+  ownerId: {
+    type: mongoose.ObjectId,
     required: true
   },
 
-  review_score: {
+  reviewScore: {
     type: Number
   },
   // Required entity
-  last_modified_date: {
+  lastModifiedDate: {
     type: Number,
     required: true
   }
