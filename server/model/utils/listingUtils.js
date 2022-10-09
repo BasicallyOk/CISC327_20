@@ -1,7 +1,7 @@
 const Listing = require('../Listing')
 const User = require('../User')
 
-async function createListing (title, description, price, lastModifiedDate, ownerID) {
+async function createListing (title, description, price, lastModifiedDate, ownerId) {
   // Validate if input is empty
   const alphanumeric = /^[^\s!@#$%^&*)(':;][a-zA-Z0-9\s]*[^\s!@#$%^&*)(':;]$/gm
   const dateBefore = new Date('2025-01-02')
@@ -25,8 +25,11 @@ async function createListing (title, description, price, lastModifiedDate, owner
   if ((lastModifiedDate < dateAfter || lastModifiedDate > dateBefore)) {
     return false
   }
+  if (!ownerId) {
+    return false
+  }
 
-  const user = await User.findOne({ _id: ownerID })
+  const user = await User.findById(ownerId)
   if (user) {
     if (!(user.email)) {
       return false
@@ -34,7 +37,7 @@ async function createListing (title, description, price, lastModifiedDate, owner
   } else { // If user does not exist
     return false
   }
-  const listing = await Listing.findOne({ ownerID, title })
+  const listing = await Listing.findOne({ ownerId, title })
   if (listing) {
     return false
   }
@@ -44,7 +47,7 @@ async function createListing (title, description, price, lastModifiedDate, owner
     description,
     price,
     lastModifiedDate,
-    ownerID
+    ownerId
   })
   await newListing.save()
   return true
@@ -80,7 +83,7 @@ const validateDescription = (description, title) => {
   if (description.match(/^[.+]$/i)) {
     return false
   }
-  if (description.length < 20 || description.length > 20000) {
+  if (description.length < 20 || description.length > 2000) {
     return false
   }
   // R4-4
@@ -127,20 +130,19 @@ async function updateListing (title, description, price) {
   if (!validatePrice(price)) {
     return false
   }
-  if (Listing.price >= price) {
+  const listing = await Listing.findOne({ title, description })
+  if (listing.price > price) {
     return false
   }
-  const date = new Date()
-  const currentDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-  Listing.lastModifiedDate = currentDate
-  if (!validateDate(Listing.lastModifiedDate)) {
-    return false
-  }
-  if (Listing.lastModifiedDate !== currentDate) {
-    return false
-  }
-  // updates user to database
-  await Listing.updateOne()
+
+  // Update Price
+  listing.price = price
+
+  const currentDate = Date.now()
+  listing.lastModifiedDate = currentDate
+
+  listing.save()
+
   return true
 }
 
