@@ -138,9 +138,13 @@ async function updateListing (title, description, price) {
   // Update Price
   listing.price = price
 
+  // Update last modified date
   const currentDate = Date.now()
-  listing.lastModifiedDate = currentDate
+  if (!validateDate(currentDate)) { // To specification, weird condition imo
+    return false
+  }
 
+  listing.lastModifiedDate = currentDate
   listing.save()
 
   return true
