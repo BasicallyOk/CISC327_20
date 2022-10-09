@@ -1,6 +1,15 @@
 const User = require('../User')
 
 /**
+ * Validate username using R3-4
+ * @param {String} username
+ * @returns
+ */
+const validateUserName = (username) => {
+  return String(username)
+    .match(/^[a-zA-Z0-9][a-zA-Z0-9 ]+[a-zA-Z0-9]$/i)
+}
+/**
  * Validate email using the rfc5322 standard
  * @param {String} email
  * @returns
@@ -20,7 +29,30 @@ const validateEmail = (email) => {
       /^[-a-z0-9~!$%^&*=+}{'?]+(\.[-a-z0-9~!$%^&*=+}{'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i
     )
 }
-
+/**
+ * Validate billingAddress using number, street name, extension
+ * @param {String} billingAddress
+ * @returns
+ */
+const validateBillingAddress = (billingAddress) => {
+  if (billingAddress.split(' ').length !== 3) {
+    return false
+  }
+  return String(billingAddress)
+    .match(/^\d+ [ ]? [a-zA-Z]+ [ ]? [a-zA-Z]+$/i)
+}
+/**
+ * Validate postalCode using R3-2 and R3-3
+ * @param {String} postalCode
+ * @returns
+ */
+const validatePostalCode = (postalCode) => {
+  if (postalCode.split(' ').length !== 2) {
+    return false
+  }
+  return String(postalCode)
+    .match(/^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] [ ]?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i)
+}
 /**
  * Validates password for registration
  * @param {String} password
@@ -143,4 +175,32 @@ async function register (email, password, username) {
   await newUser.save()
   return true
 }
-module.exports = { login, register }
+
+// write user update pofile function async
+async function update (username, email, billingAddress, postalCode) {
+  // Validate if input is empty
+  if (username === '' || email === '' || billingAddress === '' || postalCode === '') {
+    return false
+  }
+  // Check if username is valid
+  if (!validateUserName(username)) {
+    return false
+  }
+  // Check if local part is longer than 64. Regex cant test this
+  if (!validateEmail(email)) {
+    return false
+  }
+  // Ckeck if billingAddress is valid
+  if (!validateBillingAddress(billingAddress)) {
+    return false
+  }
+  // Check if postalCode is valid
+  if (!validatePostalCode(postalCode)) {
+    return false
+  }
+  // updates user to database
+  await User.updateOne()
+  return true
+}
+
+module.exports = { login, register, update }
