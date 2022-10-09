@@ -87,7 +87,7 @@ describe('Listing functionality', () => {
         username: 'shouldnotexist',
         password: 'P@ssword'
       })
-      let nonExistentId = (await testUser.save()).id
+      const nonExistentId = (await testUser.save()).id
       // Make sure no user with this id exists
       await User.findByIdAndDelete(nonExistentId)
 
