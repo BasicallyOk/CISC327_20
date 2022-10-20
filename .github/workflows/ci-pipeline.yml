@@ -15,20 +15,20 @@ jobs:
       working-directory: client
     - run: npm run build
       working-directory: client
-  test-client:
-    needs: build-client
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '17'
-        cache: 'npm'
-        cache-dependency-path: 'client/package-lock.json'
-    - run: npm install
-      working-directory: client
-    - run: npm run test
-      working-directory: client
+  # test-client:
+  #   needs: build-client
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - uses: actions/setup-node@v3
+  #     with:
+  #       node-version: '17'
+  #       cache: 'npm'
+  #       cache-dependency-path: 'client/package-lock.json'
+  #   - run: npm install
+  #     working-directory: client
+  #   - run: npm run test
+  #     working-directory: client
   test-server:
     runs-on: ubuntu-latest
     steps:
