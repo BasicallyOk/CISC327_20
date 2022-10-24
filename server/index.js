@@ -4,6 +4,7 @@ const { connectDb } = require('./database')
 
 // Import the routers
 const usersRouter = require('./routes/user')
+const listingRouter = require('./routes/listing')
 
 const port = 5000 // Server will listen to port 5000
 const app = express()
@@ -30,6 +31,7 @@ async function main () {
 
   // Set up express routers
   app.use('/user', usersRouter)
+  app.use('/listing', listingRouter)
 
   // Set up server listener on port
   app.listen(port, () => {
