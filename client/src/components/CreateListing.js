@@ -10,8 +10,8 @@ function CreateListing (props) {
 	const [title, setTitle] = useState('')
 	const [description, setDescription] = useState('')
 	const [price, setPrice] = useState('')
-    const [ownerId, setOwnerId] = useState('')
     const [lastModifiedDate, setLastModifiedDate] = useState('')
+    const [ownerId, setOwnerId] = useState('')
 	// const [disableSubmit, setDisableSubmit] = useState(true)
 
 	/**
@@ -22,8 +22,8 @@ function CreateListing (props) {
 			title,
 			description,
 			price,
-            ownerId,
-            lastModifiedDate
+            lastModifiedDate,
+            ownerId
 		}).then(res => {
 			console.log(res.data.success)
 		}).catch(e => {
@@ -43,8 +43,8 @@ function CreateListing (props) {
 				<input
 					type = "text"
 					data-testid = 'titleBox'
-					value = {email}
-					onChange = {(event) => setEmail(event.target.value)}
+					value = {title}
+					onChange = {(event) => setTitle(event.target.value)}
 				/>
 			</div>
 
@@ -53,8 +53,8 @@ function CreateListing (props) {
 				<input
 					type = "text"
 					data-testid = 'descriptionBox'
-					value = {username}
-					onChange = {(event) => setUsername(event.target.value)}
+					value = {description}
+					onChange = {(event) => setDescription(event.target.value)}
 				/>
 			</div>
 
@@ -63,18 +63,8 @@ function CreateListing (props) {
 				<input
 					type = "text"
 					data-testid = 'priceBox'
-					value = {password}
-					onChange = {(event) => setPassword(event.target.value)}
-				/>
-			</div>
-
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-				<p>Owner ID</p>
-				<input
-					type = "text"
-					data-testid = 'ownerIdBox'
-					value = {password}
-					onChange = {(event) => setPassword(event.target.value)}
+					value = {price}
+					onChange = {(event) => setPrice(event.target.value)}
 				/>
 			</div>
 
@@ -83,8 +73,18 @@ function CreateListing (props) {
 				<input
 					type = "text"
 					data-testid = 'lastModifiedDateBox'
-					value = {password}
-					onChange = {(event) => setPassword(event.target.value)}
+					value = {lastModifiedDate}
+					onChange = {(event) => setLastModifiedDate(event.target.value)}
+				/>
+			</div>
+
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+				<p>Owner ID</p>
+				<input
+					type = "text"
+					data-testid = 'ownerIdBox'
+					value = {ownerId}
+					onChange = {(event) => setOwnerId(event.target.value)}
 				/>
 			</div>
 
@@ -94,7 +94,7 @@ function CreateListing (props) {
 			>
 				Create Listing
 			</button>
-			<Link to={'..'}>Sign In</Link>
+			<Link to={'..'}>Update Listing</Link>
 		</div>
 	)
 }
