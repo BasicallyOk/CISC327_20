@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express.Router()
+const router = express.Router() // set up express router
 
 const listingUtils = require('../model/utils/listingUtils')
 
