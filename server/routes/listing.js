@@ -19,7 +19,7 @@ router.post('/update', async (req, res) => {
   if (status) {
     res.status(200).json({ success: `Successfully updated ${req.body.title}` })
   } else {
-    res.status(400).json({ error: `Unable to update ${req.body.title}` })
+    res.status(400).json({ error: `Unable to updaste ${req.body.title}` })
   }
 })
 
