@@ -9,7 +9,7 @@ import axios from 'axios'
 function CreateListing (props) {
 	const [title, setTitle] = useState('')
 	const [description, setDescription] = useState('')
-	const [price, setPrice] = useState('')
+    const [price, setPrice] = useState('')
     const [lastModifiedDate, setLastModifiedDate] = useState('')
     const [ownerId, setOwnerId] = useState('')
 	// const [disableSubmit, setDisableSubmit] = useState(true)
