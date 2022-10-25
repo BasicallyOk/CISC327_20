@@ -18,7 +18,7 @@ router.post('/login', async (req, res) => {
   console.log(req)
   const user = await userUtils.login(req.body.email, req.body.password)
   if (user) {
-    res.status(200).json({ 
+    res.status(200).json({
       success: `Sucessfully login' ${req.body.email}`,
       user
     })
