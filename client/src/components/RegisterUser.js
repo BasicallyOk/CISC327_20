@@ -34,6 +34,7 @@ function RegisterUser (props) {
 			alignItems: 'center'
 		}}>
 			<p>Register</p>
+			<p>After sucessful register, please login</p>
 			<div style={{ display: 'flex', flexDirection: 'row' }}>
 				<p>Email</p>
 				<input
@@ -70,7 +71,7 @@ function RegisterUser (props) {
 			>
 				Register
 			</button>
-			<Link to={'..'}>Sign In</Link>
+			<Link to={'/login'}>Sign In</Link>
 		</div>
 	)
 }
