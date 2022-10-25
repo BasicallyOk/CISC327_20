@@ -9,9 +9,9 @@ import axios from 'axios'
 function CreateListing (props) {
 	const [title, setTitle] = useState('')
 	const [description, setDescription] = useState('')
-    const [price, setPrice] = useState('')
-    const [lastModifiedDate, setLastModifiedDate] = useState('')
-    const [ownerId, setOwnerId] = useState('')
+	const [price, setPrice] = useState('')
+	const [lastModifiedDate, setLastModifiedDate] = useState('')
+	const [ownerId, setOwnerId] = useState('')
 	// const [disableSubmit, setDisableSubmit] = useState(true)
 
 	/**
@@ -22,8 +22,8 @@ function CreateListing (props) {
 			title,
 			description,
 			price,
-            lastModifiedDate,
-            ownerId
+			lastModifiedDate,
+			ownerId
 		}).then(res => {
 			console.log(res.data.success)
 		}).catch(e => {
@@ -68,7 +68,7 @@ function CreateListing (props) {
 				/>
 			</div>
 
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
+			<div style={{ display: 'flex', flexDirection: 'row' }}>
 				<p>Last Modified Date</p>
 				<input
 					type = "text"
@@ -78,7 +78,7 @@ function CreateListing (props) {
 				/>
 			</div>
 
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
+			<div style={{ display: 'flex', flexDirection: 'row' }}>
 				<p>Owner ID</p>
 				<input
 					type = "text"
