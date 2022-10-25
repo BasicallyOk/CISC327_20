@@ -14,4 +14,17 @@ router.post('/register', async (req, res) => {
   }
 })
 
+router.post('/login', async (req, res) => {
+  console.log(req)
+  const user = await userUtils.login(req.body.email, req.body.password)
+  if (user) {
+    res.status(200).json({ 
+      success: `Sucessfully login' ${req.body.email}`,
+      user
+    })
+  } else {
+    res.status(400).json({ error: `Unable to login ${req.body.email}` })
+  }
+})
+
 module.exports = router
