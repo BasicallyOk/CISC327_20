@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import './App.css'
 import RegisterUser from './components/RegisterUser'
+import UpdateListing from './components/UpdateListing'
 import CreateListing from './components/CreateListing'
 
 import axios from 'axios'
@@ -20,6 +21,7 @@ function App () {
 				<Routes>
 					<Route path="/" element={<Main />} />
 					<Route path="/register" element={<RegisterUser />} />
+					<Route path="/updateListing" element={<UpdateListing />} />
 					<Route path="/create" element={<CreateListing />} />
 				</Routes>
 			</div>
@@ -32,6 +34,7 @@ function Main () {
 		<div>
 			<h4>QBNB</h4>
 			<Link to={'register'}>Register</Link>
+			<Link to={'updateListing'}>Update Listing</Link>
 			<Link to={'create'}>Create Listing</Link>
 			<button onClick={() => axios.get('http://localhost:5000/')}>Ping server</button>
 		</div>
