@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 
 function UserProfile (props) {
 	// if login sucessful take to profile page
@@ -7,6 +7,7 @@ function UserProfile (props) {
 		return (
 			<div>
 				<h1>UserProfile</h1>
+				<Link to='../updateListing'>updateListing</Link>
 			</div>
 		)
 	}
