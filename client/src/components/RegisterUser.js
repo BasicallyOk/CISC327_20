@@ -34,6 +34,7 @@ function RegisterUser (props) {
 			alignItems: 'center'
 		}}>
 			<p>Register</p>
+			<p>After sucessful register, please login</p>
 			<div style={{ display: 'flex', flexDirection: 'row' }}>
 				<p>Email</p>
 				<input
