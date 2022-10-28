@@ -7,10 +7,11 @@ import axios from 'axios'
  * @param {Object} props
  */
 function CreateListing (props) {
+	const date = new Date()
 	const [title, setTitle] = useState('')
 	const [description, setDescription] = useState('')
 	const [price, setPrice] = useState('')
-	const [lastModifiedDate, setLastModifiedDate] = useState('')
+	const lastModifiedDate = date.getDate()
 	const [ownerId, setOwnerId] = useState('')
 	// const [disableSubmit, setDisableSubmit] = useState(true)
 
@@ -65,16 +66,6 @@ function CreateListing (props) {
 					data-testid = 'priceBox'
 					value = {price}
 					onChange = {(event) => setPrice(event.target.value)}
-				/>
-			</div>
-
-			<div style={{ display: 'flex', flexDirection: 'row' }}>
-				<p>Last Modified Date</p>
-				<input
-					type = "text"
-					data-testid = 'lastModifiedDateBox'
-					value = {lastModifiedDate}
-					onChange = {(event) => setLastModifiedDate(event.target.value)}
 				/>
 			</div>
 
