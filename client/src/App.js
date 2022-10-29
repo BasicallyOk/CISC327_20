@@ -36,12 +36,14 @@ function App () {
 
 function Main () {
 	return (
-		<div>
+		<div style={{
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center'
+		}}>
 			<h4>QBNB</h4>
 			<Link to={'register'}>Register</Link>
 			<Link to={'login'}>Login</Link>
-			<Link to={'updateListing'}>Update Listing</Link>
-			<Link to={'create'}>Create Listing</Link>
 			<button onClick={() => axios.get('http://localhost:5000/')}>Ping server</button>
 		</div>
 	)
