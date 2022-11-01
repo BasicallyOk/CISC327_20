@@ -39,7 +39,7 @@ function RegisterUser (props) {
 				<p>Email</p>
 				<input
 					type = "text"
-					data-testid = 'emailBox'
+					id = 'emailBox'
 					value = {email}
 					onChange = {(event) => setEmail(event.target.value)}
 				/>
@@ -49,7 +49,7 @@ function RegisterUser (props) {
 				<p>Username</p>
 				<input
 					type = "text"
-					data-testid = 'usernameBox'
+					id = 'usernameBox'
 					value = {username}
 					onChange = {(event) => setUsername(event.target.value)}
 				/>
@@ -59,14 +59,14 @@ function RegisterUser (props) {
 				<p>Password</p>
 				<input
 					type = "text"
-					data-testid = 'passwordBox'
+					id = 'passwordBox'
 					value = {password}
 					onChange = {(event) => setPassword(event.target.value)}
 				/>
 			</div>
 
 			<button
-				data-testid = 'submitButton'
+				id = 'submitButton'
 				onClick = {handleSubmit}
 			>
 				Register

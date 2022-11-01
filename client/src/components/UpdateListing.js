@@ -30,7 +30,7 @@ function UpdateListing (props) {
 				<p>Title</p>
 				<input
 					type = "text"
-					data-testid = 'titleBox'
+					id = 'titleBox'
 					value = {title}
 					onChange = {(event) => setTitle(event.target.value)}
 				/>
@@ -40,7 +40,7 @@ function UpdateListing (props) {
 				<p>Descriptio</p>
 				<input
 					type = "text"
-					data-testid = 'descriptionBox'
+					id = 'descriptionBox'
 					value = {description}
 					onChange = {(event) => setDescription(event.target.value)}
 				/>
@@ -50,14 +50,14 @@ function UpdateListing (props) {
 				<p>Price</p>
 				<input
 					type = "text"
-					data-testid = 'priceBox'
+					id = 'priceBox'
 					value = {price}
 					onChange = {(event) => setPrice(event.target.value)}
 				/>
 			</div>
 
 			<button
-				data-testid = 'submitButton'
+				id = 'submitButton'
 				onClick = {handleSubmit}
 			>
 				Update
