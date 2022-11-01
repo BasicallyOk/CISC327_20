@@ -24,6 +24,7 @@ function LoginUser (props) {
 			props.setUser(res.data.user)
 		}).catch(e => {
 			console.log(e)
+			alert('Unable to login')
 		})
 	}
 
