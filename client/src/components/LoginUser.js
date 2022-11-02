@@ -9,6 +9,7 @@ import axios from 'axios'
 function LoginUser (props) {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [failed, setFailed] = useState(false)
 	// const [disableSubmit, setDisableSubmit] = useState(true)
 
 	/**
@@ -24,6 +25,7 @@ function LoginUser (props) {
 			props.setUser(res.data.user)
 		}).catch(e => {
 			console.log(e)
+			setFailed(true)
 		})
 	}
 
@@ -40,7 +42,7 @@ function LoginUser (props) {
 					<p>Email</p>
 					<input
 						type = "text"
-						data-testid = 'emailBox'
+						id = 'emailBox'
 						value = {email}
 						onChange = {(event) => setEmail(event.target.value)}
 					/>
@@ -50,18 +52,21 @@ function LoginUser (props) {
 					<p>Password</p>
 					<input
 						type = "text"
-						data-testid = 'passwordBox'
+						id = 'passwordBox'
 						value = {password}
 						onChange = {(event) => setPassword(event.target.value)}
 					/>
 				</div>
 
 				<button
-					data-testid = 'submitButton'
+					id = 'submitButton'
 					onClick = {handleSubmitToken}
 				>
 				Login
 				</button>
+
+				{failed ? <p id='failText'>Unable to login</p> : null}
+
 				<Link to={'/register'}>Register</Link>
 			</div>
 		)

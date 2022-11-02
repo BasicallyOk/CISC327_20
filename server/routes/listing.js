@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router() // set up express router
 
-const listingUtils = require('../model/utils/listingUtils')
+const listingUtils = require('../model/controller/listingUtils')
 
 router.get('/', async (req, res) => res.send('Listing route'))
 

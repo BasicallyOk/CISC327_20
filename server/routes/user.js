@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router() // set up express router
 
-const userUtils = require('../model/utils/userUtils')
+const userUtils = require('../model/controller/userUtils')
 
 router.get('/', async (req, res) => res.send('User route'))
 
@@ -15,7 +15,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-  console.log(req)
+  // console.log(req)
   const user = await userUtils.login(req.body.email, req.body.password)
   if (user) {
     res.status(200).json({
