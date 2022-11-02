@@ -1,5 +1,5 @@
 const User = require('../User')
-const { login, register, update } = require('../utils/userUtils')
+const { login, register, update } = require('../controller/userUtils')
 const { connectDb, disconnectDb } = require('../../database')
 
 beforeAll(() => {
