@@ -9,6 +9,7 @@ import axios from 'axios'
 function LoginUser (props) {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [failed, setFailed] = useState(false)
 	// const [disableSubmit, setDisableSubmit] = useState(true)
 
 	/**
@@ -24,7 +25,7 @@ function LoginUser (props) {
 			props.setUser(res.data.user)
 		}).catch(e => {
 			console.log(e)
-			alert('Unable to login')
+			setFailed(true)
 		})
 	}
 
@@ -63,6 +64,9 @@ function LoginUser (props) {
 				>
 				Login
 				</button>
+
+				{failed ? <p id='failText'>Unable to login</p> : null}
+
 				<Link to={'/register'}>Register</Link>
 			</div>
 		)
