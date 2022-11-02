@@ -13,6 +13,8 @@ import UpdateListing from './components/UpdateListing'
 
 import axios from 'axios'
 
+axios.defaults.baseURL = process.env.REACT_APP_API_URL
+
 function App () {
 	// token and setToken are the return values of the useState
 	const [user, setUser] = useState()
@@ -39,7 +41,7 @@ function Main () {
 			<Link to={'register'}>Register</Link>
 			<Link to={'login'}>Login</Link>
 			<Link to={'updateListing'}>Update Listing</Link>
-			<button onClick={() => axios.get('http://localhost:5000/')}>Ping server</button>
+			<button onClick={() => axios.get('/')}>Ping server</button>
 		</div>
 	)
 }
