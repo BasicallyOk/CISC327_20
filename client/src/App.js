@@ -13,7 +13,7 @@ import UpdateListing from './components/UpdateListing'
 
 import axios from 'axios'
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL
+axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL
 
 function App () {
 	// token and setToken are the return values of the useState
