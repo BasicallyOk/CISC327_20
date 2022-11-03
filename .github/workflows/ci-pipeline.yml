@@ -4,6 +4,8 @@ on: [push]
 jobs:
   build-client:
     runs-on: ubuntu-latest
+    env:
+      REACT_APP_API_BASE_URL: http://localhost:5000
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
@@ -31,6 +33,10 @@ jobs:
   #     working-directory: client
   test-server:
     runs-on: ubuntu-latest
+    env:
+      CLIENT_PORT: 3000
+      SERVER_PORT: 5000
+      DB_URI: mongodb+srv://test:test@cluster0.bt5g3.mongodb.net/QBNB?retryWrites=true&w=majority
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
