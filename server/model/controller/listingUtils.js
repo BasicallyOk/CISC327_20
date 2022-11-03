@@ -7,7 +7,7 @@ async function createListing (title, description, price, lastModifiedDate, owner
   const alphanumeric = /^[^\s!@#$%^&*)(':;][a-zA-Z0-9\s]*[^\s!@#$%^&*)(':;]$/gm
   const dateBefore = new Date('2025-01-02')
   const dateAfter = new Date('2021-01-02')
-  ownlastModifiedDate = new Date(lastModifiedDate)
+  lastModifiedDate = new Date(lastModifiedDate)
   if (!title.match(alphanumeric)) {
     return false
   }
