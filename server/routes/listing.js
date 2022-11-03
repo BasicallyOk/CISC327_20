@@ -6,7 +6,7 @@ const listingUtils = require('../model/controller/listingUtils')
 router.get('/', async (req, res) => res.send('Listing route'))
 
 router.post('/create', async (req, res) => {
-  const status = await listingUtils.createListing(req.body.title, req.body.description, req.body.price, req.body.lastModifiedDate, req.ownerID)
+  const status = await listingUtils.createListing(req.body.title, req.body.description, req.body.price, req.body.lastModifiedDate, req.body.ownerId)
   if (status) {
     res.status(200).json({ success: `Successfully created ${req.body.title}` })
   } else {

@@ -27,7 +27,7 @@ function App () {
 					<Route path='/profile' element={<UserProfile user={user}/>}/>
 					<Route path="/" element={<Main />} />
 					<Route path="/updateListing" element={<UpdateListing />} />
-					<Route path="/create" element={<CreateListing />} />
+					<Route path="/create" element={<CreateListing user ={user}/>} />
 				</Routes>
 			</div>
 		</Router>

@@ -7,12 +7,11 @@ import axios from 'axios'
  * @param {Object} props
  */
 function CreateListing (props) {
-	const date = new Date()
 	const [title, setTitle] = useState('')
 	const [description, setDescription] = useState('')
 	const [price, setPrice] = useState('')
-	const lastModifiedDate = date.getDate()
-	const [ownerId, setOwnerId] = useState('')
+	const lastModifiedDate = Date.now()
+	const ownerId = props.user._id// GET ID OF PERSON LOGGED IN
 	// const [disableSubmit, setDisableSubmit] = useState(true)
 
 	/**
@@ -29,6 +28,7 @@ function CreateListing (props) {
 			console.log(res.data.success)
 		}).catch(e => {
 			console.log(e.response.data.error)
+			alert('Unable to create listing')
 		})
 	}
 
@@ -69,22 +69,13 @@ function CreateListing (props) {
 				/>
 			</div>
 
-			<div style={{ display: 'flex', flexDirection: 'row' }}>
-				<p>Owner ID</p>
-				<input
-					type = "text"
-					data-testid = 'ownerIdBox'
-					value = {ownerId}
-					onChange = {(event) => setOwnerId(event.target.value)}
-				/>
-			</div>
-
 			<button
 				data-testid = 'submitButton'
 				onClick = {handleSubmit}
 			>
 				Create Listing
 			</button>
+			{props.user._id ? <p>{props.user._id}</p> : <p>Penis</p>}
 			<Link to={'..'}>Update Listing</Link>
 		</div>
 	)

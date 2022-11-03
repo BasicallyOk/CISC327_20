@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Listing = require('../Listing')
 const User = require('../User')
 
@@ -6,7 +7,7 @@ async function createListing (title, description, price, lastModifiedDate, owner
   const alphanumeric = /^[^\s!@#$%^&*)(':;][a-zA-Z0-9\s]*[^\s!@#$%^&*)(':;]$/gm
   const dateBefore = new Date('2025-01-02')
   const dateAfter = new Date('2021-01-02')
-  lastModifiedDate = new Date(lastModifiedDate)
+  ownlastModifiedDate = new Date(lastModifiedDate)
   if (!title.match(alphanumeric)) {
     return false
   }
@@ -29,9 +30,11 @@ async function createListing (title, description, price, lastModifiedDate, owner
     return false
   }
 
+  ownerId = mongoose.Types.ObjectId(ownerId)
+
   const user = await User.findById(ownerId)
   if (user) {
-    if (!(user.email)) {
+    if (!user.email) {
       return false
     }
   } else { // If user does not exist
