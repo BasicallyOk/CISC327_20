@@ -23,6 +23,7 @@
   "scripts": {
     "start": "env-cmd -f ../.env react-scripts start",
     "build": "env-cmd -f ../.env react-scripts build",
+    "ci-build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/eslint . --fix",
