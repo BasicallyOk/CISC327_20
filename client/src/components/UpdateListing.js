@@ -8,7 +8,7 @@ function UpdateListing (props) {
 	const [price, setPrice] = useState('')
 
 	const handleSubmit = () => {
-		axios.post('http://localhost:5000/listing/update', {
+		axios.post('http://localhost:8080/listing/update', {
 			title,
 			description,
 			price

@@ -16,7 +16,7 @@ function RegisterUser (props) {
 		 * Submit form and register user
 		 */
 	const handleSubmit = () => {
-		axios.post('http://localhost:5000/user/register', {
+		axios.post('http://localhost:8080/user/register', {
 			email,
 			username,
 			password

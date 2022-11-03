@@ -16,7 +16,7 @@ function LoginUser (props) {
 		 * Submit form and login the user
 		 */
 	const handleSubmitToken = () => {
-		axios.post('http://localhost:5000/user/login', {
+		axios.post('http://localhost:8080/user/login', {
 			email,
 			password
 		}).then(res => {

@@ -39,7 +39,7 @@ function Main () {
 			<Link to={'register'}>Register</Link>
 			<Link to={'login'}>Login</Link>
 			<Link to={'updateListing'}>Update Listing</Link>
-			<button onClick={() => axios.get('http://localhost:5000/')}>Ping server</button>
+			<button onClick={() => axios.get('http://localhost:8080/')}>Ping server</button>
 		</div>
 	)
 }

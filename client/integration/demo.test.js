@@ -8,7 +8,7 @@ describe('Selenium Test', () => {
 	let driver
 
 	beforeAll(async () => {
-		driver = await new Builder().forBrowser(Browser.CHROME).build()
+		driver = await new Builder().forBrowser(Browser.SAFARI).build()
 	})
 
 	it('Google Search', async () => {

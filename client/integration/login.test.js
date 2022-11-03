@@ -8,12 +8,12 @@ describe('Selenium Test', () => {
 	let driver
 
 	beforeAll(async () => {
-		driver = await new Builder().forBrowser(Browser.CHROME).build()
+		driver = await new Builder().forBrowser(Browser.SAFARI).build()
 	})
 
 	describe('Input partitioning', () => {
 		it('should allow an existing user to login if the correct credentials are given', async () => {
-			await driver.get('http://localhost:3000/login')
+			await driver.get('http://localhost:8080/login')
 			// Type in a legal test email. For now must make sure that khoa@gmail.com exists.
 			await driver.findElement(By.id('emailBox')).sendKeys('khoa@gmail.com', Key.RETURN)
 			// Type in test password. Password is legal and is correct
@@ -25,7 +25,7 @@ describe('Selenium Test', () => {
 			await driver.wait(until.urlContains('profile'), 1000)
 		})
 		it('should fail to login if the input credentials are illegal', async () => {
-			await driver.get('http://localhost:3000/login')
+			await driver.get('http://localhost:8080/login')
 			// User exists, password illegal according to R1-4
 			await driver.findElement(By.id('emailBox')).sendKeys('khoa@gmail.com', Key.RETURN)
 			await driver.findElement(By.id('passwordBox')).sendKeys('password', Key.RETURN)
