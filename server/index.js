@@ -1,5 +1,5 @@
 const express = require('express')
-require('dotenv').config({path: '../.env'})
+require('dotenv').config({ path: '../.env' })
 
 const bodyParser = require('body-parser')
 const { connectDb } = require('./database')

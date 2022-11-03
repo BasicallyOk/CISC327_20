@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-require('dotenv').config({path: '../.env'})
+require('dotenv').config({ path: '../.env' })
 
 // TODO: use environment variable to allow for a separate testdb
 const dbURI = process.env.DB_URI
