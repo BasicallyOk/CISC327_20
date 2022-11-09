@@ -5,9 +5,14 @@ function UserProfile (props) {
 	// if login sucessful take to profile page
 	if (props.user) {
 		return (
-			<div>
+			<div style={{
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center'
+			}}>
 				<h1>UserProfile</h1>
 				<Link to='../updateListing'>updateListing</Link>
+				<Link to='../create'>createListing</Link>
 			</div>
 		)
 	}

@@ -10,6 +10,7 @@ import RegisterUser from './components/RegisterUser'
 import LoginUser from './components/LoginUser'
 import UserProfile from './components/UserProfile'
 import UpdateListing from './components/UpdateListing'
+import CreateListing from './components/CreateListing'
 
 import axios from 'axios'
 
@@ -26,6 +27,7 @@ function App () {
 					<Route path='/profile' element={<UserProfile user={user}/>}/>
 					<Route path="/" element={<Main />} />
 					<Route path="/updateListing" element={<UpdateListing />} />
+					<Route path="/create" element={<CreateListing user ={user}/>} />
 				</Routes>
 			</div>
 		</Router>
@@ -34,11 +36,14 @@ function App () {
 
 function Main () {
 	return (
-		<div>
+		<div style={{
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center'
+		}}>
 			<h4>QBNB</h4>
 			<Link to={'register'}>Register</Link>
 			<Link to={'login'}>Login</Link>
-			<Link to={'updateListing'}>Update Listing</Link>
 			<button onClick={() => axios.get('http://localhost:5000/')}>Ping server</button>
 		</div>
 	)
