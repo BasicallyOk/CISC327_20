@@ -1,4 +1,6 @@
 const express = require('express')
+require('dotenv').config({ path: '../.env' })
+
 const bodyParser = require('body-parser')
 const { connectDb } = require('./database')
 
@@ -6,7 +8,7 @@ const { connectDb } = require('./database')
 const usersRouter = require('./routes/user')
 const listingRouter = require('./routes/listing')
 
-const port = 5000 // Server will listen to port 5000
+const port = process.env.SERVER_PORT // Server will listen to port 5000
 const app = express()
 
 // Configuration

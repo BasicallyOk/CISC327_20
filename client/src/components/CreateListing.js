@@ -18,7 +18,7 @@ function CreateListing (props) {
 		 * Submit form and create listing
 		 */
 	const handleSubmit = () => {
-		axios.post('http://localhost:5000/listing/create', {
+		axios.post('/listing/create', {
 			title,
 			description,
 			price,
