@@ -14,19 +14,19 @@
      describe('Input partitioning', () => {
          it('should allow a user to register if the correct credentials are given', async () => {
              await driver.get(`http://localhost:${process.env.CLIENT_PORT}/register`)
-             // Type in a legal test email. For now must make sure that ammarTest@gmail.com exists.
-             await driver.findElement(By.id('emailBox')).sendKeys('ammarTest@gmail.com', Key.RETURN)
+             // Type in a legal test email. For now must make sure that ammar@gmail.com exists.
+             await driver.findElement(By.id('emailBox')).sendKeys('ammar@gmail.com', Key.RETURN)
              // Type in test password. Password is legal and is correct
              await driver.findElement(By.id('passwordBox')).sendKeys('P@ssword', Key.RETURN)
  
              // Submit
              await driver.findElement(By.id('submitButton')).click()
-             // Make sure that redirection to profile happens. May want to raise this number for CI.
-             await driver.wait(until.urlContains('profile'), 1000)
+             // Make sure that redirection to login happens. May want to raise this number for CI.
+             await driver.wait(until.urlContains('login'), 1000)
          })
          it('should fail to register if the input credentials are illegal', async () => {
              await driver.get(`http://localhost:${process.env.CLIENT_PORT}/register`)
-             // User exists, password illegal according to R1-4
+             // User is illegal, password legal according to R1-4
              await driver.findElement(By.id('emailBox')).sendKeys('ammarTest', Key.RETURN)
              await driver.findElement(By.id('passwordBox')).sendKeys('P@ssword', Key.RETURN)
              await driver.findElement(By.id('submitButton')).click()
