@@ -13,6 +13,7 @@ import UpdateListing from './components/UpdateListing'
 import CreateListing from './components/CreateListing'
 
 import axios from 'axios'
+import UpdateUserProfile from './components/UpdateUserProfile'
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL
 
@@ -30,6 +31,7 @@ function App () {
 					<Route path="/" element={<Main />} />
 					<Route path="/updateListing" element={<UpdateListing />} />
 					<Route path="/create" element={<CreateListing user ={user}/>} />
+					<Route path="/updateUser" element={<UpdateUserProfile user={user}/>} />
 				</Routes>
 			</div>
 		</Router>
