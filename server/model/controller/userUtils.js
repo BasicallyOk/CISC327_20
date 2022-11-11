@@ -29,18 +29,7 @@ const validateEmail = (email) => {
       /^[-a-z0-9~!$%^&*=+}{'?]+(\.[-a-z0-9~!$%^&*=+}{'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i
     )
 }
-/**
- * Validate billingAddress using number, street name, extension
- * @param {String} billingAddress
- * @returns
- */
-const validateBillingAddress = (billingAddress) => {
-  if (billingAddress.split(' ').length !== 3) {
-    return false
-  }
-  return String(billingAddress)
-    .match(/^\d+ [ ]? [a-zA-Z]+ [ ]? [a-zA-Z]+$/i)
-}
+
 /**
  * Validate postalCode using R3-2 and R3-3
  * @param {String} postalCode
@@ -201,18 +190,20 @@ async function update (username, email, billingAddress, postalCode) {
     console.log('Email does not satisfy requirements')
     return false
   }
-  // Ckeck if billingAddress is valid
-  if (!validateBillingAddress(billingAddress)) {
-    console.log('Billing Address does not satisfy requirements')
-    return false
-  }
   // Check if postalCode is valid
   if (!validatePostalCode(postalCode)) {
     console.log('Postal Code does not satisfy requirements')
     return false
   }
   // updates user to database
-  await User.updateOne()
+  //
+  //finds a user in the data that satifies the requirement that we set (email)
+  //when we change for example the username it will verify using the email 
+  const update = await User.findOne({ email })
+  update.billingAddress=billingAddress
+  update.postalCode=postalCode
+  update.username=username
+  update.save()
   return true
 }
 
