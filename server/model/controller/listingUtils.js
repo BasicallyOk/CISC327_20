@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Listing = require('../Listing')
 const User = require('../User')
 
@@ -29,9 +30,11 @@ async function createListing (title, description, price, lastModifiedDate, owner
     return false
   }
 
+  ownerId = mongoose.Types.ObjectId(ownerId)
+
   const user = await User.findById(ownerId)
   if (user) {
-    if (!(user.email)) {
+    if (!user.email) {
       return false
     }
   } else { // If user does not exist

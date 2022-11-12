@@ -4,6 +4,8 @@ on: [push]
 jobs:
   build-client:
     runs-on: ubuntu-latest
+    env:
+      REACT_APP_API_BASE_URL: http://localhost:8080
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
@@ -13,7 +15,7 @@ jobs:
         cache-dependency-path: 'client/package-lock.json'
     - run: npm install
       working-directory: client
-    - run: npm run build
+    - run: npm run ci-build
       working-directory: client
   # test-client:
   #   needs: build-client
@@ -31,6 +33,10 @@ jobs:
   #     working-directory: client
   test-server:
     runs-on: ubuntu-latest
+    env:
+      CLIENT_PORT: 3000
+      SERVER_PORT: 8080
+      DB_URI: mongodb+srv://test:test@cluster0.bt5g3.mongodb.net/QBNB?retryWrites=true&w=majority
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3

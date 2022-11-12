@@ -2,21 +2,33 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-function UpdateListing (props) {
+/**
+ * Create listing page
+ * @param {Object} props
+ */
+function CreateListing (props) {
 	const [title, setTitle] = useState('')
 	const [description, setDescription] = useState('')
 	const [price, setPrice] = useState('')
+	const lastModifiedDate = Date.now()
+	const ownerId = props.user._id// GET ID OF PERSON LOGGED IN
+	// const [disableSubmit, setDisableSubmit] = useState(true)
 
+	/**
+		 * Submit form and create listing
+		 */
 	const handleSubmit = () => {
-		axios.post('/listing/update', {
+		axios.post('/listing/create', {
 			title,
 			description,
-			price
+			price,
+			lastModifiedDate,
+			ownerId
 		}).then(res => {
 			console.log(res.data.success)
 		}).catch(e => {
 			console.log(e.response.data.error)
-			alert('Unable to login')
+			alert('Unable to create listing')
 		})
 	}
 
@@ -26,12 +38,12 @@ function UpdateListing (props) {
 			flexDirection: 'column',
 			alignItems: 'center'
 		}}>
-			<p>Update</p>
+			<p>Create Listing</p>
 			<div style={{ display: 'flex', flexDirection: 'row' }}>
 				<p>Title</p>
 				<input
 					type = "text"
-					id = 'titleBox'
+					data-testid = 'titleBox'
 					value = {title}
 					onChange = {(event) => setTitle(event.target.value)}
 				/>
@@ -41,7 +53,7 @@ function UpdateListing (props) {
 				<p>Description</p>
 				<input
 					type = "text"
-					id = 'descriptionBox'
+					data-testid = 'descriptionBox'
 					value = {description}
 					onChange = {(event) => setDescription(event.target.value)}
 				/>
@@ -51,21 +63,22 @@ function UpdateListing (props) {
 				<p>Price</p>
 				<input
 					type = "text"
-					id = 'priceBox'
+					data-testid = 'priceBox'
 					value = {price}
 					onChange = {(event) => setPrice(event.target.value)}
 				/>
 			</div>
 
 			<button
-				id = 'submitButton'
+				data-testid = 'submitButton'
 				onClick = {handleSubmit}
 			>
-				Update
+				Create Listing
 			</button>
+			{props.user._id ? <p>{props.user._id}</p> : <p>Penis</p>}
 			<Link to={'..'}>Update Listing</Link>
 		</div>
 	)
 }
 
-export default UpdateListing
+export default CreateListing

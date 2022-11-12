@@ -16,7 +16,7 @@ function RegisterUser (props) {
 		 * Submit form and register user
 		 */
 	const handleSubmit = () => {
-		axios.post('http://localhost:8080/user/register', {
+		axios.post('/user/register', {
 			email,
 			username,
 			password
@@ -72,7 +72,7 @@ function RegisterUser (props) {
 			>
 				Register
 			</button>
-			<Link to={'..'}>Sign In</Link>
+			<Link to={'../login'}>Sign In</Link>
 		</div>
 	)
 }
