@@ -22,5 +22,8 @@ router.post('/update', async (req, res) => {
     res.status(400).json({ error: `Unable to updaste ${req.body.title}` })
   }
 })
+router.delete('/delete', async (req,res) => {
 
+  
+})
 module.exports = router
