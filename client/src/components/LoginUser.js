@@ -13,8 +13,8 @@ function LoginUser (props) {
 	// const [disableSubmit, setDisableSubmit] = useState(true)
 
 	/**
-		 * Submit form and login the user
-		 */
+	 * Submit form and login the user
+	 */
 	const handleSubmitToken = () => {
 		axios.post('/user/login', {
 			email,
