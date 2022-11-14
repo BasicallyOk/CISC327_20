@@ -10,22 +10,32 @@ describe('Update Listing Test', () => {
 
 	beforeAll(async () => {
 		driver = await new Builder().forBrowser(Browser.SAFARI).build()
+		await driver.get(`http://localhost:${process.env.CLIENT_PORT}/login`)
+		// Type in a legal test email. For now must make sure that drake@gmail.com exists.
+		await driver.findElement(By.id('emailBox')).sendKeys('drake@gmail.com', Key.RETURN)
+		// Type in test password. Password is legal and is correct
+		await driver.findElement(By.id('passwordBox')).sendKeys('P@ssword123', Key.RETURN)
+
+		// Submit
+		await driver.findElement(By.id('submitButton')).click()
+		// Make sure that redirection to profile happens. May want to raise this number for CI.
+		await driver.wait(until.urlContains('profile'), 1000)
 	})
 
 	describe('Input partitioning', () => {
 		it('should allow an existing user to update listing if the correct credentials are given', async () => {
-			await driver.get('http://localhost:${process.env.CLIENT_PORT}/updateListing')
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			await driver.findElement(By.id('titleBox')).sendKeys('title', Key.RETURN)
-			await driver.findElement(By.id('descritionBox')).sendKeys('this is a valid description that should work.', Key.RETURN)
+			await driver.findElement(By.id('descriptionBox')).sendKeys('this is a valid description that should work.', Key.RETURN)
 			await driver.findElement(By.id('priceBox')).sendKeys(500, Key.RETURN)
 
 			// Submit
 			await driver.findElement(By.id('submitButton')).click()
 			// Make sure that redirection to listing happens. May want to raise this number for CI.
-			await driver.wait(until.urlContains('listing'), 1000)
+			await driver.wait(until.elementLocated(By.id('successText')), 1000)
 		})
 		it('should fail to update if the price is decreased', async () => {
-			await driver.get('http://localhost:${process.env.CLIENT_PORT}/updateListing')
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			await driver.findElement(By.id('titleBox')).sendKeys('title', Key.RETURN)
 			await driver.findElement(By.id('descriptioBox')).sendKeys('this is a valid description that should work.', Key.RETURN)
 			await driver.findElement(By.id('priceBox')).sendKeys(10, Key.RETURN)
@@ -35,7 +45,7 @@ describe('Update Listing Test', () => {
 			await driver.wait(until.elementLocated(By.id('failText')), 1000)
 		})
 		it('should fail to update if the title is not alphanumeric-only', async () => {
-			await driver.get('http://localhost:${process.env.CLIENT_PORT}/updateListing')
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			await driver.findElement(By.id('titleBox')).sendKeys('t!t|e', Key.RETURN)
 			await driver.findElement(By.id('descriptioBox')).sendKeys('this is a valid description that should work.', Key.RETURN)
 			await driver.findElement(By.id('priceBox')).sendKeys(500, Key.RETURN)
@@ -45,7 +55,7 @@ describe('Update Listing Test', () => {
 			await driver.wait(until.elementLocated(By.id('failText')), 1000)
 		})
 		it('should fail to update if the title contains spaces as prefix or suffix', async () => {
-			await driver.get('http://localhost:${process.env.CLIENT_PORT}/updateListing')
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			await driver.findElement(By.id('titleBox')).sendKeys(' title ', Key.RETURN)
 			await driver.findElement(By.id('descriptioBox')).sendKeys('this is a valid description that should work.', Key.RETURN)
 			await driver.findElement(By.id('priceBox')).sendKeys(500, Key.RETURN)
@@ -55,7 +65,7 @@ describe('Update Listing Test', () => {
 			await driver.wait(until.elementLocated(By.id('failText')), 1000)
 		})
 		it('should fail to update if the title is longer than 80 characters', async () => {
-			await driver.get('http://localhost:${process.env.CLIENT_PORT}/updateListing')
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			await driver.findElement(By.id('titleBox')).sendKeys('abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz', Key.RETURN)
 			await driver.findElement(By.id('descriptioBox')).sendKeys('this is a valid description that should work.', Key.RETURN)
 			await driver.findElement(By.id('priceBox')).sendKeys(500, Key.RETURN)
@@ -65,7 +75,7 @@ describe('Update Listing Test', () => {
 			await driver.wait(until.elementLocated(By.id('failText')), 1000)
 		})
 		it('should fail to update if the description is shorter than the title', async () => {
-			await driver.get('http://localhost:${process.env.CLIENT_PORT}/updateListing')
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			await driver.findElement(By.id('titleBox')).sendKeys('abcdefghijklmnopqrstuvwxyz', Key.RETURN)
 			await driver.findElement(By.id('descriptioBox')).sendKeys('abcdefghijklmnopqrstuvwxy', Key.RETURN)
 			await driver.findElement(By.id('priceBox')).sendKeys(500, Key.RETURN)
@@ -75,7 +85,7 @@ describe('Update Listing Test', () => {
 			await driver.wait(until.elementLocated(By.id('failText')), 1000)
 		})
 		it('should fail to update if the description is shorter than 20 characters', async () => {
-			await driver.get('http://localhost:${process.env.CLIENT_PORT}/updateListing')
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			await driver.findElement(By.id('titleBox')).sendKeys('title', Key.RETURN)
 			await driver.findElement(By.id('descriptioBox')).sendKeys('abcdefgh', Key.RETURN)
 			await driver.findElement(By.id('priceBox')).sendKeys(500, Key.RETURN)
@@ -85,7 +95,7 @@ describe('Update Listing Test', () => {
 			await driver.wait(until.elementLocated(By.id('failText')), 1000)
 		})
 		it('should fail to update if the description is longer than 2000 characters', async () => {
-			await driver.get('http://localhost:${process.env.CLIENT_PORT}/updateListing')
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			await driver.findElement(By.id('titleBox')).sendKeys('title', Key.RETURN)
 			await driver.findElement(By.id('descriptioBox')).sendKeys(Array(2002).join('a'), Key.RETURN)
 			await driver.findElement(By.id('priceBox')).sendKeys(500, Key.RETURN)
@@ -95,7 +105,7 @@ describe('Update Listing Test', () => {
 			await driver.wait(until.elementLocated(By.id('failText')), 1000)
 		})
 	})
-	
+
 	// Breaks every once in a while as the page cant keep up with selenium, I think?
 	describe('Shotgun testing', () => {
 		const testTitle = ['title', 't!t|e', ' title ', 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz, abcdefghijklmnopqrstuvwxyz']
@@ -122,14 +132,14 @@ describe('Update Listing Test', () => {
 					// Make sure that redirection to listing happens. May want to raise this number for CI.
 					await driver.wait(until.urlContains('listing'), 1000)
 				}
-				await driver.get('http://localhost:${process.env.CLIENT_PORT}/updateListing')
+				await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			}
 		})
 	})
 
 	describe('Output coverage', () => {
 		it('should allow user to update listing if all inputs are legal', async () => {
-			await driver.get('http://localhost:${process.env.CLIENT_PORT}/updateListing')
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			// Type in a legal test title. For now must make sure that title exists.
 			await driver.findElement(By.id('titleBox')).sendKeys('title', Key.RETURN)
 			// Type in test description. Description is legal and is correct
@@ -144,7 +154,7 @@ describe('Update Listing Test', () => {
 		})
 
 		it('should not allow user to update listing if inputs are illegal', async () => {
-			await driver.get('http://localhost:${process.env.CLIENT_PORT}/updateListing')
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			await driver.findElement(By.id('titleBox')).sendKeys(' title ', Key.RETURN)
 			await driver.findElement(By.id('descritionBox')).sendKeys('this.', Key.RETURN)
 			await driver.findElement(By.id('priceBox')).sendKeys(1, Key.RETURN)

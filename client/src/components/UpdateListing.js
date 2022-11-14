@@ -6,6 +6,8 @@ function UpdateListing (props) {
 	const [title, setTitle] = useState('')
 	const [description, setDescription] = useState('')
 	const [price, setPrice] = useState('')
+	const [success, setSuccess] = useState(false)
+	const [failed, setFailed] = useState(false)
 
 	const handleSubmit = () => {
 		axios.post('/listing/update', {
@@ -14,9 +16,12 @@ function UpdateListing (props) {
 			price
 		}).then(res => {
 			console.log(res.data.success)
+			setSuccess(true)
+			setFailed(false)
 		}).catch(e => {
 			console.log(e.response.data.error)
-			alert('Unable to login')
+			setFailed(true)
+			setSuccess(false)
 		})
 	}
 
@@ -63,6 +68,8 @@ function UpdateListing (props) {
 			>
 				Update
 			</button>
+			{failed ? <p id='failText'>Unable to update listing</p> : null}
+			{success ? <p id='successText'>successfully updated listing</p> : null}
 			<Link to={'..'}>Update Listing</Link>
 		</div>
 	)
