@@ -197,15 +197,15 @@ async function update (username, email, billingAddress, postalCode) {
   }
   // updates user to database
   //
-  //finds a user in the data that satifies the requirement that we set (email)
-  //when we change for example the username it will verify using the email 
+  // finds a user in the data that satifies the requirement that we set (email)
+  // when we change for example the username it will verify using the email
   const update = await User.findOne({ email })
   if (!update) {
     return false
   }
-  update.billingAddress=billingAddress
-  update.postalCode=postalCode
-  update.username=username
+  update.billingAddress = billingAddress
+  update.postalCode = postalCode
+  update.username = username
   update.save()
   return true
 }
