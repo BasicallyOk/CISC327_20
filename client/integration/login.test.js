@@ -70,7 +70,6 @@ describe('Login Functionality Test', () => {
 		it('should behave as expected for random combinations of valid/invalid inputs', async () => {
 			// How many inputs are tested, should increase with a bigger test set
 			for (let i = 0; i < 20; i++) {
-				await driver.get(`http://localhost:${process.env.CLIENT_PORT}/login`)
 				const emailIndex = Math.floor(Math.random() * testEmails.length)
 				const passwordIndex = Math.floor(Math.random() * testPasswords.length)
 
@@ -86,8 +85,9 @@ describe('Login Functionality Test', () => {
 					// Make sure that redirection to profile happens. May want to raise this number for CI.
 					await driver.wait(until.urlContains('profile'), 1000)
 				}
+				await driver.get(`http://localhost:${process.env.CLIENT_PORT}/login`)
 			}
-		}, 10000)
+		})
 	})
 
 	describe('Output coverage testing', () => {
