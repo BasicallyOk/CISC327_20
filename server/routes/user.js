@@ -14,6 +14,11 @@ router.post('/register', async (req, res) => {
   }
 })
 
+/**
+ * Login router
+ *
+ * Expects email and password in request body
+ */
 router.post('/login', async (req, res) => {
   // console.log(req)
   const user = await userUtils.login(req.body.email, req.body.password)
