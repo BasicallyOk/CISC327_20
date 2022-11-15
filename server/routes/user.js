@@ -32,4 +32,14 @@ router.post('/login', async (req, res) => {
   }
 })
 
+// route to the update user page
+router.post('/update', async (req, res) => {
+  const update = await userUtils.update(req.body.username, req.body.email, req.body.billingAddress, req.body.postalCode)
+  if (update) {
+    res.status(200).json({ success: `Sucessfully updated user ${req.body.email}` })
+  } else {
+    res.status(400).json({ error: `Unable to update ${req.body.email}` })
+  }
+})
+
 module.exports = router

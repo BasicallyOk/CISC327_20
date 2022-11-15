@@ -13,6 +13,7 @@ function UserProfile (props) {
 				<h1>UserProfile</h1>
 				<Link to='../updateListing'>Update Listing</Link>
 				<Link to='../create'>Create Listing</Link>
+				<Link id ='updateUser' to='../updateUser'>Update User </Link>
 			</div>
 		)
 	}
