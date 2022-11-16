@@ -1,4 +1,6 @@
 const express = require('express')
+const Listing = require('../model/Listing')
+
 const router = express.Router() // set up express router
 
 const listingUtils = require('../model/controller/listingUtils')
