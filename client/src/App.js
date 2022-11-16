@@ -47,6 +47,7 @@ function Main () {
 			<Link to={'register'}>Register</Link>
 			<Link to={'login'}>Login</Link>
 			<button onClick={() => axios.get('/')}>Ping server</button>
+			<button onClick={() => axios.delete('/user/delete/', {email: 'Amamr@gmail.com'})}>Delete Ammar</button>
 		</div>
 	)
 }

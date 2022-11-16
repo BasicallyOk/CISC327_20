@@ -1,4 +1,5 @@
 const express = require('express')
+const User = require('../model/User')
 const router = express.Router() // set up express router
 
 const userUtils = require('../model/controller/userUtils')
@@ -29,6 +30,22 @@ router.post('/login', async (req, res) => {
     })
   } else {
     res.status(400).json({ error: `Unable to login ${req.body.email}` })
+  }
+})
+/**
+ * Delete user router
+ *
+ * Expects email and password in request body
+ */
+router.delete('/delete', async (req, res) => {
+  // console.log(req)
+  let deleteCount = await User.deleteOne({ email: req.body.email })
+  if (deleteCount.deletedCount > 0) {
+    res.status(200).json({
+      success: `Sucessfully deleted' ${req.body.email}`
+    })
+  } else {
+    res.status(400).json({ error: `Unable to delete ${req.body.email}` })
   }
 })
 
