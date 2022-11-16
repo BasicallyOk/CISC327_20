@@ -20,7 +20,7 @@ router.post('/create', async (req, res) => {
  */
 router.delete('/delete/title/:title', async (req, res) => {
   // console.log(req)
-  let deleteCount = await User.deleteOne({ title: req.params.title })
+  const deleteCount = await Listing.deleteOne({ title: req.params.title })
   if (deleteCount.deletedCount > 0) {
     res.status(200).json({
       success: `Sucessfully deleted' ${req.params.title}`
@@ -30,7 +30,6 @@ router.delete('/delete/title/:title', async (req, res) => {
   }
 })
 
-
 router.post('/update', async (req, res) => {
   const status = await listingUtils.updateListing(req.body.title, req.body.description, req.body.price)
   if (status) {
@@ -38,9 +37,5 @@ router.post('/update', async (req, res) => {
   } else {
     res.status(400).json({ error: `Unable to updaste ${req.body.title}` })
   }
-})
-router.delete('/delete', async (req,res) => {
-
-  
 })
 module.exports = router

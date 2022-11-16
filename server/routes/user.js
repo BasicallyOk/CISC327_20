@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
  */
 router.delete('/delete/email/:email', async (req, res) => {
   // console.log(req)
-  let deleteCount = await User.deleteOne({ email: req.params.email })
+  const deleteCount = await User.deleteOne({ email: req.params.email })
   if (deleteCount.deletedCount > 0) {
     res.status(200).json({
       success: `Sucessfully deleted' ${req.params.email}`
