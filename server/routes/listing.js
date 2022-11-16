@@ -13,6 +13,23 @@ router.post('/create', async (req, res) => {
     res.status(400).json({ error: `Unable to create ${req.body.title}` })
   }
 })
+/**
+ * Delete title router
+ *
+ * Expects title in request body
+ */
+router.delete('/delete/title/:title', async (req, res) => {
+  // console.log(req)
+  let deleteCount = await User.deleteOne({ title: req.params.title })
+  if (deleteCount.deletedCount > 0) {
+    res.status(200).json({
+      success: `Sucessfully deleted' ${req.params.title}`
+    })
+  } else {
+    res.status(400).json({ error: `Unable to delete ${req.params.title}` })
+  }
+})
+
 
 router.post('/update', async (req, res) => {
   const status = await listingUtils.updateListing(req.body.title, req.body.description, req.body.price)

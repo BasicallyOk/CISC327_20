@@ -24,7 +24,6 @@ function RegisterUser (props) {
 			console.log(res.data.success)
 		}).catch(e => {
 			console.log(e.response.data.error)
-			alert('Unable to register')
 		})
 	}
 

@@ -53,6 +53,8 @@ describe('Update user profile Functionality Test', () => {
 			await driver.findElement(By.id('postalBox')).sendKeys('M1W 3T1', Key.RETURN)
 			// Submit
 			await driver.findElement(By.id('submitButton')).click()
+			// Success state
+			await driver.wait(until.elementLocated(By.id('successText')), 1000)
 		})
 		it('should fail to update user if the username does not satifiy requirements', async () => {
 			// username does not meet requirement R1-5
@@ -128,7 +130,7 @@ describe('Update user profile Functionality Test', () => {
 					await driver.findElement(By.id('postalBox')).clear()
 				}
 			}
-		}, 9000)
+		}, 20000)
 	})
 
 	describe('Ouput coverage testing', () => {
