@@ -1,0 +1,35 @@
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    env_file: ./.env
+    volumes: 
+      - mongodb_data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh mongodb:27017/test --quiet
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    env_file: ./.env
+    environment:
+      - TZ=$TZ
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    depends_on:
+      - mongodb
+    ports:
+      - 8081:8081
+    # healthcheck:
+    #   test: wget --quiet --tries=3 --spider http://$MONGO_EXPRESS_BASICAUTH_USERNAME:$MONGO_EXPRESS_BASICAUTH_PASSWORD@0.0.0.0:8081 || exit 1
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    restart: unless-stopped
+volumes:
+  mongodb_data:
+    name: mongodb_data
+
