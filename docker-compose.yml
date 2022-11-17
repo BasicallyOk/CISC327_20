@@ -1,6 +1,8 @@
 services:
   mongodb:
-    image: mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
     container_name: mongodb
     env_file: ./.env
     volumes: 
@@ -17,7 +19,6 @@ services:
     container_name: mongo-express
     env_file: ./.env
     environment:
-      - TZ=$TZ
       - ME_CONFIG_MONGODB_SERVER=mongodb
     depends_on:
       - mongodb
