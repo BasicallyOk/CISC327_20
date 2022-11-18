@@ -76,7 +76,7 @@ function CreateListing (props) {
 				Create Listing
 			</button>
 			{props.user._id ? <p>{props.user._id}</p> : <p>Penis</p>}
-			<Link to={'..'}>Update Listing</Link>
+			<Link id="linkToUpdateListing" to={'..'}>Update Listing</Link>
 		</div>
 	)
 }

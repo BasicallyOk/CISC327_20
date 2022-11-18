@@ -26,7 +26,7 @@ describe('Update Listing Test', () => {
 			await driver.wait(until.urlContains('profile'), 1000)
 		})
 		it('should create listing', async () => {
-			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
+			await driver.findElement(By.linkText('Create Listing')).click();
 			await driver.findElement(By.id('titleBox')).sendKeys('title', Key.RETURN)
 			await driver.findElement(By.id('descriptionBox')).sendKeys('this is a valid description that should work.', Key.RETURN)
 			await driver.findElement(By.id('priceBox')).sendKeys(100, Key.RETURN)
