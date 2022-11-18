@@ -6,7 +6,7 @@ require('dotenv').config({ path: '../.env' })
 let dbURI = process.env.DB_URI
 if (process.env.DOCKERIZED === 'no') {
   dbURI = process.env.LOCAL_DB_URI
-} 
+}
 
 const connectDb = () => {
   mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
