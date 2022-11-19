@@ -71,7 +71,7 @@ function RegisterUser (props) {
 			>
 				Register
 			</button>
-			<Link to={'../login'}>Sign In</Link>
+			<Link id='linkToSignIn' to={'../login'}>Sign In</Link>
 		</div>
 	)
 }
