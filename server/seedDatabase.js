@@ -1,4 +1,9 @@
-require('dotenv').config({ path: '../.env' })
+/**
+ * Seed database with necessary data for testing
+ * Assumes the mongodb docker is already running in detached mode
+ * Does not terminate automatically
+ */
+
 const mongoose = require('mongoose')
 const User = require('./model/User')
 const Listing = require('./model/Listing')
@@ -32,7 +37,7 @@ const seedDb = () => {
   })
 }
 
-mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost:27017/qbnb', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connection to database established')
     seedDb()
