@@ -28,7 +28,18 @@ describe('Listing functionality', () => {
       username: 'ammarTest',
       password: 'P@ssword'
     })
-    await Listing.collection.drop()
+    await Listing.findOneAndRemove({
+      title: 'test title'
+    })
+    await Listing.findOneAndRemove({
+      title: 'test title 2'
+    })
+    await Listing.findOneAndRemove({
+      title: 'test title 3'
+    })
+    await Listing.findOneAndRemove({
+      title: 'test title 4'
+    })
   })
   describe('Input validation', () => {
     it('The title of the product has to be alphanumeric-only, and space allowed only if it is not as prefix and suffix. R4-1', async () => {
@@ -130,16 +141,17 @@ describe('Update functionality', () => {
       password: 'P@ssword'
     })
     id = (await testUser.save()).id
+
+    const listing = new Listing({
+      title: 'test listing',
+      description: 'abcdefghijklmnopqrstuvwxyz',
+      price: 100,
+      lastModifiedDate: Date.now(),
+      ownerId: id
+    })
+    listing.save()
   })
 
-  afterAll(async () => {
-    await User.findOneAndRemove({
-      email: 'ammar@gmail.com',
-      username: 'ammarTest',
-      password: 'P@ssword'
-    })
-    await Listing.collection.drop()
-  })
   it('should not accept empty title description price', async () => {
     // all empty
     let status
@@ -168,14 +180,11 @@ describe('Update functionality', () => {
     expect(status).toBe(false)
   })
   it('should not accept price decrease R5-2', async () => {
-    let status
-    status = await createListing('temp title', 'abcdefghijklmnopqrstuvwxyz', 100, '2021-01-03', id)
-    expect(status).toBe(true) // Listing successfully created
-    status = await updateListing('temp title', 'abcdefghijklmnopqrstuvwxyz', 99)
+    const status = await updateListing('test listing', 'abcdefghijklmnopqrstuvwxyz', 99)
     expect(status).toBe(false)
   })
   it('should change last modified date R5-3', async () => {
-    const status = await updateListing('temp title', 'abcdefghijklmnopqrstuvwxyz', 100)
+    const status = await updateListing('test listing', 'abcdefghijklmnopqrstuvwxyz', 100)
     expect(status).toBe(true)
   })
   it('should not accept title to have non-alphanumeric characters R4-1', async () => {
@@ -188,7 +197,7 @@ describe('Update functionality', () => {
     expect(status).toBe(false)
     status = await updateListing('title ', 'abcdefghijklmnopqrstuvwxyz', 100)
     expect(status).toBe(false)
-    status = await updateListing('temp title', 'abcdefghijklmnopqrstuvwxyz', 100)
+    status = await updateListing('test listing', 'abcdefghijklmnopqrstuvwxyz', 200)
     expect(status).toBe(true)
   })
   it('should not accept title out of range R4-2', async () => {
@@ -218,4 +227,18 @@ describe('Update functionality', () => {
     const status = await updateListing('titletitletitletitletitletitletitletitletitletitletitletitle', 'abcdefghijklmnopqrstuvwxyz', 100)
     expect(status).toBe(false)
   })
+
+  afterAll(async () => {
+    await User.findOneAndRemove({
+      email: 'ammar@gmail.com',
+      username: 'ammarTest',
+      password: 'P@ssword'
+    })
+    await Listing.findOneAndRemove({
+      title: 'temp title'
+    })
+    await Listing.findOneAndRemove({
+      title: 'test listing'
+    })
+  }, 5000)
 })

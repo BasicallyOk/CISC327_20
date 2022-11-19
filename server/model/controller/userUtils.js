@@ -1,15 +1,6 @@
 const User = require('../User')
 
 /**
- * Validate username using R3-4
- * @param {String} username
- * @returns
- */
-const validateUserName = (username) => {
-  return String(username)
-    .match(/^[a-zA-Z0-9][a-zA-Z0-9 ]+[a-zA-Z0-9]$/i)
-}
-/**
  * Validate email using the rfc5322 standard
  * @param {String} email
  * @returns
@@ -42,6 +33,7 @@ const validatePostalCode = (postalCode) => {
   return String(postalCode)
     .match(/^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] [ ]?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i)
 }
+
 /**
  * Validates password for registration
  * @param {String} password
@@ -130,7 +122,7 @@ async function login (email, password) {
 }
 
 /**
- *
+ * Register a user
  * @param {String} email email used for registration
  * @param {String} password password for the user
  * @param {String} username username for the user
@@ -181,7 +173,7 @@ async function update (username, email, billingAddress, postalCode) {
     return false
   }
   // Check if username is valid
-  if (!validateUserName(username)) {
+  if (!validateUsername(username)) {
     console.log('Username does not satisfy requirements')
     return false
   }
