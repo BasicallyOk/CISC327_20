@@ -9,24 +9,31 @@ async function createListing (title, description, price, lastModifiedDate, owner
   const dateAfter = new Date('2021-01-02')
   lastModifiedDate = new Date(lastModifiedDate)
   if (!title.match(alphanumeric)) {
+    console.log('Listing title not alphanumeric')
     return false
   }
   if (title.length > 80) {
+    console.log('Listing title too long')
     return false
   }
   if ((description.length < 20 || description.length > 2000)) {
+    console.log('Listing description does not satisfy length requirement')
     return false
   }
   if (description.length < title.length) {
+    console.log('Listing description shorter than title')
     return false
   }
   if ((price < 10 || price > 10000)) {
+    console.log('Listing price does not satisfy requirement')
     return false
   }
   if ((lastModifiedDate < dateAfter || lastModifiedDate > dateBefore)) {
+    console.log('This listing have yet to be created in this timeline')
     return false
   }
   if (!ownerId) {
+    console.log('Impossible! Users that havent logged in cannot create listings')
     return false
   }
 
@@ -52,7 +59,12 @@ async function createListing (title, description, price, lastModifiedDate, owner
     lastModifiedDate,
     ownerId
   })
-  await newListing.save()
+  newListing.save((error, listing) => {
+    if (error) {
+      console.error(error)
+    }
+    console.log(`Listing ${listing.title} successfully created`)
+  })
   return true
 }
 
@@ -134,7 +146,11 @@ async function updateListing (title, description, price) {
     return false
   }
   const listing = await Listing.findOne({ title, description })
-  if (listing.price > price) {
+  if (listing) {
+    if (listing.price > price) {
+      return false
+    }
+  } else {
     return false
   }
 

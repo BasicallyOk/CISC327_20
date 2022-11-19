@@ -36,9 +36,10 @@ describe('Create Listing Test', () => {
 			await driver.findElement(By.id('priceBox')).sendKeys('5000', Key.RETURN)
 			// Submit
 			await driver.findElement(By.id('submitButton')).click()
-			// Make sure that redirection to update listing happens. May want to raise this number for CI.
-			await driver.wait(until.urlContains('listing/update'), 1000)
-			await fetch(`http://localhost:${SERVER_PORT}/listing/delete/title/test`)
+			await driver.wait(until.elementLocated(By.id('successText')), 1000)
+			await driver.findElement(By.id('titleBox')).clear()
+			await driver.findElement(By.id('descriptionBox')).clear()
+			await driver.findElement(By.id('priceBox')).clear()
 
 		})
 		it('should fail to login if the price credentials are illegal', async () => {
@@ -54,6 +55,9 @@ describe('Create Listing Test', () => {
 
 			// Should not create listing
 			await driver.wait(until.elementLocated(By.id('failText')), 1000)
+			await driver.findElement(By.id('titleBox')).clear()
+			await driver.findElement(By.id('descriptionBox')).clear()
+			await driver.findElement(By.id('priceBox')).clear()
 		})
 		it('should fail to login if the title credentials are illegal', async () => {
 			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
@@ -65,6 +69,9 @@ describe('Create Listing Test', () => {
 
 			// Should not create listing
 			await driver.wait(until.elementLocated(By.id('failText')), 1000)
+			await driver.findElement(By.id('titleBox')).clear()
+			await driver.findElement(By.id('descriptionBox')).clear()
+			await driver.findElement(By.id('priceBox')).clear()
 		})
 		it('should fail to login if the description credentials are illegal', async () => {
 			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
@@ -76,6 +83,9 @@ describe('Create Listing Test', () => {
 
 			// Should not create listing
 			await driver.wait(until.elementLocated(By.id('failText')), 1000)
+			await driver.findElement(By.id('titleBox')).clear()
+			await driver.findElement(By.id('descriptionBox')).clear()
+			await driver.findElement(By.id('priceBox')).clear()
 		})
 	})
 	describe('Shotgun testing', () => {
@@ -98,11 +108,15 @@ describe('Create Listing Test', () => {
 				if (titleIndex !== 0 || descriptionIndex !== 0 || priceIndex !== 0) {
 					// fail state
 					await driver.wait(until.elementLocated(By.id('failText')), 1000)
+					await driver.findElement(By.id('titleBox')).clear()
+					await driver.findElement(By.id('descriptionBox')).clear()
+					await driver.findElement(By.id('priceBox')).clear()
 				} else {
 					// pass state
-					// Make sure that redirection to profile happens. May want to raise this number for CI.
-					await driver.wait(until.urlContains('listing/update'), 1000)
-					await fetch(`http://localhost:${SERVER_PORT}/listing/delete/title/test`)
+					await driver.wait(until.elementLocated(By.id('successText')), 1000)
+					await driver.findElement(By.id('titleBox')).clear()
+					await driver.findElement(By.id('descriptionBox')).clear()
+					await driver.findElement(By.id('priceBox')).clear()
 				}
 				await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
 			}
@@ -110,6 +124,19 @@ describe('Create Listing Test', () => {
 	})
 
 	describe('Output coverage testing', () => {
+		beforeEach(async () => {
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/login`)
+			// Type in a legal test email
+			await driver.findElement(By.id('emailBox')).sendKeys('khoa@gmail.com', Key.RETURN)
+			// Type in a test password that is correct
+			await driver.findElement(By.id('passwordBox')).sendKeys('P@ssword', Key.RETURN)
+			// Submit
+			await driver.findElement(By.id('submitButton')).click()
+			// Make sure that the URL redirection occurs
+			await driver.wait(until.urlContains('profile'), 1000)
+			// Click on update User
+			await driver.findElement(By.id('updateUser')).click()
+		})
 		it('should allow listing to be created if user enters correct parameters that are legal', async () => {
 			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
 			// Type in a legal test title. For now must make sure that test works as a title.
@@ -120,10 +147,10 @@ describe('Create Listing Test', () => {
 			await driver.findElement(By.id('priceBox')).sendKeys('5000', Key.RETURN)
 			// Submit
 			await driver.findElement(By.id('submitButton')).click()
-			// Make sure that redirection to update listing happens. May want to raise this number for CI.
-			await driver.wait(until.urlContains('listing/update'), 1000)
-			await fetch(`http://localhost:${SERVER_PORT}/listing/delete/title/test`)
-
+			await driver.wait(until.elementLocated(By.id('successText')), 1000)
+			await driver.findElement(By.id('titleBox')).clear()
+			await driver.findElement(By.id('descriptionBox')).clear()
+			await driver.findElement(By.id('priceBox')).clear()
 		})
 
 		it('should fail to login if the price credentials are illegal', async () => {
@@ -139,6 +166,26 @@ describe('Create Listing Test', () => {
 
 			// Should not create listing
 			await driver.wait(until.elementLocated(By.id('failText')), 1000)
+			await driver.findElement(By.id('titleBox')).clear()
+			await driver.findElement(By.id('descriptionBox')).clear()
+			await driver.findElement(By.id('priceBox')).clear()
+		})
+		it('should fail to login if the description credentials are illegal', async () => {
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
+			// Type in a legal test title. For now must make sure that test works as a title.
+			await driver.findElement(By.id('titleBox')).sendKeys('test', Key.RETURN)
+			// Type in test description. the description is legal and is correct.
+			await driver.findElement(By.id('descriptionBox')).sendKeys('no', Key.RETURN)
+			// Type in an illegal price. the price is illegal and incorrect.
+			await driver.findElement(By.id('priceBox')).sendKeys('500', Key.RETURN)
+			// Submit
+			await driver.findElement(By.id('submitButton')).click()
+
+			// Should not create listing
+			await driver.wait(until.elementLocated(By.id('failText')), 1000)
+			await driver.findElement(By.id('titleBox')).clear()
+			await driver.findElement(By.id('descriptionBox')).clear()
+			await driver.findElement(By.id('priceBox')).clear()
 		})
 	})
 

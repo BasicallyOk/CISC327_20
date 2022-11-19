@@ -2,6 +2,7 @@ const express = require('express')
 const User = require('../model/User')
 const router = express.Router() // set up express router
 
+const User = require('../model/User')
 const userUtils = require('../model/controller/userUtils')
 
 router.get('/', async (req, res) => res.send('User route'))
@@ -32,6 +33,23 @@ router.post('/login', async (req, res) => {
     res.status(400).json({ error: `Unable to login ${req.body.email}` })
   }
 })
+/**
+ * Delete user router
+ *
+ * Expects email and password in request body
+ */
+router.delete('/delete/email/:email', async (req, res) => {
+  // console.log(req)
+  const deleteCount = await User.deleteOne({ email: req.params.email })
+  if (deleteCount.deletedCount > 0) {
+    res.status(200).json({
+      success: `Sucessfully deleted' ${req.params.email}`
+    })
+  } else {
+    res.status(400).json({ error: `Unable to delete ${req.params.email}` })
+  }
+})
+
 /**
  * Delete user router
  *
