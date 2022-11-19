@@ -5,6 +5,10 @@
 const { Builder, Browser, By, Key, until } = require('selenium-webdriver')
 require('dotenv').config({ path: '../.env' })
 
+// all testing assumes that there is a default listing created already
+// title: title
+// description: this is a valid description that should work.
+// price: 100
 describe('Update Listing Test', () => {
 	let driver
 
@@ -13,6 +17,20 @@ describe('Update Listing Test', () => {
 	})
 
 	describe('Input partitioning', () => {
+		beforeEach(async () => {
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/login`)
+			// Type in a legal test email
+			await driver.findElement(By.id('emailBox')).sendKeys('drake@gmail.com', Key.RETURN)
+			// Type in a test password that is correct
+			await driver.findElement(By.id('passwordBox')).sendKeys('P@ssword123', Key.RETURN)
+			// Submit
+			await driver.findElement(By.id('submitButton')).click()
+			// Make sure that the URL redirection occurs
+			await driver.wait(until.urlContains('profile'), 1000)
+			// Click on update listing
+			await driver.findElement(By.id('updateListing')).click()
+		})
+
 		it('should allow an existing user to update listing if the correct credentials are given', async () => {
 			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			await driver.findElement(By.id('titleBox')).sendKeys('title', Key.RETURN)
@@ -97,6 +115,20 @@ describe('Update Listing Test', () => {
 
 	// Breaks every once in a while as the page cant keep up with selenium, I think?
 	describe('Shotgun testing', () => {
+		beforeEach(async () => {
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/login`)
+			// Type in a legal test email
+			await driver.findElement(By.id('emailBox')).sendKeys('drake@gmail.com', Key.RETURN)
+			// Type in a test password that is correct
+			await driver.findElement(By.id('passwordBox')).sendKeys('P@ssword123', Key.RETURN)
+			// Submit
+			await driver.findElement(By.id('submitButton')).click()
+			// Make sure that the URL redirection occurs
+			await driver.wait(until.urlContains('profile'), 1000)
+			// Click on update User
+			await driver.findElement(By.id('updateListing')).click()
+		})
+
 		const testTitle = ['title', 't!t|e', ' title ', 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz, abcdefghijklmnopqrstuvwxyz']
 		const testDescription = ['this is a valid description that should work.', 'abcdefghijklmnopqrstuvwxy', '', 'abcdefgh', Array(2002).join('a')]
 		const testPrice = [0, 10, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
@@ -119,14 +151,27 @@ describe('Update Listing Test', () => {
 				} else {
 					// pass state
 					// Make sure that redirection to listing happens. May want to raise this number for CI.
-					await driver.wait(until.urlContains('listing'), 1000)
+					await driver.wait(until.elementsLocated(By.id('successText')), 1000)
 				}
-				await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			}
-		})
+		}, 9000)
 	})
 
 	describe('Output coverage', () => {
+		beforeEach(async () => {
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/login`)
+			// Type in a legal test email
+			await driver.findElement(By.id('emailBox')).sendKeys('drake@gmail.com', Key.RETURN)
+			// Type in a test password that is correct
+			await driver.findElement(By.id('passwordBox')).sendKeys('P@ssword123', Key.RETURN)
+			// Submit
+			await driver.findElement(By.id('submitButton')).click()
+			// Make sure that the URL redirection occurs
+			await driver.wait(until.urlContains('profile'), 1000)
+			// Click on update listing
+			await driver.findElement(By.id('updateListing')).click()
+		})
+
 		it('should allow user to update listing if all inputs are legal', async () => {
 			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/updateListing`)
 			// Type in a legal test title. For now must make sure that title exists.
@@ -138,8 +183,8 @@ describe('Update Listing Test', () => {
 
 			// Submit
 			await driver.findElement(By.id('submitButton')).click()
-			// Make sure that redirection to listing happens. May want to raise this number for CI.
-			await driver.wait(until.urlContains('listing'), 1000)
+			// success state
+			await driver.wait(until.elementsLocated(By.id('successText')), 1000)
 		})
 
 		it('should not allow user to update listing if inputs are illegal', async () => {
