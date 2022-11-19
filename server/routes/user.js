@@ -2,7 +2,6 @@ const express = require('express')
 const User = require('../model/User')
 const router = express.Router() // set up express router
 
-const User = require('../model/User')
 const userUtils = require('../model/controller/userUtils')
 
 router.get('/', async (req, res) => res.send('User route'))
