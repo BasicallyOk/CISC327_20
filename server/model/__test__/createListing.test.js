@@ -1,5 +1,5 @@
 const Listing = require('../Listing')
-const User = require('../User')
+const SQLI = require('../resources/Generic_SQLI.js')
 const { createListing } = require('../controller/listingUtils')
 const { connectDb, disconnectDb } = require('../../database')
 
@@ -7,9 +7,8 @@ function syncReadFile () {
   let arr = [];
   const f = require('fs');
   const readline = require('readline');
-  var user_file = '../../resources/Generic_SQLI.txt';
-  var r = readline.createInterface({
-    input : f.createReadStream(user_file)
+  let r = readline.createInterface({
+    input : f.createReadStream('../../resources/Generic_SQLI.txt')
   });
   r.on('line', function (text) {
     arr.push(text);
@@ -26,35 +25,8 @@ afterAll(async () => {
 })
 
 describe('create listing functionality', () => {
-  let id
-  beforeAll(async () => {
-    const testUser = new User({
-      email: 'ammar@gmail.com',
-      username: 'ammarTest',
-      password: 'P@ssword'
-    })
-    id = (await testUser.save()).id
-  })
+  let id = '6379af2f0edda1c53b70f27a'; // test id linked to khoa@gmail.com
 
-  afterAll(async () => {
-    await User.findOneAndRemove({
-      email: 'ammar@gmail.com',
-      username: 'ammarTest',
-      password: 'P@ssword'
-    })
-    await Listing.findOneAndRemove({
-      title: 'test title'
-    })
-    await Listing.findOneAndRemove({
-      title: 'test title 2'
-    })
-    await Listing.findOneAndRemove({
-      title: 'test title 3'
-    })
-    await Listing.findOneAndRemove({
-      title: 'test title 4'
-    })
-  })
   describe('SQL injection', () => {
     const arr = syncReadFile()
     it('should not create listing based on price', async () => {

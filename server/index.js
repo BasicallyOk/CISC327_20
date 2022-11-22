@@ -8,7 +8,7 @@ const { connectDb } = require('./database')
 const usersRouter = require('./routes/user')
 const listingRouter = require('./routes/listing')
 
-const port = process.env.SERVER_PORT // Server will listen to port 8080
+const port = process.env.SERVER_PORT // Server will listen to port 5000
 const app = express()
 
 // Configuration

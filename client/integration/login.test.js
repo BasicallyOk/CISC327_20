@@ -10,7 +10,7 @@ describe('Login Functionality Test', () => {
 
 	// For now, it is made with the assumption that my user will always be there, will update with register code
 	beforeAll(async () => {
-		driver = await new Builder().forBrowser(Browser.SAFARI).build()
+		driver = await new Builder().forBrowser(Browser.CHROME).build()
 	})
 
 	describe('Input partitioning', () => {
