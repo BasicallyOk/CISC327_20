@@ -29,6 +29,20 @@ describe('create listing functionality', () => {
 
   describe('SQL injection', () => {
     const arr = syncReadFile()
+    it('should not create listing based on title', async () => {
+      let listing
+      for (let i = 0; i < arr.length; i++) {
+        listing = await createListing(arr[i], 'This is a test description that should work as it is more than 20 chars', 100, Date.now(), id)
+        expect(listing).toBe(false)
+      }
+    })
+    it('should not create listing based on description', async () => {
+      let listing
+      for (let i = 0; i < arr.length; i++) {
+        listing = await createListing('title', arr[i], 100, Date.now(), id)
+        expect(listing).toBe(false)
+      }
+    })
     it('should not create listing based on price', async () => {
       let listing
       for (let i = 0; i < arr.length; i++) {
@@ -50,5 +64,6 @@ describe('create listing functionality', () => {
         expect(listing).toBe(false)
       }
     })
+    
   })
 })
