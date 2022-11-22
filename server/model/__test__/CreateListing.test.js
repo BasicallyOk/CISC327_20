@@ -1,17 +1,19 @@
 const { createListing } = require('../controller/listingUtils')
 const { connectDb, disconnectDb } = require('../../database')
 
-function syncReadFile () {
-  const arr = []
-  const f = require('fs')
-  const readline = require('readline')
-  const r = readline.createInterface({
-    input: f.createReadStream('../../resources/Generic_SQLI.txt')
-  })
-  r.on('line', function (text) {
-    arr.push(text)
-  })
-  return arr
+async function syncReadFile () {
+  const fs = require('fs')
+  try {
+    // read contents of the file
+    const data = fs.readFileSync('././resources/Generic_SQLI.txt', 'UTF-8')
+
+    // split the contents by new line
+    const lines = data.split(/\r?\n/)
+
+    return lines
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 beforeAll(() => {
