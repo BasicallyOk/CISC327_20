@@ -27,7 +27,6 @@ describe('Create Listing Test', () => {
 			await driver.findElement(By.id('createListing')).click()
 		})
 		it('should allow a user to create a listing if the correct parameters are given', async () => {
-			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
 			// Type in a legal test title. For now must make sure that test works as a title.
 			await driver.findElement(By.id('titleBox')).sendKeys('test', Key.RETURN)
 			// Type in test description. the description is legal and is correct.
@@ -36,14 +35,9 @@ describe('Create Listing Test', () => {
 			await driver.findElement(By.id('priceBox')).sendKeys('5000', Key.RETURN)
 			// Submit
 			await driver.findElement(By.id('submitButton')).click()
-			await driver.wait(until.elementLocated(By.id('successText')), 1000)
-			await driver.findElement(By.id('titleBox')).clear()
-			await driver.findElement(By.id('descriptionBox')).clear()
-			await driver.findElement(By.id('priceBox')).clear()
-
+			await driver.wait(until.urlContains('profile'), 1000)
 		})
-		it('should fail to login if the price credentials are illegal', async () => {
-			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
+		it('should fail to createListing if the credentials are illegal', async () => {
 			// Type in a legal test title. For now must make sure that test works as a title.
 			await driver.findElement(By.id('titleBox')).sendKeys('test', Key.RETURN)
 			// Type in test description. the description is legal and is correct.
@@ -58,9 +52,7 @@ describe('Create Listing Test', () => {
 			await driver.findElement(By.id('titleBox')).clear()
 			await driver.findElement(By.id('descriptionBox')).clear()
 			await driver.findElement(By.id('priceBox')).clear()
-		})
-		it('should fail to login if the title credentials are illegal', async () => {
-			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
+
 			await driver.findElement(By.id('titleBox')).sendKeys('l', Key.RETURN)
 			await driver.findElement(By.id('descriptionBox')).sendKeys('this is a test title', Key.RETURN)
 			await driver.findElement(By.id('priceBox')).sendKeys('5000', Key.RETURN)
@@ -72,9 +64,7 @@ describe('Create Listing Test', () => {
 			await driver.findElement(By.id('titleBox')).clear()
 			await driver.findElement(By.id('descriptionBox')).clear()
 			await driver.findElement(By.id('priceBox')).clear()
-		})
-		it('should fail to login if the description credentials are illegal', async () => {
-			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
+
 			await driver.findElement(By.id('titleBox')).sendKeys('test', Key.RETURN)
 			await driver.findElement(By.id('descriptionBox')).sendKeys('l', Key.RETURN)
 			await driver.findElement(By.id('priceBox')).sendKeys('5000', Key.RETURN)
@@ -89,9 +79,22 @@ describe('Create Listing Test', () => {
 		})
 	})
 	describe('Shotgun testing', () => {
-		const testTitles = ['test', 't', 't', 't', '', 'this title is way too long and should not work as it goes beyond the required specifications of the title case', '12', '="lkl"']
-		const testDescriptions = ['this is a test title', 'd', '', '90909090', 'wrong']
-		const testPrices = ['5000', 'word', '-5', '5000000', '', '0', '5a', '909']
+		beforeEach(async () => {
+			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/login`)
+			// Type in a legal test email
+			await driver.findElement(By.id('emailBox')).sendKeys('khoa@gmail.com', Key.RETURN)
+			// Type in a test password that is correct
+			await driver.findElement(By.id('passwordBox')).sendKeys('P@ssword', Key.RETURN)
+			// Submit
+			await driver.findElement(By.id('submitButton')).click()
+			// Make sure that the URL redirection occurs
+			await driver.wait(until.urlContains('profile'), 1000)
+			// Click on update User
+			await driver.findElement(By.id('createListing')).click()
+		})
+		const testTitles = ['test2', 't', 't', 't', '', 'this title is way too long and should not work as it goes beyond the required specifications of the title case', '12', '="lkl"']
+		const testDescriptions = ['this is a test title2', 'd', '', '90909090', 'wrong']
+		const testPrices = ['500', 'word', '-5', '5000000', '', '0', '5a', '909']
 
 		it('should behave as expected for random combinations of valid/invalid inputs', async () => {
 			// How many inputs are tested, should increase with a bigger test set
@@ -113,14 +116,11 @@ describe('Create Listing Test', () => {
 					await driver.findElement(By.id('priceBox')).clear()
 				} else {
 					// pass state
-					await driver.wait(until.elementLocated(By.id('successText')), 1000)
-					await driver.findElement(By.id('titleBox')).clear()
-					await driver.findElement(By.id('descriptionBox')).clear()
-					await driver.findElement(By.id('priceBox')).clear()
+					await driver.wait(until.urlContains('profile'), 1000)
+					await driver.findElement(By.id('createListing')).click()
 				}
-				await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
 			}
-		})
+		}, 20000)
 	})
 
 	describe('Output coverage testing', () => {
@@ -135,26 +135,21 @@ describe('Create Listing Test', () => {
 			// Make sure that the URL redirection occurs
 			await driver.wait(until.urlContains('profile'), 1000)
 			// Click on update User
-			await driver.findElement(By.id('updateUser')).click()
+			await driver.findElement(By.id('createListing')).click()
 		})
 		it('should allow listing to be created if user enters correct parameters that are legal', async () => {
-			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
 			// Type in a legal test title. For now must make sure that test works as a title.
-			await driver.findElement(By.id('titleBox')).sendKeys('test', Key.RETURN)
+			await driver.findElement(By.id('titleBox')).sendKeys('test3', Key.RETURN)
 			// Type in test description. the description is legal and is correct.
-			await driver.findElement(By.id('descriptionBox')).sendKeys('this is a test title', Key.RETURN)
+			await driver.findElement(By.id('descriptionBox')).sendKeys('this is a test title3', Key.RETURN)
 			// Type in a legal price. the price is legal and is correct.
 			await driver.findElement(By.id('priceBox')).sendKeys('5000', Key.RETURN)
 			// Submit
 			await driver.findElement(By.id('submitButton')).click()
-			await driver.wait(until.elementLocated(By.id('successText')), 1000)
-			await driver.findElement(By.id('titleBox')).clear()
-			await driver.findElement(By.id('descriptionBox')).clear()
-			await driver.findElement(By.id('priceBox')).clear()
+			await driver.wait(until.urlContains('profile'), 1000)
 		})
 
 		it('should fail to login if the price credentials are illegal', async () => {
-			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
 			// Type in a legal test title. For now must make sure that test works as a title.
 			await driver.findElement(By.id('titleBox')).sendKeys('test', Key.RETURN)
 			// Type in test description. the description is legal and is correct.
@@ -171,12 +166,11 @@ describe('Create Listing Test', () => {
 			await driver.findElement(By.id('priceBox')).clear()
 		})
 		it('should fail to login if the description credentials are illegal', async () => {
-			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/listing/create`)
 			// Type in a legal test title. For now must make sure that test works as a title.
 			await driver.findElement(By.id('titleBox')).sendKeys('test', Key.RETURN)
-			// Type in test description. the description is legal and is correct.
-			await driver.findElement(By.id('descriptionBox')).sendKeys('no', Key.RETURN)
-			// Type in an illegal price. the price is illegal and incorrect.
+			// Type in test description. the description is illegal and is not correct.
+			await driver.findElement(By.id('descriptionBox')).sendKeys('l', Key.RETURN)
+			// Type in an legal price. the price is legal and correct.
 			await driver.findElement(By.id('priceBox')).sendKeys('500', Key.RETURN)
 			// Submit
 			await driver.findElement(By.id('submitButton')).click()
