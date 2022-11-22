@@ -2,15 +2,15 @@ const { createListing } = require('../controller/listingUtils')
 const { connectDb, disconnectDb } = require('../../database')
 
 function syncReadFile () {
-  let arr = [];
-  const f = require('fs');
-  const readline = require('readline');
-  let r = readline.createInterface({
-    input : f.createReadStream('../../resources/Generic_SQLI.txt')
-  });
+  const arr = []
+  const f = require('fs')
+  const readline = require('readline')
+  const r = readline.createInterface({
+    input: f.createReadStream('../../resources/Generic_SQLI.txt')
+  })
   r.on('line', function (text) {
-    arr.push(text);
-  });
+    arr.push(text)
+  })
   return arr
 }
 
@@ -23,7 +23,7 @@ afterAll(async () => {
 })
 
 describe('create listing functionality', () => {
-  let id = '6379af2f0edda1c53b70f27a'; // test id linked to khoa@gmail.com
+  const id = '6379af2f0edda1c53b70f27a' // test id linked to khoa@gmail.com
 
   describe('SQL injection', () => {
     const arr = syncReadFile()
