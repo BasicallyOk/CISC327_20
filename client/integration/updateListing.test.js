@@ -160,7 +160,7 @@ describe('Update Listing Test', () => {
 					await driver.findElement(By.id('priceBox')).clear()
 				}
 			}
-		}, 9000)
+		}, 20000)
 	})
 
 	describe('Output coverage', () => {
