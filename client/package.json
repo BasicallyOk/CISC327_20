@@ -40,5 +40,8 @@
       "last 1 firefox version",
       "last 1 CHROME version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-n": "^15.5.1"
   }
 }
