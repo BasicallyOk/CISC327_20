@@ -120,7 +120,7 @@ describe('Create Listing Test', () => {
 					await driver.findElement(By.id('createListing')).click()
 				}
 			}
-		}, 20000)
+		}, 30000)
 	})
 
 	describe('Output coverage testing', () => {

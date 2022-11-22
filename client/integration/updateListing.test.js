@@ -107,7 +107,7 @@ describe('Update Listing Test', () => {
 
 			// Should not update
 			await driver.wait(until.elementLocated(By.id('failText')), 3000)
-		})
+		}, 10000)
 	})
 
 	// Breaks every once in a while as the page cant keep up with selenium, I think?
@@ -160,7 +160,7 @@ describe('Update Listing Test', () => {
 					await driver.findElement(By.id('priceBox')).clear()
 				}
 			}
-		}, 20000)
+		}, 30000)
 	})
 
 	describe('Output coverage', () => {
