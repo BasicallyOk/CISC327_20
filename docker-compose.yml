@@ -45,8 +45,6 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-    extra_hosts:
-      mongo: 172.18.0.1
     env_file: ./.env
     environment:
       - DOCKERIZED='yes'
