@@ -31,7 +31,7 @@ const validatePostalCode = (postalCode) => {
     return false
   }
   return String(postalCode)
-    .match(/^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] [ ]?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i)
+    .match(/^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] [ ]?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/)
 }
 
 /**
@@ -198,7 +198,7 @@ async function update (username, email, billingAddress, postalCode) {
   update.billingAddress = billingAddress
   update.postalCode = postalCode
   update.username = username
-  update.save()
+  await update.save()
   return true
 }
 
