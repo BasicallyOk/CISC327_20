@@ -64,6 +64,5 @@ describe('create listing functionality', () => {
         expect(listing).toBe(false)
       }
     })
-    
   })
 })
