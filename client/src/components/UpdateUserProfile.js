@@ -74,7 +74,7 @@ function UpdateUserProfile (props) {
 		)
 	}
 	return (
-		<Navigate to='../login'/>
+		<Navigate to='../profile'/>
 	)
 }
 
