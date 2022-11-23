@@ -290,28 +290,49 @@ describe('Update functionality', () => {
     })
   })
   describe('checks for valid postalCode', () => {
+    beforeAll(async () => {
+      const postalCodeUser = new User({
+        email: 'postalCodeTester@gmail.com',
+        username: 'testpostalcode',
+        password: 'P@ssword',
+        balance: 100
+      })
+      await postalCodeUser.save()
+    })
+
+    afterAll(async () => {
+      await User.findOneAndRemove({ email: 'postalCodeTester@gmail.com' })
+    })
+
     // testing for invalid postalCode
     it('should not accept an invalid postalCode format R3-2, R3-3', async () => {
       let status
       // fails because too long
-      status = await update('testUser', 'test@gmail.com', 'address', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+      status = await update('testpostalcode', 'postalCodeTester@gmail.com', 'address', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
       expect(status).toBe(false)
       // fails because all numbers
-      status = await update('testUser', 'test@gmail.com', 'address', '012 345')
+      status = await update('testpostalcode', 'postalCodeTester@gmail.com', 'address', '012 345')
       expect(status).toBe(false)
       // fails because symbols
-      status = await update('testUser', 'test@gmail.com', 'address', '!@# $%^')
+      status = await update('testpostalcode', 'postalCodeTester@gmail.com', 'address', '!@# $%^')
       expect(status).toBe(false)
       // fails because all letters
-      status = await update('testUser', 'test@gmail.com', 'address', 'ABC DEF')
+      status = await update('testpostalcode', 'postalCodeTester@gmail.com', 'address', 'ABC DEF')
       expect(status).toBe(false)
       // fails because lowercase letters
-      status = await update('testUser', 'test@gmail.com', 'address', 'a1b 2c3')
+      status = await update('testpostalcode', 'postalCodeTester@gmail.com', 'address', 'a1b 2c3')
       expect(status).toBe(false)
       // fails because wrong format
-      status = await update('testUser', 'test@gmail.com', 'address', '1A2 B3C')
+      status = await update('testpostalcode', 'postalCodeTester@gmail.com', 'address', '1A2 B3C')
       expect(status).toBe(false)
+      status = await update('testpostalcode', 'postalCodeTester@gmail.com', 'address', 'A1B 2C3')
+      expect(status).toBe(true)
     })
+
+    // it('should accept valid postalCode format R3-2, R3-3', async () => {
+    //   const status = await update('testpostalcode', 'postalCodeTester@gmail.com', 'address', 'A1B 2C3')
+    //   expect(status).toBe(true)
+    // })
   })
   describe('checks for if user exists', () => {
     it('should not update a user that does not exist', async () => {

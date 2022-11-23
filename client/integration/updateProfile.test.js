@@ -105,16 +105,20 @@ describe('Update user profile Functionality Test', () => {
 		})
 
 		const testUsername = ['testUser', '', 'u', 'username1234567890123456', ' testfail', 'testUser1', 'testUser2', 'testUser3']
-		const testPostalCode = ['012 345', 'M2Q 3T1', 'L6A 4X4', '6T8 5L5', 'ABC DEF', '!@# $%^']
+		const testPostalCode = ['M2Q 3T1', '012 345', 'L6A4X4', '6T 5L5', 'ABC DEF', '!@# $%^']
 
 		it('should behave as expected for random combinations of valid/invalid inputs', async () => {
 			for (let i = 0; i < 20; i++) {
 				const userNameIndex = Math.floor(Math.random() * testUsername.length)
 				const postalCodeIndex = Math.floor(Math.random() * testPostalCode.length)
 
-				await driver.findElement(By.id('userBox')).sendKeys(testUsername[userNameIndex], Key.RETURN)
-				await driver.findElement(By.id('billingBox')).sendKeys('address', Key.RETURN)
-				await driver.findElement(By.id('postalBox')).sendKeys(testPostalCode[postalCodeIndex], Key.RETURN)
+				// await driver.findElement(By.id('userBox')).clear()
+				// await driver.findElement(By.id('billingBox')).clear()
+				// await driver.findElement(By.id('postalBox')).clear()
+
+				await driver.findElement(By.id('userBox')).sendKeys(Key.chord(Key.CONTROL, 'a'), Key.BACK_SPACE, testUsername[userNameIndex], Key.RETURN)
+				await driver.findElement(By.id('billingBox')).sendKeys(Key.chord(Key.CONTROL, 'a'), Key.BACK_SPACE, 'address', Key.RETURN)
+				await driver.findElement(By.id('postalBox')).sendKeys(Key.chord(Key.CONTROL, 'a'), Key.BACK_SPACE, testPostalCode[postalCodeIndex], Key.RETURN)
 				// Submit
 				await driver.findElement(By.id('submitButton')).click()
 
@@ -124,10 +128,7 @@ describe('Update user profile Functionality Test', () => {
 					await driver.findElement(By.id('billingBox')).clear()
 					await driver.findElement(By.id('postalBox')).clear()
 				} else {
-					await driver.wait(until.elementLocated(By.id('successText')), 1000)
-					await driver.findElement(By.id('userBox')).clear()
-					await driver.findElement(By.id('billingBox')).clear()
-					await driver.findElement(By.id('postalBox')).clear()
+					await driver.wait(until.urlContains('profile'), 1000)
 				}
 			}
 		}, 20000)

@@ -103,17 +103,14 @@ describe('Create Listing Test', () => {
 				const descriptionIndex = Math.floor(Math.random() * testDescriptions.length)
 				const priceIndex = Math.floor(Math.random() * testPrices.length)
 
-				await driver.findElement(By.id('titleBox')).sendKeys(testTitles[titleIndex], Key.RETURN)
-				await driver.findElement(By.id('descriptionBox')).sendKeys(testDescriptions[descriptionIndex], Key.RETURN)
-				await driver.findElement(By.id('priceBox')).sendKeys(testPrices[priceIndex], Key.RETURN)
+				await driver.findElement(By.id('titleBox')).sendKeys(Key.chord(Key.CONTROL, 'a'), Key.BACK_SPACE, testTitles[titleIndex], Key.RETURN)
+				await driver.findElement(By.id('descriptionBox')).sendKeys(Key.chord(Key.CONTROL, 'a'), Key.BACK_SPACE, testDescriptions[descriptionIndex], Key.RETURN)
+				await driver.findElement(By.id('priceBox')).sendKeys(Key.chord(Key.CONTROL, 'a'), Key.BACK_SPACE, testPrices[priceIndex], Key.RETURN)
 				await driver.findElement(By.id('submitButton')).click()
 
 				if (titleIndex !== 0 || descriptionIndex !== 0 || priceIndex !== 0) {
 					// fail state
 					await driver.wait(until.elementLocated(By.id('failText')), 1000)
-					await driver.findElement(By.id('titleBox')).clear()
-					await driver.findElement(By.id('descriptionBox')).clear()
-					await driver.findElement(By.id('priceBox')).clear()
 				} else {
 					// pass state
 					await driver.wait(until.urlContains('profile'), 1000)
