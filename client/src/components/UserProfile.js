@@ -11,8 +11,8 @@ function UserProfile (props) {
 				alignItems: 'center'
 			}}>
 				<h1>UserProfile</h1>
+				<Link id='createListing' to='../create'>Create Listing</Link>
 				<Link id='updateListing' to='../updateListing'>Update Listing</Link>
-				<Link to='../create'>Create Listing</Link>
 				<Link id ='updateUser' to='../updateUser'>Update User </Link>
 			</div>
 		)

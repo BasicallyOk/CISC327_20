@@ -7,6 +7,7 @@ function UpdateUserProfile (props) {
 	const [billingAddress, setBillingAddress] = useState('')
 	const [postalCode, setPostalCode] = useState('')
 	const [failed, setFailed] = useState(false)
+	const [success, setSuccess] = useState(false)
 
 	const handleSubmit = () => {
 		axios.post('/user/update', {
@@ -16,6 +17,8 @@ function UpdateUserProfile (props) {
 			email: props.user.email
 		}).then(res => {
 			console.log(res.data.success)
+			setFailed(false)
+			setSuccess(true)
 		}).catch(e => {
 			console.log(e)
 			setFailed(true)
@@ -68,6 +71,7 @@ function UpdateUserProfile (props) {
 				</button>
 
 				{failed ? <p id='failText'>Unable to update</p> : null}
+				{success ? <p id='successText'>Update successful</p> : null}
 
 				<Link to={'..'}>User</Link>
 			</div>

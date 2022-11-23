@@ -8,6 +8,7 @@ async function createListing (title, description, price, lastModifiedDate, owner
   const dateBefore = new Date('2025-01-02')
   const dateAfter = new Date('2021-01-02')
   lastModifiedDate = new Date(lastModifiedDate)
+  price = parseInt(price)
   if (!title.match(alphanumeric)) {
     console.log('Listing title not alphanumeric')
     return false
@@ -24,7 +25,7 @@ async function createListing (title, description, price, lastModifiedDate, owner
     console.log('Listing description shorter than title')
     return false
   }
-  if ((price < 10 || price > 10000)) {
+  if (isNaN(price) || price < 10 || price > 10000) {
     console.log('Listing price does not satisfy requirement')
     return false
   }
@@ -62,8 +63,9 @@ async function createListing (title, description, price, lastModifiedDate, owner
   newListing.save((error, listing) => {
     if (error) {
       console.error(error)
+    } else {
+      console.log(`Listing ${listing.title} successfully created`)
     }
-    console.log(`Listing ${listing.title} successfully created`)
   })
   return true
 }

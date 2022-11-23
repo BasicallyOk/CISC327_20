@@ -25,7 +25,7 @@ describe('Login Functionality Test', () => {
 			await driver.findElement(By.id('submitButton')).click()
 			// Make sure that redirection to profile happens. May want to raise this number for CI.
 			await driver.wait(until.urlContains('profile'), 1000)
-		})
+		}, 10000)
 		it('should fail to login if the password credentials are illegal', async () => {
 			await driver.get(`http://localhost:${process.env.CLIENT_PORT}/login`)
 			// User exists, password illegal according to R1-4
@@ -87,7 +87,7 @@ describe('Login Functionality Test', () => {
 				}
 				await driver.get(`http://localhost:${process.env.CLIENT_PORT}/login`)
 			}
-		})
+		}, 20000)
 	})
 
 	describe('Output coverage testing', () => {
