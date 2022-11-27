@@ -2,12 +2,12 @@ const express = require('express')
 const User = require('../model/User')
 const router = express.Router() // set up express router
 
-const userUtils = require('../model/controller/userUtils')
+const userController = require('../model/controller/userController')
 
 router.get('/', async (req, res) => res.send('User route'))
 
 router.post('/register', async (req, res) => {
-  const status = await userUtils.register(req.body.email, req.body.password, req.body.username)
+  const status = await userController.register(req.body.email, req.body.password, req.body.username)
   if (status) {
     res.status(200).json({ success: `Successfully registered ${req.body.email}` })
   } else {
@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
  */
 router.post('/login', async (req, res) => {
   // console.log(req)
-  const user = await userUtils.login(req.body.email, req.body.password)
+  const user = await userController.login(req.body.email, req.body.password)
   if (user) {
     res.status(200).json({
       success: `Sucessfully login' ${req.body.email}`,
@@ -68,7 +68,7 @@ router.delete('/delete/email/:email', async (req, res) => {
 
 // route to the update user page
 router.post('/update', async (req, res) => {
-  const update = await userUtils.update(req.body.username, req.body.email, req.body.billingAddress, req.body.postalCode)
+  const update = await userController.update(req.body.username, req.body.email, req.body.billingAddress, req.body.postalCode)
   if (update) {
     res.status(200).json({ success: `Sucessfully updated user ${req.body.email}` })
   } else {

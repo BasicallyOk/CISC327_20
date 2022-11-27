@@ -3,12 +3,12 @@ const Listing = require('../model/Listing')
 
 const router = express.Router() // set up express router
 
-const listingUtils = require('../model/controller/listingUtils')
+const listingController = require('../model/controller/listingController')
 
 router.get('/', async (req, res) => res.send('Listing route'))
 
 router.post('/create', async (req, res) => {
-  const status = await listingUtils.createListing(req.body.title, req.body.description, req.body.price, req.body.lastModifiedDate, req.body.ownerId)
+  const status = await listingController.createListing(req.body.title, req.body.description, req.body.price, req.body.lastModifiedDate, req.body.ownerId)
   if (status) {
     res.status(200).json({ success: `Successfully created ${req.body.title}` })
   } else {
@@ -33,7 +33,7 @@ router.delete('/delete/title/:title', async (req, res) => {
 })
 
 router.post('/update', async (req, res) => {
-  const status = await listingUtils.updateListing(req.body.title, req.body.description, req.body.price)
+  const status = await listingController.updateListing(req.body.title, req.body.description, req.body.price)
   if (status) {
     res.status(200).json({ success: `Successfully updated ${req.body.title}` })
   } else {

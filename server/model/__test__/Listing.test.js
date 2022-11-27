@@ -1,6 +1,6 @@
 const Listing = require('../Listing')
 const User = require('../User')
-const { createListing, updateListing } = require('../controller/listingUtils')
+const { createListing, updateListing } = require('../controller/listingController')
 const { connectDb, disconnectDb } = require('../../database')
 
 beforeAll(() => {

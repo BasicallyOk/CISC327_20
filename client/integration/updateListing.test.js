@@ -140,24 +140,18 @@ describe('Update Listing Test', () => {
 				const descriptionIndex = Math.floor(Math.random() * testDescription.length)
 				const priceIndex = Math.floor(Math.random() * testPrice.length)
 
-				await driver.findElement(By.id('titleBox')).sendKeys(testTitle[titleIndex], Key.RETURN)
-				await driver.findElement(By.id('descriptionBox')).sendKeys(testDescription[descriptionIndex], Key.RETURN)
-				await driver.findElement(By.id('priceBox')).sendKeys(testPrice[priceIndex], Key.RETURN)
+				await driver.findElement(By.id('titleBox')).sendKeys(Key.chord(Key.CONTROL, 'a'), Key.BACK_SPACE, testTitle[titleIndex], Key.RETURN)
+				await driver.findElement(By.id('descriptionBox')).sendKeys(Key.chord(Key.CONTROL, 'a'), Key.BACK_SPACE, testDescription[descriptionIndex], Key.RETURN)
+				await driver.findElement(By.id('priceBox')).sendKeys(Key.chord(Key.CONTROL, 'a'), Key.BACK_SPACE, testPrice[priceIndex], Key.RETURN)
 				await driver.findElement(By.id('submitButton')).click()
 
 				if (titleIndex !== 0 || descriptionIndex !== 0 || priceIndex !== 0) {
 					// fail state
 					await driver.wait(until.elementLocated(By.id('failText')), 3000)
-					await driver.findElement(By.id('titleBox')).clear()
-					await driver.findElement(By.id('descriptionBox')).clear()
-					await driver.findElement(By.id('priceBox')).clear()
 				} else {
 					// pass state
 					// Make sure that redirection to listing happens. May want to raise this number for CI.
 					await driver.wait(until.elementLocated(By.id('successText')), 3000)
-					await driver.findElement(By.id('titleBox')).clear()
-					await driver.findElement(By.id('descriptionBox')).clear()
-					await driver.findElement(By.id('priceBox')).clear()
 				}
 			}
 		}, 30000)

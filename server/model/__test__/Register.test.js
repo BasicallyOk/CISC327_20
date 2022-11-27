@@ -1,4 +1,4 @@
-const { register } = require('../controller/userUtils')
+const { register } = require('../controller/userController')
 const { connectDb, disconnectDb } = require('../../database')
 
 async function syncReadFile () {
