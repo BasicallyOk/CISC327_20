@@ -26,7 +26,7 @@ app.use(bodyParser.json())
 async function main () {
   connectDb()
 
-  console.log('Connected to Database')
+  // console.log('Connected to Database')
 
   // Ping server
   app.get('/', (req, res) => res.send('Ping'))
@@ -37,7 +37,7 @@ async function main () {
 
   // Set up server listener on port
   app.listen(port, () => {
-    console.log(`This Server running on port ${port}`)
+    // console.log(`This Server running on port ${port}`)
   })
 }
 

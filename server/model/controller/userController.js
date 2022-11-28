@@ -92,17 +92,17 @@ const validateUsername = (username) => {
  */
 async function login (email, password) {
   if (password === '') {
-    console.log('Password is empty')
+    // console.log('Password is empty')
     return null
   }
 
   if (!validatePassword(password)) {
-    console.log('Password does not satisfy requirements')
+    // console.log('Password does not satisfy requirements')
     return null
   }
 
   if (!validateEmail(email)) {
-    console.log('Email does not satisfy requirements')
+    // console.log('Email does not satisfy requirements')
     return null
   }
 
@@ -111,11 +111,11 @@ async function login (email, password) {
     if (user.password === password) {
       return user
     } else { // Wrong password
-      console.log('Wrong password')
+      // console.log('Wrong password')
       return null
     }
   } else {
-    console.log(`User ${email} does not exist`)
+    // console.log(`User ${email} does not exist`)
     // User does not exist
     return null
   }
@@ -133,25 +133,25 @@ async function login (email, password) {
 async function register (email, password, username) {
   // makes sure that the email is valid when registrating
   if (!validateEmail(email)) {
-    console.log('Email does not satisfy requirements')
+    // console.log('Email does not satisfy requirements')
     return false
   }
 
   // make sure that the password meets the requirments
   if (!validatePassword(password)) {
-    console.log('Password does not satisfy requirements')
+    // console.log('Password does not satisfy requirements')
     return false
   }
 
   // make sure that the username meets the requirements
   if (!validateUsername(username)) {
-    console.log('Username does not satisfy requirements')
+    // console.log('Username does not satisfy requirements')
     return false
   }
   // looks through the database if the email has been used then return false
   const user = await User.findOne({ email })
   if (user) {
-    console.log(`User ${email} already exists`)
+    // console.log(`User ${email} already exists`)
     return false
   }
 
@@ -174,17 +174,17 @@ async function update (username, email, billingAddress, postalCode) {
   }
   // Check if username is valid
   if (!validateUsername(username)) {
-    console.log('Username does not satisfy requirements')
+    // console.log('Username does not satisfy requirements')
     return false
   }
   // Check if local part is longer than 64. Regex cant test this
   if (!validateEmail(email)) {
-    console.log('Email does not satisfy requirements')
+    // console.log('Email does not satisfy requirements')
     return false
   }
   // Check if postalCode is valid
   if (!validatePostalCode(postalCode)) {
-    console.log('Postal Code does not satisfy requirements')
+    // console.log('Postal Code does not satisfy requirements')
     return false
   }
   // updates user to database

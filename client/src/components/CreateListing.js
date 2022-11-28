@@ -27,11 +27,11 @@ function CreateListing (props) {
 			lastModifiedDate,
 			ownerId
 		}).then(res => {
-			console.log(res.data.success)
+			// // console.log(res.data.success)
 			setFailed(false)
 			setSuccess(true)
 		}).catch(e => {
-			console.log(e.response.data.error)
+			// console.log(e.response.data.error)
 			setFailed(true)
 		})
 	}

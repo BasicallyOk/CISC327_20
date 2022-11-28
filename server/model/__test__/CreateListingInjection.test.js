@@ -1,4 +1,6 @@
-const { createListing } = require('../controller/listingUtils')
+const User = require('../User')
+
+const { createListing } = require('../controller/listingController')
 const { connectDb, disconnectDb } = require('../../database')
 
 async function syncReadFile () {
@@ -25,7 +27,13 @@ afterAll(async () => {
 })
 
 describe('create listing functionality', () => {
-  const id = '6379af2f0edda1c53b70f27a' // test id linked to khoa@gmail.com
+  let id 
+
+  beforeAll(async () => {
+    id = await User.findOne({
+      email: 'khoa@gmail.com'
+    })
+  })
 
   describe('SQL injection', () => {
     const arr = syncReadFile()

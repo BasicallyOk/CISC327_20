@@ -16,11 +16,11 @@ function UpdateUserProfile (props) {
 			postalCode,
 			email: props.user.email
 		}).then(res => {
-			console.log(res.data.success)
+			// console.log(res.data.success)
 			setFailed(false)
 			setSuccess(true)
 		}).catch(e => {
-			console.log(e)
+			// console.log(e)
 			setFailed(true)
 		})
 	}

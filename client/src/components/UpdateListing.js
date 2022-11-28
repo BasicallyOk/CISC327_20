@@ -15,11 +15,11 @@ function UpdateListing (props) {
 			description,
 			price
 		}).then(res => {
-			console.log(res.data.success)
+			// console.log(res.data.success)
 			setSuccess(true)
 			setFailed(false)
 		}).catch(e => {
-			console.log(e.response.data.error)
+			// console.log(e.response.data.error)
 			setFailed(true)
 			setSuccess(false)
 		})

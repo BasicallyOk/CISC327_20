@@ -13,7 +13,7 @@ const mongoose = require('mongoose')
  * @returns true if the booking was created successfully, false otherwise
  */
 async function createBooking(listingId, userId, guestNum, startDate, endDate) {
-     return true
+    return true
 }
 
 /**

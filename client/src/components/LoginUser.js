@@ -20,11 +20,11 @@ function LoginUser (props) {
 			email,
 			password
 		}).then(res => {
-			console.log(res.data.success)
-			console.log(res.data.user)
+			// console.log(res.data.success)
+			// console.log(res.data.user)
 			props.setUser(res.data.user)
 		}).catch(e => {
-			console.log(e)
+			// console.log(e)
 			setFailed(true)
 		})
 	}

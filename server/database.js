@@ -11,7 +11,7 @@ if (process.env.DOCKERIZED === 'no') {
 const connectDb = () => {
   mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
-      console.log('Connection to database established')
+      // console.log('Connection to database established')
     })
     .catch((err) => {
       console.error(err)

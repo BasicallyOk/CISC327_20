@@ -10,31 +10,31 @@ async function createListing (title, description, price, lastModifiedDate, owner
   lastModifiedDate = new Date(lastModifiedDate)
   price = parseInt(price)
   if (!title.match(alphanumeric)) {
-    console.log('Listing title not alphanumeric')
+    // console.log('Listing title not alphanumeric')
     return false
   }
   if (title.length > 80) {
-    console.log('Listing title too long')
+    // console.log('Listing title too long')
     return false
   }
   if ((description.length < 20 || description.length > 2000)) {
-    console.log('Listing description does not satisfy length requirement')
+    // console.log('Listing description does not satisfy length requirement')
     return false
   }
   if (description.length < title.length) {
-    console.log('Listing description shorter than title')
+    // console.log('Listing description shorter than title')
     return false
   }
   if (isNaN(price) || price < 10 || price > 10000) {
-    console.log('Listing price does not satisfy requirement')
+    // console.log('Listing price does not satisfy requirement')
     return false
   }
   if ((lastModifiedDate < dateAfter || lastModifiedDate > dateBefore)) {
-    console.log('This listing have yet to be created in this timeline')
+    // console.log('This listing have yet to be created in this timeline')
     return false
   }
   if (!ownerId) {
-    console.log('Impossible! Users that havent logged in cannot create listings')
+    // console.log('Impossible! Users that havent logged in cannot create listings')
     return false
   }
 
@@ -64,7 +64,7 @@ async function createListing (title, description, price, lastModifiedDate, owner
     if (error) {
       console.error(error)
     } else {
-      console.log(`Listing ${listing.title} successfully created`)
+      // console.log(`Listing ${listing.title} successfully created`)
     }
   })
   return true
