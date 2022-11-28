@@ -5,8 +5,9 @@ const bodyParser = require('body-parser')
 const { connectDb } = require('./database')
 
 // Import the routers
-const usersRouter = require('./routes/user')
-const listingRouter = require('./routes/listing')
+const usersRouter = require('./routes/userRoute')
+const listingRouter = require('./routes/listingRoute')
+const bookingRouter = require('./routes/bookingRoute')
 
 const port = process.env.SERVER_PORT // Server will listen to port 5000
 const app = express()
@@ -34,10 +35,11 @@ async function main () {
   // Set up express routers
   app.use('/user', usersRouter)
   app.use('/listing', listingRouter)
+  app.use('/booking', bookingRouter)
 
   // Set up server listener on port
   app.listen(port, () => {
-    // console.log(`This Server running on port ${port}`)
+    console.log(`This Server running on port ${port}`)
   })
 }
 

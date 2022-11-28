@@ -8,8 +8,8 @@ const mongoose = require('mongoose')
  * @param {mongoose.ObjectId} listingId The id of the listing associated with the booking
  * @param {mongoose.ObjectId} userId The id of the user making the booking (not the listing owner)
  * @param {Number} guestNum The number of guests
- * @param {Number} startDate The start date (internal representation of the Datetime object, or ms from January 1st, 1970)
- * @param {Number} endDate The end date
+ * @param {Date} startDate The start date (internal representation of the Datetime object, or ms from January 1st, 1970)
+ * @param {Date} endDate The end date
  * @returns true if the booking was created successfully, false otherwise
  */
 async function createBooking(listingId, userId, guestNum, startDate, endDate) {
