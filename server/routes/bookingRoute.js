@@ -1,6 +1,4 @@
 const express = require('express')
-// const mongoose = require('mongoose')
-// const Booking = require('../model/Booking')
 
 const router = express.Router() // set up express router
 
