@@ -19,11 +19,25 @@ const seedDb = () => {
         username: 'khoaTester'
       })
 
+      const secondUser = new User({
+        email: 'robbie@gmail.com',
+        password: 'P@ssword',
+        username: 'robbieTester',
+        balance: 200 // Rob do be richer than me fr
+      })
+
+      secondUser.save((error, user) => {
+        if (error) {
+          console.error(error)
+        }
+        console.log(`User ${user.email} seeded successfully`)
+      })
+
       defaultUser.save((error, user) => {
         if (error) {
           console.error(error)
         }
-        console.log('User seeded successfully')
+        console.log(`User ${user.email} seeded successfully`)
         const defaultListing = new Listing({
           title: 'khoasTestListing',
           description: "Khoa's Test Listing. Definitely long enough to satisfy requirement",

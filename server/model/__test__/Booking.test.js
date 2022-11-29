@@ -24,14 +24,9 @@ describe('Booking', () => {
   // Assuming that khoasTestListing always exists
   beforeAll(async () => {
     // Create the second user that will acquire the booking
-    const bookerTest = new User({
-      email: 'bookingTester@gmail.com',
-      username: 'bookingTester',
-      password: 'P@ssword',
-      balance: '200'
+    booker = await User.findOne({
+      email: 'robbie@gmail.com'
     })
-    // Only continue once the user has been seeded
-    booker = await bookerTest.save()
 
     listingOwner = await User.findOne({
       email: 'khoa@gmail.com'
@@ -113,10 +108,5 @@ describe('Booking', () => {
 
   describe('Get Booking', () => {
 
-  })
-
-  afterAll(async () => {
-    // Delete booker
-    await User.findByIdAndRemove(booker._id)
   })
 })
