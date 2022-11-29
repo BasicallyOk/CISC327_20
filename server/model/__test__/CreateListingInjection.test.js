@@ -27,7 +27,7 @@ afterAll(async () => {
 })
 
 describe('create listing functionality', () => {
-  let id 
+  let id
 
   beforeAll(async () => {
     id = await User.findOne({

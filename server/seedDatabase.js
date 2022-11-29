@@ -18,7 +18,7 @@ const seedDb = () => {
         password: 'P@ssword',
         username: 'khoaTester'
       })
-    
+
       defaultUser.save((error, user) => {
         if (error) {
           console.error(error)

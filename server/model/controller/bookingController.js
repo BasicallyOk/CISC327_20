@@ -1,7 +1,7 @@
-const Booking = require('../Booking')
-const User = require('../User')
-const Listing = require('../Listing')
-const mongoose = require('mongoose')
+// const Booking = require('../Booking')
+// const User = require('../User')
+// const Listing = require('../Listing')
+// const mongoose = require('mongoose')
 
 /**
  * Controller function for creating a booking in the database
@@ -12,8 +12,8 @@ const mongoose = require('mongoose')
  * @param {Date} endDate The end date
  * @returns true if the booking was created successfully, false otherwise
  */
-async function createBooking(listingId, userId, guestNum, startDate, endDate) {
-    return true
+async function createBooking (listingId, userId, guestNum, startDate, endDate) {
+  return true
 }
 
 /**
@@ -21,8 +21,8 @@ async function createBooking(listingId, userId, guestNum, startDate, endDate) {
  * @param {mongoose.ObjectId} userId The id of the user in question
  * @returns an array of bookings under the user, empty if none found
  */
-async function getBookings(userId) {
-    return []
+async function getBookings (userId) {
+  return []
 }
 
 module.exports = { createBooking, getBookings }
