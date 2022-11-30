@@ -2,7 +2,7 @@ const Booking = require('../Booking')
 const User = require('../User')
 const Listing = require('../Listing')
 
-const { createBooking } = require('../controller/bookingController')
+const { createBooking, getBookings } = require('../controller/bookingController')
 const { connectDb, disconnectDb } = require('../../database')
 
 beforeAll(() => {
@@ -107,6 +107,34 @@ describe('Booking', () => {
   })
 
 	describe('Get Booking', () => {
-		
+		let affordableListing_2
+		let bookingToGet
+		beforeAll(async () => {
+			affordableListing_2 = await Listing.findOne({
+				title: 'khoasTestListing_2',
+				ownerId: listingOwner._id
+			  })
+
+			const existingBooking = new Booking({
+				startDate: Date.now(),
+				endDate: Date.now()+10,
+				userId: booker._id,
+				listingId: affordableListing_2._id,
+				guest_num: 1,
+				price: affordableListing_2.price
+			  })
+
+			bookingToGet = await existingBooking.save()
+		})
+
+		it('should return the booking that the user holds', async () => {
+			const bookingList = await getBookings(booker._id)
+			expect(bookingList).toContainEqual(true)
+		})
+
+		it('should not return any bookings if the user being queried does not have any booking attached', async () => {
+			const bookingList = await getBookings(listingOwner._id)
+			expect(bookingList).toEqual([])
+		})
   })
 })
