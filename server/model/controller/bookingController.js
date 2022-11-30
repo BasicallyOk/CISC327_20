@@ -15,6 +15,7 @@ async function createBooking (startDate, endDate, userId, listingId, price, owne
     const owner = await User.findById(ownerId)
     const user = await User.findById(userId)
     const listing = await Listing.findOne({ ownerId, title })
+    const booking = await Booking.findOne({ startDate, endDate })
 
     if (owner) {
         if (user){
