@@ -1,4 +1,4 @@
-// const Booking = require('../Booking')
+const Booking = require('../Booking')
 // const User = require('../User')
 // const Listing = require('../Listing')
 // const mongoose = require('mongoose')
@@ -22,7 +22,12 @@ async function createBooking (listingId, userId, guestNum, startDate, endDate) {
  * @returns an array of bookings under the user, empty if none found
  */
 async function getBookings (userId) {
-	return []
+	// Validate if input is empty
+	if (userId === '') {
+		return []
+	}
+	let bookings = Booking.find(userId)
+	return bookings
 }
 
 module.exports = { createBooking, getBookings }
