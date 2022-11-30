@@ -13,7 +13,7 @@
  * @returns true if the booking was created successfully, false otherwise
  */
 async function createBooking (listingId, userId, guestNum, startDate, endDate) {
-  return true
+	return true
 }
 
 /**
@@ -22,7 +22,7 @@ async function createBooking (listingId, userId, guestNum, startDate, endDate) {
  * @returns an array of bookings under the user, empty if none found
  */
 async function getBookings (userId) {
-  return []
+	return []
 }
 
 module.exports = { createBooking, getBookings }
