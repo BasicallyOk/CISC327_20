@@ -26,7 +26,7 @@ async function getBookings (userId) {
 	if (userId === '') {
 		return []
 	}
-	let bookings = Booking.find(userId)
+	let bookings = Booking.find({userId})
 	return bookings
 }
 
