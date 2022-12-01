@@ -25,7 +25,7 @@ function CreateBooking (props) {
 		}).catch(e => {
 			// console.log(e.response.data.error)
 			setFailed(true)
-            setSuccess(false)
+			setSuccess(false)
 		})
 	}
 
@@ -41,6 +41,7 @@ function CreateBooking (props) {
 					<p>Title</p>
 					<input
 						type = "text"
+						placeholder = 'search by title of listing..'
 						id = 'titleBox'
 						value = {title}
 						onChange = {(event) => findTitle(event.target.value)}
