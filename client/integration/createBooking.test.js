@@ -14,6 +14,6 @@ describe('Create Booking Test', () => {
 	})
 	// The create booking operation isn't idempotent, must figure out a good way to delete the listing
 	it('should not allow a user to book their own listing', () => {
-		
+
 	})
 })
