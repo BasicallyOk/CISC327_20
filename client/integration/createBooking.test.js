@@ -39,8 +39,6 @@ describe('Create Booking Test', () => {
 		await driver.wait(until.urlContains('profile'), 1000)
 		// Click on update User
 		await driver.findElement(By.id('createBooking')).click()
-
-		
 	})
 
 	it('should not show a listing the user cannot afford', async () => {
@@ -53,35 +51,35 @@ describe('Create Booking Test', () => {
 	})
 
 	it('should allow the creation of a valid booking', async () => {
-		//valid title 
+		// valid title
 		await driver.findElement(By.id('titleBox')).sendKeys('khoasTestListing', Key.RETURN)
-		//valid startDate
-		let startDate = Date.now()
+		// valid startDate
+		const startDate = Date.now()
 		await driver.findElement(By.id('startDateBox')).sendKeys(startDate, Key.RETURN)
-		//endDate
-		let endDate = startDate + 200
+		// endDate
+		const endDate = startDate + 200
 		await driver.findElement(By.id('endDateBox')).sendKeys(endDate, Key.RETURN)
-		//click on the create booking button
+		// click on the create booking button
 		await driver.findElement(By.id('listingBlock')).findElement(By.id('submitBooking')).click()
-		//should redirect 
+		// should redirect
 		await driver.wait(until.urlContains('profile'), 1000)
-		//check to see if it appears in profile
+		// check to see if it appears in profile
 		await driver.findElement(By.linkText('khoasTestListing'))
 	})
 
-	//assume that a valid booking was done before
+	// assume that a valid booking was done before
 	it('should not allow for the creation of booking due to time overlap', async () => {
-		//valid title 
+		// valid title
 		await driver.findElement(By.id('titleBox')).sendKeys('khoasTestListing', Key.RETURN)
-		//valid startDate
-		let startDate = Date.now()
+		// valid startDate
+		const startDate = Date.now()
 		await driver.findElement(By.id('startDateBox')).sendKeys(startDate, Key.RETURN)
-		//endDate
-		let endDate = startDate + 200
+		// endDate
+		const endDate = startDate + 200
 		await driver.findElement(By.id('endDateBox')).sendKeys(endDate, Key.RETURN)
-		//click on the create booking button
+		// click on the create booking button
 		await driver.findElement(By.id('listingBlock')).findElement(By.id('submitBooking')).click()
-		//should redirect 
+		// should redirect
 		await driver.wait(until.elementLocated(By.id('failText')), 1000)
 	})
 })

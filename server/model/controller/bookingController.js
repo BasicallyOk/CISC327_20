@@ -70,7 +70,7 @@ async function getBookings (userId) {
 	if (userId === '') {
 		return []
 	}
-	let bookings = Booking.find({userId})
+	const bookings = Booking.find({userId})
 	return bookings
 }
 
