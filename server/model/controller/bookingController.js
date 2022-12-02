@@ -1,6 +1,6 @@
 const Booking = require('../Booking')
-// const User = require('../User')
-// const Listing = require('../Listing')
+const User = require('../User')
+const Listing = require('../Listing')
 // const mongoose = require('mongoose')
 
 /**
@@ -13,7 +13,51 @@ const Booking = require('../Booking')
  * @returns true if the booking was created successfully, false otherwise
  */
 async function createBooking (listingId, userId, guestNum, startDate, endDate) {
-	return true
+    const listing = await Listing.findOne({ listingId })
+	const ownerId = listing.ownerId
+    const owner = await User.findById(ownerId)
+    const booker = await User.findById(userId)
+    const booking = await Booking.findOne({ $or: [{startDate: { $gte: startDate }}, { endDate: { $lte: endDate } }]})
+
+    if (owner) {
+        if (booker){
+            if (userId == ownerId){
+                return false
+            }
+            if (booker.balance<price) {
+              return false
+            }
+        }
+        else { // If user does not exist
+            return false
+        } 
+    }
+    else { // If owner does not exist
+        return false
+    }
+
+    if (!listing) {
+        return false // If listing does not exist
+    }
+    if (booking.length > 0){
+        return false
+    }
+
+    const newBooking = new Booking({
+        listingId, 
+        userId, 
+        guestNum, 
+        startDate, 
+        endDate
+      })
+    newBooking.save((error, booking) => {
+    if (error) {
+        console.error(error)
+    } else {
+        console.log(`Booking for ${booking.price} successfully created`)
+    }
+    })
+    return true
 }
 
 /**
