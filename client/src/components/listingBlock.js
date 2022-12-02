@@ -8,12 +8,12 @@
  * @param {Object} props React props
  * @param {Object} props.listingObj the listing object as returned from the database
  * @param {Boolean} props.showBookingButton whether the booking button should be activated
- * @param {Function} props.handleBooking takes in listingId. The function that handles the booking of this block 
+ * @param {Function} props.handleBooking takes in listingId. The function that handles the booking of this block
  */
-function ListingBlock(props) {
-    return (
-        <div></div>
-    )
+function ListingBlock (props) {
+	return (
+		<div></div>
+	)
 }
 
 export default ListingBlock

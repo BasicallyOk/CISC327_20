@@ -11,6 +11,7 @@ import LoginUser from './components/LoginUser'
 import UserProfile from './components/UserProfile'
 import UpdateListing from './components/UpdateListing'
 import CreateListing from './components/CreateListing'
+import CreateBooking from './components/CreateBooking'
 
 import axios from 'axios'
 import UpdateUserProfile from './components/UpdateUserProfile'
@@ -32,6 +33,7 @@ function App () {
 					<Route path="/updateListing" element={<UpdateListing />} />
 					<Route path="/create" element={<CreateListing user ={user}/>} />
 					<Route path="/updateUser" element={<UpdateUserProfile user={user}/>} />
+					<Route path="/createBooking" element={<CreateBooking user={user}/>} />
 				</Routes>
 			</div>
 		</Router>

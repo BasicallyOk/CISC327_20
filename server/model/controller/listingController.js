@@ -1,8 +1,10 @@
 const mongoose = require('mongoose')
 const Listing = require('../Listing')
 const User = require('../User')
+
 async function findListings(title) {
-	return []
+	const listing = Listing.find(title)
+	return listing
 }
 
 async function createListing (title, description, price, lastModifiedDate, ownerId) {

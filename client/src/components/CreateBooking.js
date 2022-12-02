@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import { ListingBlock } from './listingBlock'
+import ListingBlock from './listingBlock'
 import axios from 'axios'
 
 /**
@@ -36,11 +36,11 @@ function CreateBooking (props) {
 	const handleBooking = (listingId, userId, guestNum, startDate, endDate) => {
 		axios.post('/booking/create', {
 			listingId,
-			userId,
+			userId: props.user._id,
 			guestNum,
-			startDate, 
+			startDate,
 			endDate
-		}).then( res => {
+		}).then(res => {
 			setSuccess(true)
 		}).catch(e => {
 			// console.log(e.response.data.error)
@@ -69,7 +69,7 @@ function CreateBooking (props) {
 				</div>
 
 				<div style={{ display: 'flex', flexDirection: 'row' }}>
-					<p>Title</p>
+					<p>Start Date</p>
 					<input
 						type = "text"
 						placeholder = 'Enter start date of booking'
@@ -80,7 +80,7 @@ function CreateBooking (props) {
 				</div>
 
 				<div style={{ display: 'flex', flexDirection: 'row' }}>
-					<p>Title</p>
+					<p>End Date</p>
 					<input
 						type = "text"
 						placeholder = 'Enter end date of booking'
@@ -91,13 +91,13 @@ function CreateBooking (props) {
 				</div>
 
 				<div style={{ display: 'flex', flexDirection: 'row' }}>
-					<p>Title</p>
+					<p>Gest Num</p>
 					<input
 						type = "text"
 						placeholder = 'Enter the number of guests'
 						id = 'guestNumBox'
 						value = {guestNum}
-						onChange = {(event) => setEnd(event.target.value)}
+						onChange = {(event) => setGuestNum(event.target.value)}
 					/>
 				</div>
 
@@ -110,20 +110,22 @@ function CreateBooking (props) {
 
 				{failed ? <p id='failText'>{message}</p> : null}
 
-				{listings.length>0 ? (
-					<ul>
-						{
-							listings.map((listing) => {
-								return (
-									<li>
-										<ListingBlock listingObj={listing} showBookingButton={true} handleBooking={handleBooking}/>
-									</li>		
-								)
-							})
-						}
-					</ul>
-					
-				) : null}
+				{listings.length > 0
+					? (
+						<ul>
+							{
+								listings.map((listing) => {
+									return (
+										<li key={listing._id}>
+											<ListingBlock listingObj={listing} showBookingButton={true} handleBooking={handleBooking}/>
+										</li>
+									)
+								})
+							}
+						</ul>
+
+					)
+					: null}
 
 				<Link id='linkToProfile' to={'../profile'}>Profile</Link>
 			</div>
