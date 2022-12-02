@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const Listing = require('../Listing')
 const User = require('../User')
+async function findListings(title) {
+	return []
+}
 
 async function createListing (title, description, price, lastModifiedDate, ownerId) {
 	// Validate if input is empty
@@ -171,4 +174,4 @@ async function updateListing (title, description, price) {
 	return true
 }
 
-module.exports = { createListing, updateListing }
+module.exports = { createListing, updateListing, findListings }

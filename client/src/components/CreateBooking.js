@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
+import { ListingBlock } from './listingBlock'
 import axios from 'axios'
 
 /**
@@ -7,25 +8,44 @@ import axios from 'axios'
  * @param {Object} props
  */
 function CreateBooking (props) {
-	const [title, findTitle] = useState('')
-	const [success, setSuccess] = useState(false)
+	const [title, setTitle] = useState('')
+	const [startDate, setStart] = useState('')
+	const [endDate, setEnd] = useState('')
+	const [guestNum, setGuestNum] = useState(1)
 	const [failed, setFailed] = useState(false)
-	// const [disableSubmit, setDisableSubmit] = useState(true)
+	const [success, setSuccess] = useState(false)
+	const [message, setMessage] = useState('')
+	const [listings, setListings] = useState([])
 
 	/**
-		 * Submit form and create booking
-		 */
+	 * Submit form and find listing
+	 */
 	const handleSubmit = () => {
-		axios.post('/booking/create', {
-			title
-		}).then(res => {
+		axios.get(`/listing/find/title/${title}`).then(res => {
 			// // console.log(res.data.success)
+			setListings(res.response.data.listings)
 			setFailed(false)
+			setMessage('')
+		}).catch(e => {
+			// console.log(e.response.data.error)
+			setFailed(true)
+			setMessage(`Unable to find the listing ${title}`)
+		})
+	}
+
+	const handleBooking = (listingId, userId, guestNum, startDate, endDate) => {
+		axios.post('/booking/create', {
+			listingId,
+			userId,
+			guestNum,
+			startDate, 
+			endDate
+		}).then( res => {
 			setSuccess(true)
 		}).catch(e => {
 			// console.log(e.response.data.error)
 			setFailed(true)
-			setSuccess(false)
+			setMessage('Unable to create the booking')
 		})
 	}
 
@@ -44,7 +64,40 @@ function CreateBooking (props) {
 						placeholder = 'search by title of listing..'
 						id = 'titleBox'
 						value = {title}
-						onChange = {(event) => findTitle(event.target.value)}
+						onChange = {(event) => setTitle(event.target.value)}
+					/>
+				</div>
+
+				<div style={{ display: 'flex', flexDirection: 'row' }}>
+					<p>Title</p>
+					<input
+						type = "text"
+						placeholder = 'Enter start date of booking'
+						id = 'startDateBox'
+						value = {startDate}
+						onChange = {(event) => setStart(event.target.value)}
+					/>
+				</div>
+
+				<div style={{ display: 'flex', flexDirection: 'row' }}>
+					<p>Title</p>
+					<input
+						type = "text"
+						placeholder = 'Enter end date of booking'
+						id = 'endDateBox'
+						value = {endDate}
+						onChange = {(event) => setEnd(event.target.value)}
+					/>
+				</div>
+
+				<div style={{ display: 'flex', flexDirection: 'row' }}>
+					<p>Title</p>
+					<input
+						type = "text"
+						placeholder = 'Enter the number of guests'
+						id = 'guestNumBox'
+						value = {guestNum}
+						onChange = {(event) => setEnd(event.target.value)}
 					/>
 				</div>
 
@@ -55,7 +108,22 @@ function CreateBooking (props) {
 					Create Booking
 				</button>
 
-				{failed ? <p id='failText'>Unable to create booking</p> : null}
+				{failed ? <p id='failText'>{message}</p> : null}
+
+				{listings.length>0 ? (
+					<ul>
+						{
+							listings.map((listing) => {
+								return (
+									<li>
+										<ListingBlock listingObj={listing} showBookingButton={true} handleBooking={handleBooking}/>
+									</li>		
+								)
+							})
+						}
+					</ul>
+					
+				) : null}
 
 				<Link id='linkToProfile' to={'../profile'}>Profile</Link>
 			</div>

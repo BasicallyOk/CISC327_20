@@ -7,6 +7,18 @@ const listingController = require('../model/controller/listingController')
 
 router.get('/', async (req, res) => res.send('Listing route'))
 
+router.get('/find/title/:title', async (req, res) => {
+	const listings = await listingController.findListings(req.params.title)
+	if (listings.length > 0) {
+		res.status(200).json({ 
+			listings,
+			success: `Successfully found ${req.params.title}` 
+		})
+	} else {
+		res.status(400).json({ error: `Unable to find any listing with ${req.params.title}` })
+	}
+})
+
 router.post('/create', async (req, res) => {
 	const status = await listingController.createListing(req.body.title, req.body.description, req.body.price, req.body.lastModifiedDate, req.body.ownerId)
 	if (status) {

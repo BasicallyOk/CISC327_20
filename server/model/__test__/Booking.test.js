@@ -129,7 +129,7 @@ describe('Booking', () => {
 
 		it('should return the booking that the user holds', async () => {
 			const bookingList = await getBookings(booker._id)
-			expect(bookingList).toContainEqual(true)
+			expect(bookingList).toEqual(expect.arrayContaining([bookingToGet]))
 		})
 
 		it('should not return any bookings if the user being queried does not have any booking attached', async () => {
