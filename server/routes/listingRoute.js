@@ -19,6 +19,18 @@ router.get('/find/title/:title', async (req, res) => {
 	}
 })
 
+router.get('/get', async (res) => {
+	const listings = await listingController.getListings()
+	if (listings.length > 0) {
+		res.status(200).json({ 
+			listings,
+			success: `Successfully found listings` 
+		})
+	} else {
+		res.status(400).json({ error: `Unable to find any listings` })
+	}
+})
+
 router.post('/create', async (req, res) => {
 	const status = await listingController.createListing(req.body.title, req.body.description, req.body.price, req.body.lastModifiedDate, req.body.ownerId)
 	if (status) {

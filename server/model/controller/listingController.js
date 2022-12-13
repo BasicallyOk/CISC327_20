@@ -7,6 +7,11 @@ async function findListings(title) {
 	return listing
 }
 
+async function getListings() {
+	const listing = Listing.find()
+	return listing
+}
+
 async function createListing (title, description, price, lastModifiedDate, ownerId) {
 	// Validate if input is empty
 	const alphanumeric = /^[^\s!@#$%^&*)(':;][a-zA-Z0-9\s]*[^\s!@#$%^&*)(':;]$/gm
@@ -176,4 +181,4 @@ async function updateListing (title, description, price) {
 	return true
 }
 
-module.exports = { createListing, updateListing, findListings }
+module.exports = { createListing, updateListing, findListings, getListings }

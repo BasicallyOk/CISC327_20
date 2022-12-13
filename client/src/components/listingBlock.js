@@ -1,3 +1,6 @@
+import React, { useState } from 'react'
+import { Link, Navigate } from 'react-router-dom'
+import axios from 'axios'
 /**
  * The listing block component
  * Used for displaying each listing in the front end
@@ -11,8 +14,55 @@
  * @param {Function} props.handleBooking takes in listingId. The function that handles the booking of this block
  */
 function ListingBlock (props) {
+	const [listings, setListings] = useState([])
+	const [message, setMessage] = useState('')
+	const [failed, setFailed] = useState(false)
+	const [success, setSuccess] = useState(false)
+
+	const getListings = () => {
+		axios.get(`/listing/get`).then(res => {
+			// console.log(res.data.success)
+			setListings(res.response.data.listings)
+			setSuccess(true)
+			setFailed(false)
+			setMessage('')
+			
+		}).catch(e => {
+			// console.log(e.response.data.error)
+			setSuccess(false)
+			setFailed(true)
+			setMessage(`Unable to find listings`)
+		})
+	}
+
+	const printListings = () => {
+		for (var i = 0; i < listings.length; i++) {
+
+		}
+		<Link id='linkToProfile' to={'../profile'}>Profile</Link>
+	}
+	
+	if (!success) {
+		return (
+			<div style={{
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center'
+			}}>
+				<button
+					id = 'getListingsButton'
+					onClick = {getListings}
+				>
+					Get Listings
+				</button>
+
+				{failed ? <p id='failText'>{message}</p> : null}
+				<Link id='linkToProfile' to={'../profile'}>Profile</Link>
+			</div>
+		)
+	}
 	return (
-		<div></div>
+		printListings()
 	)
 }
 
