@@ -10,9 +10,9 @@ router.get('/', async (req, res) => res.send('Listing route'))
 router.get('/find/title/:title', async (req, res) => {
 	const listings = await listingController.findListings(req.params.title)
 	if (listings.length > 0) {
-		res.status(200).json({ 
+		res.status(200).json({
 			listings,
-			success: `Successfully found ${req.params.title}` 
+			success: `Successfully found ${req.params.title}`
 		})
 	} else {
 		res.status(400).json({ error: `Unable to find any listing with ${req.params.title}` })
@@ -22,12 +22,12 @@ router.get('/find/title/:title', async (req, res) => {
 router.get('/get', async (res) => {
 	const listings = await listingController.getListings()
 	if (listings.length > 0) {
-		res.status(200).json({ 
+		res.status(200).json({
 			listings,
-			success: `Successfully found listings` 
+			success: 'Successfully found listings'
 		})
 	} else {
-		res.status(400).json({ error: `Unable to find any listings` })
+		res.status(400).json({ error: 'Unable to find any listings' })
 	}
 })
 

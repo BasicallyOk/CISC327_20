@@ -13,51 +13,49 @@ const Listing = require('../Listing')
  * @returns true if the booking was created successfully, false otherwise
  */
 async function createBooking (listingId, userId, guestNum, startDate, endDate) {
-    const listing = await Listing.findOne({ listingId })
+	const listing = await Listing.findOne({ listingId })
 	const ownerId = listing.ownerId
-    const owner = await User.findById(ownerId)
-    const booker = await User.findById(userId)
-    const booking = await Booking.findOne({ $or: [{startDate: { $gte: startDate }}, { endDate: { $lte: endDate } }]})
+	const owner = await User.findById(ownerId)
+	const booker = await User.findById(userId)
+	const booking = await Booking.findOne({ $or: [{ startDate: { $gte: startDate } }, { endDate: { $lte: endDate } }] })
 
-    if (owner) {
-        if (booker){
-            if (userId == ownerId){
-                return false
-            }
-            if (booker.balance < listing.price) {
-              return false
-            }
-        }
-        else { // If user does not exist
-            return false
-        } 
-    }
-    else { // If owner does not exist
-        return false
-    }
+	if (owner) {
+		if (booker) {
+			if (userId === ownerId) {
+				return false
+			}
+			if (booker.balance < listing.price) {
+				return false
+			}
+		} else { // If user does not exist
+			return false
+		}
+	} else { // If owner does not exist
+		return false
+	}
 
-    if (!listing) {
-        return false // If listing does not exist
-    }
-    if (booking){
-        return false
-    }
+	if (!listing) {
+		return false // If listing does not exist
+	}
+	if (booking) {
+		return false
+	}
 
-    const newBooking = new Booking({
-        listingId, 
-        userId, 
-        guestNum, 
-        startDate, 
-        endDate
-      })
-    newBooking.save((error, booking) => {
-    if (error) {
-        console.error(error)
-    } else {
-        console.log(`Booking for ${booking.price} successfully created`)
-    }
-    })
-    return true
+	const newBooking = new Booking({
+		listingId,
+		userId,
+		guestNum,
+		startDate,
+		endDate
+	})
+	newBooking.save((error, booking) => {
+		if (error) {
+			console.error(error)
+		} else {
+			console.log(`Booking for ${booking.price} successfully created`)
+		}
+	})
+	return true
 }
 
 /**
@@ -70,7 +68,7 @@ async function getBookings (userId) {
 	if (userId === '') {
 		return []
 	}
-	const bookings = Booking.find({userId})
+	const bookings = Booking.find({ userId })
 	return bookings
 }
 

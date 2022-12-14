@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 const Listing = require('../Listing')
 const User = require('../User')
 
-async function findListings(title) {
+async function findListings (title) {
 	const listing = Listing.find(title)
 	return listing
 }
 
-async function getListings() {
+async function getListings () {
 	const listing = Listing.find()
 	return listing
 }

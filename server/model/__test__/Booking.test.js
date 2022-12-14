@@ -107,40 +107,40 @@ describe('Booking', () => {
 	})
 
 	describe('Get Booking', () => {
-		let affordableListing_2
+		let affordableListing2
 		let bookingToGet
 		beforeAll(async () => {
-			affordableListing_2 = await Listing.findOne({
+			affordableListing2 = await Listing.findOne({
 				title: 'khoasTestListing_2',
 				ownerId: listingOwner._id
-			  })
+			})
 
 			const existingBooking = new Booking({
 				startDate: Date.now(),
 				endDate: Date.now() + 10,
 				userId: booker._id,
-				listingId: affordableListing_2._id,
+				listingId: affordableListing2._id,
 				guest_num: 1,
-				price: affordableListing_2.price
-			  })
+				price: affordableListing2.price
+			})
 
 			bookingToGet = await existingBooking.save()
 		})
 
-        afterAll(async () => {
-            await Listing.findByIdAndDelete(bookingToGet._id)
-        })
+		afterAll(async () => {
+			await Listing.findByIdAndDelete(bookingToGet._id)
+		})
 
 		it('should return the booking that the user holds', async () => {
 			const bookingList = await getBookings(booker._id)
-            console.log(bookingList)
-            let contains = false
-            for (let booking of bookingList) {
-                if (booking.listingId == bookingToGet.listingId) {
-                    contains = true
-                    break
-                }
-            }
+			console.log(bookingList)
+			let contains = false
+			for (const booking of bookingList) {
+				if (booking.listingId === bookingToGet.listingId) {
+					contains = true
+					break
+				}
+			}
 			expect(contains).toBe(true)
 		})
 

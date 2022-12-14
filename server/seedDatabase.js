@@ -45,14 +45,14 @@ const seedDb = () => {
 					lastModifiedDate: Date.now(),
 					ownerId: user._id
 				})
-				const defaultListing_2 = new Listing({
+				const defaultListing2 = new Listing({
 					title: 'khoasTestListing_2',
 					description: "khoa's second Test Listing. Definitely long enough to satifsy requirement",
 					price: 100,
 					lastModifiedDate: Date.now(),
 					ownerId: user._id
 				})
-				defaultListing_2.save((error, listing) => {
+				defaultListing2.save((error, listing) => {
 					if (error) {
 						console.error(error)
 					}
