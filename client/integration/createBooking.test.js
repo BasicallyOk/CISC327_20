@@ -45,7 +45,7 @@ describe('Create Booking Test', () => {
 		// TODO Finish this
 		// fill in the query parameter boxes
 		const listingBlockElements = await driver.findElements(By.id('listingBlock'))
-		for (block of listingBlockElements) {
+		for (const block of listingBlockElements) {
 			block.findElement(By.linkText('Price'))
 		}
 	})

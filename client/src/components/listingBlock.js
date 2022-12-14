@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 /**
  * The listing block component
@@ -14,34 +14,32 @@ import axios from 'axios'
  * @param {Function} props.handleBooking takes in listingId. The function that handles the booking of this block
  */
 function ListingBlock (props) {
-	const [listings, setListings] = useState([])
+	// const [listings, setListings] = useState([])
 	const [message, setMessage] = useState('')
 	const [failed, setFailed] = useState(false)
 	const [success, setSuccess] = useState(false)
 
 	const getListings = () => {
-		axios.get(`/listing/get`).then(res => {
+		axios.get('/listing/get').then(res => {
 			// console.log(res.data.success)
-			setListings(res.response.data.listings)
+			// setListings(res.response.data.listings)
 			setSuccess(true)
 			setFailed(false)
 			setMessage('')
-			
 		}).catch(e => {
 			// console.log(e.response.data.error)
 			setSuccess(false)
 			setFailed(true)
-			setMessage(`Unable to find listings`)
+			setMessage('Unable to find listings')
 		})
 	}
 
 	const printListings = () => {
-		
-		props.listingObj().title
-		props.listingObj().description
-		props.listingObj().price
-		props.listingObj().ownerId
-		if(props.showBookingButton){
+		// props.listingObj().title
+		// props.listingObj().description
+		// props.listingObj().price
+		// props.listingObj().ownerId
+		if (props.showBookingButton) {
 			props.handleBooking(props.listingObj().ownerId)
 		}
 		/*
@@ -54,9 +52,8 @@ function ListingBlock (props) {
 		}
 		*/
 		<Link id='linkToProfile' to={'../profile'}>Profile</Link>
-		
 	}
-	
+
 	if (!success) {
 		return (
 			<div style={{
