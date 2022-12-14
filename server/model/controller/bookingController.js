@@ -24,7 +24,7 @@ async function createBooking (listingId, userId, guestNum, startDate, endDate) {
             if (userId == ownerId){
                 return false
             }
-            if (booker.balance<price) {
+            if (booker.balance < listing.price) {
               return false
             }
         }
@@ -39,7 +39,7 @@ async function createBooking (listingId, userId, guestNum, startDate, endDate) {
     if (!listing) {
         return false // If listing does not exist
     }
-    if (booking.length > 0){
+    if (booking){
         return false
     }
 
