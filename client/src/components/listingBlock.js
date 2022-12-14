@@ -36,10 +36,25 @@ function ListingBlock (props) {
 	}
 
 	const printListings = () => {
-		for (var i = 0; i < listings.length; i++) {
+		
+		props.listingObj().title
+		props.listingObj().description
+		props.listingObj().price
+		props.listingObj().ownerId
+		if(props.showBookingButton){
+			props.handleBooking(props.listingObj().ownerId)
+		}
+		/*
+		for (let i = 0; i < listings.length; i++) {
+			listings[i].title
+			listings[i].description
+			listings[i].price
+			listings[i].ownerId
 
 		}
+		*/
 		<Link id='linkToProfile' to={'../profile'}>Profile</Link>
+		
 	}
 	
 	if (!success) {
