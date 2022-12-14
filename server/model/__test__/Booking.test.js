@@ -127,9 +127,21 @@ describe('Booking', () => {
 			bookingToGet = await existingBooking.save()
 		})
 
+        afterAll(async () => {
+            await Listing.findByIdAndDelete(bookingToGet._id)
+        })
+
 		it('should return the booking that the user holds', async () => {
 			const bookingList = await getBookings(booker._id)
-			expect(bookingList).toEqual(expect.arrayContaining([bookingToGet]))
+            console.log(bookingList)
+            let contains = false
+            for (let booking of bookingList) {
+                if (booking.listingId == bookingToGet.listingId) {
+                    contains = true
+                    break
+                }
+            }
+			expect(contains).toBe(true)
 		})
 
 		it('should not return any bookings if the user being queried does not have any booking attached', async () => {
